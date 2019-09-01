@@ -24,33 +24,32 @@ DHT dht(DHTPIN, DHTTYPE);
 #define WIFI_SSID "iPhone de vinicius"
 #define WIFI_PASSWORD "shimbalaie"
 
-String myString;
-int vr = A0; // variable resistor connected 
-int sdata = 0; // The variable resistor value will be stored in sdata.
-StaticJsonBuffer<200> jb;
+// Mac address of device to use as id in the database
+char mac[13];
 
 // Function which reads and sends the data
 void sendSensor()
 {
-  static int count = 0;
+  static int count = 0; // Hash test
+  char path[30];
+  
+  // Read sensor data
   float h = dht.readHumidity();
   float t = dht.readTemperature();
-  char path[20];
-  char value[20];
   
-  // Discard flawed reads
-  if (isnan(h) || isnan(t)) {
-    Serial.println("Failed to read from DHT sensor!");
-    return;
+  // Check and send humidity read
+  if (!isnan(h)) {
+    sprintf(path, "hum/%s/%d", mac, count);
+    Firebase.setFloat(path,h);
+  }
+  
+  // Check and send temperature data
+  if (!isnan(t)) {
+    sprintf(path, "tmp/%s/%d", mac, count);
+    Firebase.setFloat(path,t);
   }
 
-  sprintf(path, "hum\\%d", count);
-//  sprintf(buff, "{\"%d\":\"%f\"}", count, h);
-//  JsonVariant variant = jb.parse(buff);
-
-  Firebase.setFloat(path,h);
-//  Firebase.setFloat("hum", h);
-//  Firebase.setFloat("temp", t);
+  // Hash test
   ++count;
 }
 
@@ -70,6 +69,11 @@ void setup()
   Serial.println();
   Serial.print("connected: ");
   Serial.println(WiFi.localIP());
+
+  // Getting mac address
+  byte m[6];
+  WiFi.macAddress(m);
+  sprintf(mac, "%X%X%X%X%X%X\0", m[0],m[1],m[2],m[3],m[4],m[5]);
   
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
 }
