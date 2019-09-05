@@ -34,20 +34,8 @@ char* readTime(){
   char buf[200];
   time_t now = time(nullptr);
   struct tm* p_tm = localtime(&now);
-//  Serial.print(p_tm->tm_mday);
-//  Serial.print("/");
-//  Serial.print(p_tm->tm_mon + 1);
-//  Serial.print("/");
-//  Serial.print(p_tm->tm_year + 1900);
-//  
-//  Serial.print(" ");
-//  
-//  Serial.print(p_tm->tm_hour);
-//  Serial.print(":");
-//  Serial.print(p_tm->tm_min);
-//  Serial.print(":");
-//  Serial.println(p_tm->tm_sec);
-  sprintf(buf, "%.2d-%.2d-%.4d--%.2d-%.2d-%.2d", p_tm->tm_mday, p_tm->tm_mon + 1, p_tm->tm_year + 1900, p_tm->tm_hour, p_tm->tm_min, p_tm->tm_sec);
+
+  sprintf(buf, "%.4d/%.2d/%.2d/%.2d/%.2d:%.2d", p_tm->tm_year + 1900, p_tm->tm_mon + 1, p_tm->tm_mday, p_tm->tm_hour, p_tm->tm_min, p_tm->tm_sec);
   Serial.println(buf);
   return buf;
   delay(1000);
@@ -67,13 +55,13 @@ void sendSensor()
   
   // Check and send humidity read
   if (!isnan(h)) {
-    sprintf(path, "hum/%s/%s", mac, timestr);
+    sprintf(path, "%s/%s/hum", timestr, mac);
     Firebase.setFloat(path,h);
   }
   
   // Check and send temperature data
   if (!isnan(t)) {
-    sprintf(path, "tmp/%s/%s", mac, timestr);
+    sprintf(path, "%s/%s/tmp", timestr, mac);
     Firebase.setFloat(path,t);
   }
 
