@@ -22,8 +22,8 @@ DHT dht(DHTPIN, DHTTYPE);
 // Set these to run example.
 #define FIREBASE_HOST "teste-bb0d8.firebaseio.com"
 #define FIREBASE_AUTH "mLOkguUxVGWlbYmAWdUYiHaYqWqDF9wHstkUIfTT"
-#define WIFI_SSID "HOW I MET YOUR MOTHER"
-#define WIFI_PASSWORD "M96J93C73F61"
+#define WIFI_SSID "iPhone de vinicius"
+#define WIFI_PASSWORD "shimbalaie"
 #define TIMEZONE -3*3600
 #define DST 0
 
@@ -47,7 +47,7 @@ char* readTime(){
 //  Serial.print(p_tm->tm_min);
 //  Serial.print(":");
 //  Serial.println(p_tm->tm_sec);
-  sprintf(buf, "%.2d%.2d%.4d%.2d%.2d%.2d", p_tm->tm_mday, p_tm->tm_mon + 1, p_tm->tm_year + 1900, p_tm->tm_hour, p_tm->tm_min, p_tm->tm_sec);
+  sprintf(buf, "%.2d-%.2d-%.4d--%.2d-%.2d-%.2d", p_tm->tm_mday, p_tm->tm_mon + 1, p_tm->tm_year + 1900, p_tm->tm_hour, p_tm->tm_min, p_tm->tm_sec);
   Serial.println(buf);
   return buf;
   delay(1000);
@@ -57,7 +57,7 @@ char* readTime(){
 void sendSensor()
 {
   static int count = 0; // Hash test
-  char path[30];
+  char path[100];
   
   // Read sensor data
   float h = dht.readHumidity();
