@@ -42,9 +42,9 @@ function init() {
     const temperature_ref = firebase.database().ref("tmp");
 
     let index = 0;
-    setInterval(() => {
-        update_text_with_ref(humidity_text, humidity_ref, index, ["hum", "RH"]);
-        update_text_with_ref(temperature_text, temperature_ref, index, ["tmp", "°C"]);
-        index++;
-    }, 1000);
+    // setInterval(() => {
+    //     update_text_with_ref(humidity_text, humidity_ref, index, ["hum", "RH"]);
+    //     update_text_with_ref(temperature_text, temperature_ref, index, ["tmp", "°C"]);
+    //     index++;
+    // }, 1000);
 }
