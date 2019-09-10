@@ -1,3 +1,5 @@
+'use strict';
+
 // Original code from:
 // https://gist.github.com/dannypule/48418b4cd8223104c6c92e3016fc0f61#file-json_to_csv-js
 
@@ -6,7 +8,7 @@ function convertToCSV(objArray) {
     var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     var str = '';
 
-    for (key in array) {
+    for (let key in array) {
         console.log(key);
         console.log(array[key]);
         break;
@@ -32,7 +34,7 @@ function exportCSVFile(headers, items, fileTitle) {
     // Convert Object to JSON
     var jsonObject = JSON.stringify(items);
 
-    var csv = this.convertToCSV(jsonObject);
+    var csv = convertToCSV(jsonObject);
 
     console.log(csv);
 
@@ -80,6 +82,13 @@ function exportJSONFile(object, fileTitle) {
     }
 }
 
+const logCsv = (keys, values) => {
+    // TODO parse .json to .csv before using it to export files
+    console.log(`keys: \n${keys}`);
+    console.log(`values:`);
+    console.log(values);
+}
+
 function download() {
     // TODO Show user that we are doing something, popup or some banner
     // alert("Preparing download");
@@ -89,15 +98,16 @@ function download() {
     const all_data_ref = firebase.database().ref("/");
     all_data_ref.once("value")
            .then(function (snapshot) {
-            let values = snapshot.val(); // "last"
-            const keys = Object.keys(values); // FIXME temporary workaround for current firebase data format
+                let values = snapshot.val(); // "last"
+                const keys = Object.keys(values); // FIXME temporary workaround for current firebase data format
 
-            // Download
-            // exportJSONFile(values, "export");
-            exportCSVFile(keys, values, "export");
-    })
+                // Download
+                // exportJSONFile(values, "export");
+                // exportCSVFile(keys, values, "export");
+                logCsv(keys, values);
+            })
 
-    
+
 }
 
 window.addEventListener('load', init, false);
