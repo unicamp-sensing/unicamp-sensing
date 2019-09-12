@@ -23,19 +23,21 @@ async function download() {
 }
 
 function dataToCsvArray(data) {
-    let csvArray = ["year,month,day,hour,board,humidity,temperature"];
+    let csvArray = ["year,month,day,hour,min,sec,board,humidity,temperature"];
     for (const year in data) {
         for (const month in data[year]) {
             for (const day in data[year][month]) {
                 for (const hour in data[year][month][day]) {
-                    for (const min_sec in data[year][month][day][hour]) {
-                        // const [min, sec] = min_sec.split(':');
-                        for (const board in data[year][month][day][hour][min_sec]) {
-                            const { hum: humidity, tmp: temperature } = data[year][month][day][hour][min_sec][board];
-                            if (!humidity || !temperature) {
-                                console.log("invalid entry at:", year, month, day, hour, min_sec);
-                            } else {
-                                csvArray.push(`${year},${month},${day},${hour},${board},${humidity},${temperature}`);
+                    for (const min in data[year][month][day][hour]) {
+                        for (const sec in data[year][month][day][hour][min]) {
+                            // const [min, sec] = min_sec.split(':');
+                            for (const board in data[year][month][day][hour][min][sec]) {
+                                const { hum: humidity, tmp: temperature } = data[year][month][day][hour][min][sec][board];
+                                if (!humidity || !temperature) {
+                                    console.log("invalid entry at:", year, month, day, hour, min, sec);
+                                } else {
+                                    csvArray.push(`${year},${month},${day},${hour},${min},${sec},${board},${humidity},${temperature}`);
+                                }
                             }
                         }
                     }
