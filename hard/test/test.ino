@@ -44,7 +44,7 @@ char* readTime(){
   time_t now = time(nullptr);
   struct tm* p_tm = localtime(&now);
 
-  sprintf(buf, "%.4d/%.2d/%.2d/%.2d/%.2d:%.2d", p_tm->tm_year + 1900, p_tm->tm_mon + 1, p_tm->tm_mday, p_tm->tm_hour, p_tm->tm_min, p_tm->tm_sec);
+  sprintf(buf, "%.4d/%.2d/%.2d/%.2d/%.2d/%.2d", p_tm->tm_year + 1900, p_tm->tm_mon + 1, p_tm->tm_mday, p_tm->tm_hour, p_tm->tm_min, p_tm->tm_sec);
   Serial.println(buf);
   return buf;
   delay(1000);
