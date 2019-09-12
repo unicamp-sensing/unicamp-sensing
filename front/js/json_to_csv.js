@@ -15,11 +15,11 @@ async function download() {
     const dataRef = firebase.database().ref("/");
     const dataSnapshot = await dataRef.once("value");
     const data = dataSnapshot.val();
+
     console.log(data);
 
     const [header, ...rows] = dataToCsv(data).split('\n');
-    console.log(header);
-    console.log(rows);
+    exportCsvFile(header, rows);
 }
 
 function dataToCsv(data) {
@@ -44,6 +44,15 @@ function dataToCsv(data) {
         }
     }
     return csv;
+}
+
+function exportCsvFile(header, rows, fileTitle) {
+    const fileName = (fileTitle || "data") + ".csv";
+
+    const blob = new Blob([header], {
+        type: "text/plain;charset=utf-8"
+    });
+    saveAs(blob, fileName);
 }
 
 // ref.: https://firebase.google.com/docs/reference/js/firebase.database.Reference
