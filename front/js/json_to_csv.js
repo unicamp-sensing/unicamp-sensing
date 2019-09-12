@@ -18,12 +18,12 @@ async function download() {
 
     console.log(data);
 
-    const [header, ...rows] = dataToCsv(data).split('\n');
+    const [header, ...rows] = dataToCsvArray(data);
     exportCsvFile(header, rows);
 }
 
-function dataToCsv(data) {
-    let csv = "year,month,day,hour,board,humidity,temperature";
+function dataToCsvArray(data) {
+    let csvArray = ["year,month,day,hour,board,humidity,temperature"];
     for (const year in data) {
         for (const month in data[year]) {
             for (const day in data[year][month]) {
@@ -35,7 +35,7 @@ function dataToCsv(data) {
                             if (!humidity || !temperature) {
                                 console.log("invalid entry at:", year, month, day, hour, min_sec);
                             } else {
-                                csv += `\n${year},${month},${day},${hour},${humidity},${temperature}`;
+                                csvArray.push(`${year},${month},${day},${hour},${board},${humidity},${temperature}`);
                             }
                         }
                     }
@@ -43,13 +43,15 @@ function dataToCsv(data) {
             }
         }
     }
-    return csv;
+    return csvArray;
 }
 
 function exportCsvFile(header, rows, fileTitle) {
     const fileName = (fileTitle || "data") + ".csv";
 
-    const blob = new Blob([header], {
+    const csvFile = header + "\n" + rows.join("\n");
+    
+    const blob = new Blob([csvFile], {
         type: "text/plain;charset=utf-8"
     });
     saveAs(blob, fileName);
