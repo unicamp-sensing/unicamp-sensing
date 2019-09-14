@@ -1,0 +1,27 @@
+{
+  "name": "urban-sensing",
+  "version": "0.1.0",
+  "description": "A web application for visualizing temperature, humidity and pollution levels monitored in urban centers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.ic.unicamp.br/ra187690/urban-sensing"
+  },
+  "keywords": [
+    "urban",
+    "sensing",
+    "iot",
+    "polution",
+    "sustainability",
+    "maps",
+    "visualization"
+  ],
+  "author": "Tiago Chaves",
+  "license": "MIT",
+  "dependencies": {
+    "file-saver": "^2.0.2"
+  }
+}
