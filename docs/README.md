@@ -5,8 +5,9 @@
 |   +-- [month]
 |   |   +-- [day]
 |   |   |   +-- [hour]
-|   |   |   |   +-- [minute:second]
-|   |   |   |   |   +-- [board_MAC_addr]
-|   |   |   |   |   |   +-- hum: [humidity]
-|   |   |   |   |   |   +-- tmp: [temperature]
+|   |   |   |   +-- [minute]
+|   |   |   |   |   +-- [second]
+|   |   |   |   |   |   +-- [board_MAC_addr]
+|   |   |   |   |   |   |   +-- hum: [humidity]
+|   |   |   |   |   |   |   +-- tmp: [temperature]
 ```

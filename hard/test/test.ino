@@ -13,6 +13,7 @@
 #include <ESP8266HTTPClient.h>
 #include <DHT.h>
 #include <time.h>
+#include <queue>
 
 // Specify DHT signal pin and model 
 #define DHTPIN 0          // D3
@@ -22,20 +23,28 @@ DHT dht(DHTPIN, DHTTYPE);
 // Set these to run example.
 #define FIREBASE_HOST "teste-bb0d8.firebaseio.com"
 #define FIREBASE_AUTH "mLOkguUxVGWlbYmAWdUYiHaYqWqDF9wHstkUIfTT"
-#define WIFI_SSID "iPhone de vinicius"
-#define WIFI_PASSWORD "shimbalaie"
+#define WIFI_SSID "AndroidAP"
+#define WIFI_PASSWORD "rzqm8226"
 #define TIMEZONE -3*3600
 #define DST 0
 
 // Mac address of device to use as id in the database
 char mac[13];
 
+typedef struct data {
+  char timestr[200];
+  float tmp;
+  float hum;
+} data;
+
+std::queue<data> data_queue;
+
 char* readTime(){
   char buf[200];
   time_t now = time(nullptr);
   struct tm* p_tm = localtime(&now);
 
-  sprintf(buf, "%.4d/%.2d/%.2d/%.2d/%.2d:%.2d", p_tm->tm_year + 1900, p_tm->tm_mon + 1, p_tm->tm_mday, p_tm->tm_hour, p_tm->tm_min, p_tm->tm_sec);
+  sprintf(buf, "%.4d/%.2d/%.2d/%.2d/%.2d/%.2d", p_tm->tm_year + 1900, p_tm->tm_mon + 1, p_tm->tm_mday, p_tm->tm_hour, p_tm->tm_min, p_tm->tm_sec);
   Serial.println(buf);
   return buf;
   delay(1000);
@@ -46,27 +55,35 @@ void sendSensor()
 {
   static int count = 0; // Hash test
   char path[100];
+
+  data new_data;
+  //get time string
+  strcpy(new_data.timestr, readTime());
   
   // Read sensor data
-  float h = dht.readHumidity();
-  float t = dht.readTemperature();
-  char timestr[200];
-  strcpy(timestr, readTime());
-  
-  // Check and send humidity read
-  if (!isnan(h)) {
-    sprintf(path, "%s/%s/hum", timestr, mac);
-    Firebase.setFloat(path,h);
-  }
-  
-  // Check and send temperature data
-  if (!isnan(t)) {
-    sprintf(path, "%s/%s/tmp", timestr, mac);
-    Firebase.setFloat(path,t);
-  }
+  new_data.hum = dht.readHumidity();
+  new_data.tmp = dht.readTemperature();
 
-  // Hash test
-  ++count;
+  //add data to queue
+  data_queue.push(new_data);
+
+  if (WiFi.status() == WL_CONNECTED) {
+    while (!data_queue.empty()) {
+      // Check and send humidity read
+      data cur = data_queue.front();
+      if (!isnan(cur.hum)) {
+        sprintf(path, "%s/%s/hum", cur.timestr, mac);
+        Firebase.setFloat(path, cur.hum);
+      }
+      
+      // Check and send temperature data
+      if (!isnan(cur.tmp)) {
+        sprintf(path, "%s/%s/tmp", cur.timestr, mac);
+        Firebase.setFloat(path, cur.tmp);
+      }
+      data_queue.pop();   
+    }
+  }
 }
 
 void setup()
@@ -77,11 +94,11 @@ void setup()
   // Connect to wifi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("connecting");
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    Serial.print("wifi not connected\n");
-    delay(500);
-  }
+//  while (WiFi.status() != WL_CONNECTED)
+//  {
+//    Serial.print("wifi not connected\n");
+//    delay(500);
+//  }
   Serial.println();
   Serial.print("connected: ");
   Serial.println(WiFi.localIP());
@@ -108,5 +125,5 @@ void setup()
 void loop()
 {
   sendSensor();
-  delay(5000);            
+  delay(8000);            
 }
