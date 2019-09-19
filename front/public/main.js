@@ -25,14 +25,31 @@ function init() {
     plot();
 }
 
+function formatDate(date) {
+    const monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+
+const rand_color = () => Math.round(255 * Math.random());
+
 async function plot() {
     const data = await getRawData();
 
-    const curr_date = new Date(2019, 09, 19);
-    const values = [];
+    const values_by_day_date = {};
     for (const year in data) {
         for (const month in data[year]) {
             for (const day in data[year][month]) {
+                const values = [];
                 for (const hour in data[year][month][day]) {
                     for (const min in data[year][month][day][hour]) {
                         for (const sec in data[year][month][day][hour][min]) {
@@ -40,62 +57,52 @@ async function plot() {
                                 const temperature = data[year][month][day][hour][min][sec][board].tmp;
                                 if (!!temperature) {
                                     const date = new Date(year, month, day, hour, min, sec);
-                                    if (date >= curr_date) {
-                                        values.push({
-                                            x: date,
-                                            y: temperature
-                                        });
-                                    }
+                                    values.push({
+                                        x: date,
+                                        y: temperature
+                                    });
                                 }
                             }
                         }
                     }
                 }
+                values_by_day_date[new Date(year, month, day)] = values;
             }
         }
+    }
+
+    datasets = [];
+    for (const [day_date, values] of Object.entries(values_by_day_date)) {
+        console.log(day_date);
+        const rgb = [rand_color(), rand_color(), rand_color()];
+        datasets.push({
+            label: formatDate(new Date(day_date)),
+            data: values,
+            backgroundColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.2)`,
+            borderColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
+            borderWidth: 2,
+            fill: false
+        });
     }
 
     // FIXME
     const ctx = document.getElementById("canvas-chart").getContext("2d");
     const chart = new Chart(ctx, {
         type: "scatter",
-        data: {
-            datasets: [{
-                label: "Average Temperature (°C)",
-                data: values,
-                backgroundColor: "rgba(255, 99, 132, 0.2)",
-                borderColor: "rgba(255, 99, 132, 1)",
-                borderWidth: 2,
-                fill: false
-            }]
-        },
+        data: { datasets },
         options: {
             responsive: true,
-            title: {
-                display: true,
-                text: 'Urban Sensing'
-            },
+            title: { display: true, text: 'Urban Sensing' },
             scales: {
                 xAxes: [{
                     type: 'time',
                     display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Date'
-                    },
-                    ticks: {
-                        major: {
-                            fontStyle: 'bold',
-                            fontColor: '#FF0000'
-                        }
-                    }
+                    scaleLabel: { display: true, labelString: 'Date' },
+                    ticks: { major: { fontStyle: 'bold', fontColor: '#FF0000' } }
                 }],
                 yAxes: [{
                     display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Value'
-                    }
+                    scaleLabel: { display: true, labelString: 'Value' }
                 }]
             }
         }
