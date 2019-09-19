@@ -1,5 +1,3 @@
-"use strict";
-
 // call init() once the whole page has loaded
 window.addEventListener("load", init, false);
 
@@ -7,6 +5,7 @@ window.addEventListener("load", init, false);
 
 const $ = id => document.getElementById(id);
 
+// FIXME move key to .env and get it from the server
 const firebaseConfig = {
     apiKey: "AIzaSyATSHBpjnyHaTb8bF-NmWrzam4KZ5Amrh0",
     authDomain: "teste-bb0d8.firebaseapp.com",
@@ -29,6 +28,7 @@ function init() {
 async function plot() {
     const data = await getRawData();
 
+    const curr_date = new Date(2019, 09, 19);
     const values = [];
     for (const year in data) {
         for (const month in data[year]) {
@@ -39,10 +39,13 @@ async function plot() {
                             for (const board in data[year][month][day][hour][min][sec]) {
                                 const temperature = data[year][month][day][hour][min][sec][board].tmp;
                                 if (!!temperature) {
-                                    values.push({
-                                        x: new Date(year, month, day, hour, min, sec),
-                                        y: temperature
-                                    });
+                                    const date = new Date(year, month, day, hour, min, sec);
+                                    if (date >= curr_date) {
+                                        values.push({
+                                            x: date,
+                                            y: temperature
+                                        });
+                                    }
                                 }
                             }
                         }
@@ -55,7 +58,7 @@ async function plot() {
     // FIXME
     const ctx = document.getElementById("canvas-chart").getContext("2d");
     const chart = new Chart(ctx, {
-        type: "line",
+        type: "scatter",
         data: {
             datasets: [{
                 label: "Average Temperature (°C)",
