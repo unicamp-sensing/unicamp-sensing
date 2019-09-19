@@ -72,12 +72,16 @@ void sendSensor()
       // Check and send humidity read
       data cur = data_queue.front();
       if (!isnan(cur.hum)) {
+        Serial.print(cur.hum);
+        Serial.print("|");
         sprintf(path, "%s/%s/hum", cur.timestr, mac);
         Firebase.setFloat(path, cur.hum);
       }
       
       // Check and send temperature data
       if (!isnan(cur.tmp)) {
+        Serial.print(cur.tmp);
+        Serial.print("\n");
         sprintf(path, "%s/%s/tmp", cur.timestr, mac);
         Firebase.setFloat(path, cur.tmp);
       }
@@ -90,6 +94,9 @@ void setup()
 {
   // Debug console
   Serial.begin(9600);
+
+  // Setup  DHT
+  dht.begin();
 
   // Connect to wifi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -125,5 +132,5 @@ void setup()
 void loop()
 {
   sendSensor();
-  delay(8000);            
+  delay(10000);            
 }
