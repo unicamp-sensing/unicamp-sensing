@@ -1,3 +1,5 @@
+//DSM501A code for particle concentration monitoring from https://diyprojects.io/calculate-air-quality-index-iaq-iqa-dsm501-arduino-esp8266/#.XZY4qstKhuQ
+
 #include <SimpleTimer.h>
 
 /* Connect the DSM501 sensor as follow 
@@ -8,8 +10,8 @@
  * 4 red rouge - Vout1 - 2.5 microns (PM2.5)
  * 5 black noir - GND
 */
-#define DUST_SENSOR_DIGITAL_PIN_PM10  12        // DSM501 Pin 2 of DSM501 (jaune / Yellow)
-#define DUST_SENSOR_DIGITAL_PIN_PM25  13        // DSM501 Pin 4 (rouge / red) 
+#define DUST_SENSOR_DIGITAL_PIN_PM10  12        // DSM501 Pin 2 of DSM501 (jaune / Yellow) on D6
+#define DUST_SENSOR_DIGITAL_PIN_PM25  13        // DSM501 Pin 4 (rouge / red) on D7
 #define COUNTRY                       2         // 0. France, 1. Europe, 2. USA/China
 #define EXCELLENT                     "Excellent"
 #define GOOD                          "Good"
