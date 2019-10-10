@@ -3,6 +3,7 @@
 //    DHT sensor library (1.3.7) - by Adafruit
 //    ArduinoJson (5.13.1) - by Benoit Blanchon
 //    FirebaseExtended - https://github.com/FirebaseExtended/firebase-arduino/releases
+//    TinyGPS++.h (???) - ???
 
 #include <stdio.h>
 
@@ -14,7 +15,7 @@
 #include <DHT.h>
 #include <time.h>
 #include <queue>
-#include <SimpleTimer.h>
+#include <TinyGPS++.h>
 
 /* Connect the DSM501 sensor as follow 
  * https://www.elektronik.ropla.eu/pdf/stock/smy/dsm501.pdf
@@ -26,14 +27,11 @@
 */
 #define DUST_SENSOR_DIGITAL_PIN_PM10  12        // DSM501 Pin 2 on D6
 #define DUST_SENSOR_DIGITAL_PIN_PM25  13        // DSM501 Pin 4 on D7 
-//#define COUNTRY                       2         // 0. France, 1. Europe, 2. USA/China
-//#define EXCELLENT                     "Excellent"
-//#define GOOD                          "Good"
-//#define ACCEPTABLE                    "Acceptable"
-//#define MODERATE                      "Moderate"
-//#define HEAVY                         "Heavy"
-//#define SEVERE                        "Severe"
-//#define HAZARDOUS                     "Hazardous"
+
+// GPS global settings
+#define TZ -3
+TinyGPSPlus gps;          // The TinyGPS++ object
+SoftwareSerial ss(4, 5) ; // LIGAR RX EM D1 E TX EM D2
 
 unsigned long   duration;
 unsigned long   starttime;
@@ -61,6 +59,10 @@ char mac[13];
 
 typedef struct data {
   char timestr[200];
+  double lati;
+  double lon;
+  double alt;
+  double vel;
   float tmp; //temperature
   float hum; //humidity
   float pm10; //particle concentration for < 1um
@@ -90,7 +92,6 @@ struct structAQI{
 };
 struct structAQI AQI;
 
-SimpleTimer timer;
 
 
 
@@ -99,33 +100,114 @@ char* readTime(){
   time_t now = time(nullptr);
   struct tm* p_tm = localtime(&now);
 
-  sprintf(buf, "%.4d/%.2d/%.2d/%.2d/%.2d/%.2d", p_tm->tm_year + 1900, p_tm->tm_mon + 1, p_tm->tm_mday, p_tm->tm_hour, p_tm->tm_min, p_tm->tm_sec);
+  // Get datetime from GPS
+  int y = gps.date.year(); // Year (2000+) (u16)
+  int mo = gps.date.month(); // Month (1-12) (u8)
+  int d = gps.date.day(); // Day (1-31) (u8)
+  int h = gps.time.hour()+TZ; // Hour (0-23) (u8)
+  int mi = gps.time.minute(); // Minute (0-59) (u8)
+  int s = gps.time.second(); // Second (0-59) (u8)
+
+  Serial.println(y*10000+mo*100+d);
+  sprintf(buf, "%.4d/%.2d/%.2d/%.2d/%.2d/%.2d", y, mo, d, h, mi, s);
   Serial.println(buf);
   return buf;
-  delay(1000);
 }
 
 
+void read_gps(void){
+  // Get if required data is valid
+  bool req = false;
 
+  //Reads GPS serial
+  while (ss.available()) {
+    gps.encode( ss.read() );
+    req = gps.time.isUpdated();
+    req *= gps.location.isValid()*gps.altitude.isValid();
+    req *= gps.time.isValid()*gps.speed.isValid();
+  }
 
-// Function which reads and sends the data
-void sendSensor()
-{
-  static int count = 0; // Hash test
-  char path[100];
-
-  data new_data;
-  //get time string
-  strcpy(new_data.timestr, readTime());
+  if (gps.time.isUpdated())
+  {
+    Serial.println("------( Location Data )------");
+    Serial.print("LAT: ");
+    Serial.println(gps.location.lat());
+    Serial.print("LON: ");
+    Serial.println(gps.location.lng());
+    Serial.println("------( Altitude Data )------");
+    Serial.print(gps.altitude.meters());
+    Serial.println("m");
+    Serial.println("------( Speed Data )------");
+    Serial.println(gps.speed.mps()); // Speed in meters per second (double)
+    Serial.println("m/s");
+    Serial.println("------( Time Data )------");
+    int y = gps.date.year(); // Year (2000+) (u16)
+    int mo = gps.date.month(); // Month (1-12) (u8)
+    int d = gps.date.day(); // Day (1-31) (u8)
+    Serial.println(y*10000+mo*100+d);
+    Serial.print(gps.time.hour()+TZ);
+    Serial.print(":");
+    Serial.print(gps.time.minute());
+    Serial.print(":");
+    Serial.print(gps.time.second());
+    Serial.println();
+  }
   
-  // Read sensor data
-  new_data.hum = dht.readHumidity();
-  new_data.tmp = dht.readTemperature();
+  return;
+}
 
+///////////////////////////////////////////////////////////////////////////////////
+
+void test() {
+  bool valid =  gps.location.isValid()*gps.altitude.isValid();
+  valid *= gps.time.isValid()*gps.hdop.isValid()*gps.speed.isValid();
+  
+  // Read all chars from serial communicatios  
+  while (ss.available() > 0) gps.encode( ss.read() ); //Ensures parsing
+    
+  if (gps.location.isUpdated() && valid)
+  {
+    Serial.println("------( Location Data )------");
+    Serial.print("LAT: ");
+    Serial.println(gps.location.lat());
+    Serial.print("LON: ");
+    Serial.println(gps.location.lng());
+    Serial.println("------( Altitude Data )------");
+    Serial.print(gps.altitude.meters());
+    Serial.println("m");
+    Serial.println("------( Speed Data )------");
+    Serial.println(gps.speed.mps()); // Speed in meters per second (double)
+    Serial.println("m/s");
+    Serial.println("------( Time Data )------");
+    int y = gps.date.year(); // Year (2000+) (u16)
+    int mo = gps.date.month(); // Month (1-12) (u8)
+    int d = gps.date.day(); // Day (1-31) (u8)
+    Serial.println(y*10000+mo*100+d);
+    Serial.print(gps.time.hour()+TZ);
+    Serial.print(":");
+    Serial.print(gps.time.minute());
+    Serial.print(":");
+    Serial.print(gps.time.second());
+    Serial.println();
+    Serial.println("------( Satelites & Confidence )------");
+    Serial.print("SATS: ");
+    Serial.println(gps.satellites.value()); // Number of satellites in use (u32)
+    Serial.print("HDOP: ");
+    Serial.println((float)gps.hdop.value()/100); // Horizontal Dim. of Precision (100ths-i32)
+  }
+}
+////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+void read_particle(data &new_data) {
   int starttime = millis();
+  
   while (millis()- starttime < sampletime_ms) {
     AQI.lowpulseoccupancyPM10 += pulseIn(DUST_SENSOR_DIGITAL_PIN_PM10, LOW);
     AQI.lowpulseoccupancyPM25 += pulseIn(DUST_SENSOR_DIGITAL_PIN_PM25, LOW);
+    while (ss.available() > 0) gps.encode( ss.read() );
   }
   
   //update measurements
@@ -143,34 +225,30 @@ void sendSensor()
   AQI.lowpulseoccupancyPM25 = 0;
   AQI.concentrationPM25 = concentration;
   new_data.pm25 = concentration;
+}
 
-  //Serial.print("Concentrations => PM2.5: "); Serial.print(AQI.concentrationPM25); Serial.print(" | PM10: "); Serial.println(AQI.concentrationPM10);
-  
-  //AQI.starttime = millis();
-      
-//  // Actualise l'AQI de chaque capteur - update AQI for each sensor 
-//  if ( COUNTRY == 0 ) {
-//    // France
-//    AQI.AqiPM25 = getATMO( 0, AQI.concentrationPM25 );
-//    AQI.AqiPM10 = getATMO( 1, AQI.concentrationPM10 );
-//  } else if ( COUNTRY == 1 ) {
-//    // Europe
-//    AQI.AqiPM25 = getACQI( 0, AQI.concentrationPM25 );
-//    AQI.AqiPM10 = getACQI( 1, AQI.concentrationPM10 );
-//  } else {
-//    // USA / China
-//    AQI.AqiPM25 = getAQI( 0, AQI.concentrationPM25 );
-//    AQI.AqiPM10 = getAQI( 0, AQI.concentrationPM10 );
-//  }
-//
-//  // Actualise l'indice AQI - update AQI index
-//  updateAQILevel();
-//  updateAQIDisplay();
-//  
-//  Serial.print("AQIs => PM25: "); Serial.print(AQI.AqiPM25); Serial.print(" | PM10: "); Serial.println(AQI.AqiPM10);
-//  Serial.print(" | AQI: "); Serial.println(AQI.AQI); Serial.print(" | Message: "); Serial.println(AQI.AqiString);
 
+
+
+// Function which reads and sends the data
+void sendSensor()
+{
+  static int count = 0; // Hash test
+  char path[100];
+
+  data new_data;
   
+  // Read sensor data
+  read_particle(new_data); // 10s read delay
+  read_gps(); // Get most recent data from GPS serial
+  strcpy(new_data.timestr, readTime());
+  
+  new_data.lati = gps.location.lat();
+  new_data.lon = gps.location.lng();
+  new_data.alt = gps.altitude.meters();
+  new_data.vel = gps.speed.mps();
+  new_data.hum = dht.readHumidity();
+  new_data.tmp = dht.readTemperature();
 
   //add data to queue
   data_queue.push(new_data);
@@ -179,6 +257,27 @@ void sendSensor()
     while (!data_queue.empty()) {
       // Check and send humidity read
       data cur = data_queue.front();
+
+      Serial.print(cur.lati);
+      Serial.print("|LAT:");
+      sprintf(path, "%s/%s/lat", cur.timestr, mac);
+      Firebase.setFloat(path, cur.lati);
+      
+      Serial.print(cur.lon);
+      Serial.print("|LON:");
+      sprintf(path, "%s/%s/lon", cur.timestr, mac);
+      Firebase.setFloat(path, cur.lon);
+
+      Serial.print(cur.alt);
+      Serial.print("|ALT:");
+      sprintf(path, "%s/%s/alt", cur.timestr, mac);
+      Firebase.setFloat(path, cur.alt); 
+
+      Serial.print(cur.vel);
+      Serial.print("|VEL:");
+      sprintf(path, "%s/%s/alt", cur.timestr, mac);
+      Firebase.setFloat(path, cur.vel);
+      
       if (!isnan(cur.hum)) {
         Serial.print(cur.hum);
         Serial.print("|");
@@ -218,7 +317,10 @@ void sendSensor()
 void setup()
 {
   // Debug console
-  Serial.begin(9600);
+  Serial.begin(115200);
+  
+  // Setup GPS
+  ss.begin(9600);  
 
   // Setup  DHT
   dht.begin();
@@ -238,16 +340,10 @@ void setup()
   Serial.println("Ready!");
   
   AQI.starttime = millis();
-  //timer.setInterval(sampletime_ms, updateAQI);
 
   // Connect to wifi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("connecting");
-//  while (WiFi.status() != WL_CONNECTED)
-//  {
-//    Serial.print("wifi not connected\n");
-//    delay(500);
-//  }
   Serial.println();
   Serial.print("connected: ");
   Serial.println(WiFi.localIP());
@@ -258,21 +354,11 @@ void setup()
   sprintf(mac, "%X%X%X%X%X%X\0", m[0],m[1],m[2],m[3],m[4],m[5]);
   
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-
-  //-------time acquisition begin----------//
-  configTime(TIMEZONE, DST, "pool.ntp.org", "time.nist.gov");
-  Serial.println("\nWaiting for Internet time");
-
-  while(!time(nullptr)){
-     Serial.print("*");
-     delay(1000);
-  }
-  Serial.println("\nTime response....OK");
-  //-------time acquisition end----------//
 }
 
 void loop()
 {
+  test();
   sendSensor();
-  //delay(10000);            
+//  delay(10000);            
 }

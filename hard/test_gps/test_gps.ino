@@ -26,9 +26,9 @@ void loop()
   {
     Serial.println("------( Location Data )------");
     Serial.print("LAT: ");
-    Serial.println(gps.location.lat(), 6);
+    Serial.println(gps.location.lat());
     Serial.print("LON: ");
-    Serial.println(gps.location.lng(),6);
+    Serial.println(gps.location.lng());
     Serial.println("------( Altitude Data )------");
     Serial.print(gps.altitude.meters());
     Serial.println("m");
@@ -36,6 +36,10 @@ void loop()
     Serial.println(gps.speed.mps()); // Speed in meters per second (double)
     Serial.println("m/s");
     Serial.println("------( Time Data )------");
+    int y = gps.date.year(); // Year (2000+) (u16)
+    int mo = gps.date.month(); // Month (1-12) (u8)
+    int d = gps.date.day(); // Day (1-31) (u8)
+    Serial.println(y*10000+mo*100+d);
     Serial.print(gps.time.hour()+TZ);
     Serial.print(":");
     Serial.print(gps.time.minute());
