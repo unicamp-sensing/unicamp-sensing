@@ -1,4 +1,5 @@
-const map = L.map("mapid").setView([-22.814, -47.069], 16);
+const unicampLatLong = [-22.814, -47.069];
+const map = L.map("mapid").setView(unicampLatLong, 16);
 map.scrollWheelZoom.disable();
 
 const tileUrlsOSMDE = "http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png";
@@ -40,8 +41,8 @@ L.control.layers(toggleMaps, overlayMaps).addTo(map);
 function addData() {
     // mock some data
     // FIXME TODO add real values from Firebase
-    L.circle([37.795, -122.26], 500, {color:"red"}).addTo(red);
-    L.circle([37.790, -122.26], 500, {color:"blue"}).addTo(blue);
-    L.circle([37.785, -122.26], 500, {color:"green"}).addTo(green);
-    L.circle([37.780, -122.26], 500, {color:"purple"}).addTo(purple);
+    L.circle([-22.816, -47.069], 50, {color:"red"}).addTo(red);
+    L.circle([-22.814, -47.069], 50, {color:"blue"}).addTo(blue);
+    L.circle([-22.812, -47.069], 50, {color:"green"}).addTo(green);
+    L.circle([-22.810, -47.069], 50, {color:"purple"}).addTo(purple);
 }
