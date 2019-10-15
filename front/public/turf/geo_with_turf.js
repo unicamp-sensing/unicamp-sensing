@@ -1,4 +1,4 @@
-const map = L.map("mapid").setView([37.799289, -122.266433], 13);
+const map = L.map("mapid").setView([-22.814, -47.069], 16);
 initMap();
 
 function initMap() {
