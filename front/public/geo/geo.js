@@ -1,4 +1,4 @@
-const geoMap = L.map('geoMap').setView([0, 0], 1);
+const geoMap = L.map('geoMap').setView([-22.814, -47.069], 15);
 drawMap();
 // getData();
 
