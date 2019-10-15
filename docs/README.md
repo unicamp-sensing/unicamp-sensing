@@ -23,3 +23,8 @@ In order to compile the *test.ino* file on the Arduino IDE, you must first insta
 - DHT sensor library (1.3.7) - by Adafruit
 - ArduinoJson (5.13.1) - by Benoit Blanchon
 - FirebaseExtended - https://github.com/FirebaseExtended/firebase-arduino/releases
+## Uploading to Heroku
+Clone our repository and type the following commands:
+- `$ cd path/to/urban-sensing/`
+- `$ heroku git:remote -a unicamp-sensing`
+- `$ git push heroku master`
