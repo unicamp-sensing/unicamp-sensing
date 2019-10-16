@@ -52,7 +52,6 @@ function boardValuesByDayDate(data) {
             for (const day in data[year][month]) {
                 const values = [];
                 for (const hour in data[year][month][day]) {
-                    if (day == 17 && hour == 16) continue;
                     for (const min in data[year][month][day][hour]) {
                         for (const sec in data[year][month][day][hour][min]) {
                             for (const board in data[year][month][day][hour][min][sec]) {
@@ -88,7 +87,8 @@ async function plotData(labels) {
             // get the value we're interested in
             values = boardValues.map(function(val) {
                 return { x: val.x, y: val.y[valueKey] }
-            }); // .filter(val => !!val.y)
+            }).filter(val => !!val.y); // removes invalid values
+                                       // (which should actually be fixed on Firebase)
 
             // generate a random color for the day
             const rgb = [randColor(), randColor(), randColor()];
@@ -105,7 +105,6 @@ async function plotData(labels) {
 
     charts = {};
     for (const valueKey of Object.keys(datasets)) {
-        console.log(valueKey);
         const ctx = $(`canvas-chart-${valueKey}`).getContext("2d");
         const valueDatasets = datasets[valueKey];
 
