@@ -21,9 +21,9 @@ function init() {
     $("button-download").addEventListener("click", download);
 
     plot_temperature();
-    plot_humidity();
-    plot_pm10();
-    plot_pm25();
+    // plot_humidity();
+    // plot_pm10();
+    // plot_pm25();
 }
 
 function formatDate(date) {
@@ -43,26 +43,22 @@ function formatDate(date) {
 
 const rand_color = () => Math.round(255 * Math.random());
 
-async function plot_temperature() {
-    const data = await getRawData();
-
+function board_values_by_day_date(data) {
     const values_by_day_date = {};
     for (const year in data) {
         for (const month in data[year]) {
             for (const day in data[year][month]) {
                 const values = [];
                 for (const hour in data[year][month][day]) {
+                    if (day == 17 && hour == 16) continue;
                     for (const min in data[year][month][day][hour]) {
                         for (const sec in data[year][month][day][hour][min]) {
                             for (const board in data[year][month][day][hour][min][sec]) {
-                                const temperature = data[year][month][day][hour][min][sec][board].tmp;
-                                if (!!temperature) {
-                                    const date = new Date(year, month, day, hour, min, sec);
-                                    values.push({
-                                        x: date,
-                                        y: temperature
-                                    });
-                                }
+                                const date = new Date(year, month, day, hour, min, sec);
+                                values.push({
+                                    x: date,
+                                    y: data[year][month][day][hour][min][sec][board]
+                                });
                             }
                         }
                     }
@@ -71,20 +67,32 @@ async function plot_temperature() {
             }
         }
     }
+    return values_by_day_date;
+}
 
+async function plot_temperature() {
+    const data = await getRawData();
+
+    const values_by_day_date = board_values_by_day_date(data);
     datasets = [];
     for (const [day_date, values] of Object.entries(values_by_day_date)) {
-        console.log(day_date);
+        // get the value we're interested in
+        tmp_values = values.map(function(val) { 
+            return { x: val.x, y: val.y["tmp"] }
+        }); // .filter(val => !!val.y)
+        
+        // generate a random color for the day
         const rgb = [rand_color(), rand_color(), rand_color()];
         datasets.push({
             label: formatDate(new Date(day_date)),
-            data: values,
+            data: tmp_values,
             backgroundColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.2)`,
             borderColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
             borderWidth: 2,
             fill: false
         });
     }
+
 
     const ctx = document.getElementById("canvas-chart-tmp").getContext("2d");
     return new Chart(ctx, {
@@ -140,7 +148,7 @@ async function plot_humidity() {
 
     datasets = [];
     for (const [day_date, values] of Object.entries(values_by_day_date)) {
-        console.log(day_date);
+        // console.log(day_date);
         const rgb = [rand_color(), rand_color(), rand_color()];
         datasets.push({
             label: formatDate(new Date(day_date)),
@@ -206,7 +214,7 @@ async function plot_pm10() {
 
     datasets = [];
     for (const [day_date, values] of Object.entries(values_by_day_date)) {
-        console.log(day_date);
+        // console.log(day_date);
         const rgb = [rand_color(), rand_color(), rand_color()];
         datasets.push({
             label: formatDate(new Date(day_date)),
@@ -272,7 +280,7 @@ async function plot_pm25() {
 
     datasets = [];
     for (const [day_date, values] of Object.entries(values_by_day_date)) {
-        console.log(day_date);
+        // console.log(day_date);
         const rgb = [rand_color(), rand_color(), rand_color()];
         datasets.push({
             label: formatDate(new Date(day_date)),
