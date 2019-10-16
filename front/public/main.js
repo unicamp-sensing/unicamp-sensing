@@ -5,7 +5,6 @@ window.addEventListener("load", init, false);
 
 const $ = id => document.getElementById(id);
 
-// FIXME move key to .env and get it from the server
 const firebaseConfig = {
     apiKey: "AIzaSyATSHBpjnyHaTb8bF-NmWrzam4KZ5Amrh0",
     authDomain: "teste-bb0d8.firebaseapp.com",
@@ -17,7 +16,6 @@ const firebaseConfig = {
 };
 
 function init() {
-    console.log("Initializing Firebase...");
     firebase.initializeApp(firebaseConfig);
 
     $("button-download").addEventListener("click", download);
@@ -88,9 +86,8 @@ async function plot_temperature() {
         });
     }
 
-    // FIXME
-    const ctx = document.getElementById("canvas-chart").getContext("2d");
-    const chart = new Chart(ctx, {
+    const ctx = document.getElementById("canvas-chart-tmp").getContext("2d");
+    return new Chart(ctx, {
         type: "scatter",
         data: { datasets },
         options: {
@@ -155,9 +152,8 @@ async function plot_humidity() {
         });
     }
 
-    // FIXME
-    const ctx = document.getElementById("canvas-chart-2").getContext("2d");
-    const chart = new Chart(ctx, {
+    const ctx = document.getElementById("canvas-chart-hum").getContext("2d");
+    return new Chart(ctx, {
         type: "scatter",
         data: { datasets },
         options: {
@@ -172,7 +168,7 @@ async function plot_humidity() {
                 }],
                 yAxes: [{
                     display: true,
-                    scaleLabel: { display: true, labelString: 'Humidity (%H2O)' }
+                    scaleLabel: { display: true, labelString: 'Humidity (%RH)' } // relative humidity
                 }]
             }
         }
@@ -222,9 +218,8 @@ async function plot_pm10() {
         });
     }
 
-    // FIXME
-    const ctx = document.getElementById("canvas-chart-3").getContext("2d");
-    const chart = new Chart(ctx, {
+    const ctx = document.getElementById("canvas-chart-pm10").getContext("2d");
+    return new Chart(ctx, {
         type: "scatter",
         data: { datasets },
         options: {
@@ -239,7 +234,7 @@ async function plot_pm10() {
                 }],
                 yAxes: [{
                     display: true,
-                    scaleLabel: { display: true, labelString: 'PM10 concentration' }
+                    scaleLabel: { display: true, labelString: 'PM10 Concentration' }
                 }]
             }
         }
@@ -289,9 +284,8 @@ async function plot_pm25() {
         });
     }
 
-    // FIXME
-    const ctx = document.getElementById("canvas-chart-4").getContext("2d");
-    const chart = new Chart(ctx, {
+    const ctx = document.getElementById("canvas-chart-pm25").getContext("2d");
+    return new Chart(ctx, {
         type: "scatter",
         data: { datasets },
         options: {
@@ -306,7 +300,7 @@ async function plot_pm25() {
                 }],
                 yAxes: [{
                     display: true,
-                    scaleLabel: { display: true, labelString: 'PM25 concentration' }
+                    scaleLabel: { display: true, labelString: 'PM2.5 Concentration' }
                 }]
             }
         }
