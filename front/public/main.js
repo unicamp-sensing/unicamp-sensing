@@ -22,8 +22,10 @@ function init() {
 
     $("button-download").addEventListener("click", download);
 
-    plot();
-    plot2();
+    plot_temperature();
+    plot_humidity();
+    plot_pm10();
+    plot_pm25();
 }
 
 function formatDate(date) {
@@ -43,7 +45,7 @@ function formatDate(date) {
 
 const rand_color = () => Math.round(255 * Math.random());
 
-async function plot() {
+async function plot_temperature() {
     const data = await getRawData();
 
     const values_by_day_date = {};
@@ -103,14 +105,14 @@ async function plot() {
                 }],
                 yAxes: [{
                     display: true,
-                    scaleLabel: { display: true, labelString: 'Value' }
+                    scaleLabel: { display: true, labelString: 'Temperature (°C)' }
                 }]
             }
         }
     });
 }
 
-async function plot2() {
+async function plot_humidity() {
     const data = await getRawData();
 
     const values_by_day_date = {};
@@ -170,7 +172,141 @@ async function plot2() {
                 }],
                 yAxes: [{
                     display: true,
-                    scaleLabel: { display: true, labelString: 'Value' }
+                    scaleLabel: { display: true, labelString: 'Humidity (%H2O)' }
+                }]
+            }
+        }
+    });
+}
+
+async function plot_pm10() {
+    const data = await getRawData();
+
+    const values_by_day_date = {};
+    for (const year in data) {
+        for (const month in data[year]) {
+            for (const day in data[year][month]) {
+                const values = [];
+                for (const hour in data[year][month][day]) {
+                    for (const min in data[year][month][day][hour]) {
+                        for (const sec in data[year][month][day][hour][min]) {
+                            for (const board in data[year][month][day][hour][min][sec]) {
+                                const pm10_conc = data[year][month][day][hour][min][sec][board].pm10;
+                                if (!!pm10_conc) {
+                                    const date = new Date(year, month, day, hour, min, sec);
+                                    values.push({
+                                        x: date,
+                                        y: pm10_conc
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                values_by_day_date[new Date(year, month, day)] = values;
+            }
+        }
+    }
+
+    datasets = [];
+    for (const [day_date, values] of Object.entries(values_by_day_date)) {
+        console.log(day_date);
+        const rgb = [rand_color(), rand_color(), rand_color()];
+        datasets.push({
+            label: formatDate(new Date(day_date)),
+            data: values,
+            backgroundColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.2)`,
+            borderColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
+            borderWidth: 2,
+            fill: false
+        });
+    }
+
+    // FIXME
+    const ctx = document.getElementById("canvas-chart-3").getContext("2d");
+    const chart = new Chart(ctx, {
+        type: "scatter",
+        data: { datasets },
+        options: {
+            responsive: true,
+            title: { display: true, text: 'Urban Sensing' },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    display: true,
+                    scaleLabel: { display: true, labelString: 'Date' },
+                    ticks: { major: { fontStyle: 'bold', fontColor: '#FF0000' } }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: { display: true, labelString: 'PM10 concentration' }
+                }]
+            }
+        }
+    });
+}
+
+async function plot_pm25() {
+    const data = await getRawData();
+
+    const values_by_day_date = {};
+    for (const year in data) {
+        for (const month in data[year]) {
+            for (const day in data[year][month]) {
+                const values = [];
+                for (const hour in data[year][month][day]) {
+                    for (const min in data[year][month][day][hour]) {
+                        for (const sec in data[year][month][day][hour][min]) {
+                            for (const board in data[year][month][day][hour][min][sec]) {
+                                const pm25_conc = data[year][month][day][hour][min][sec][board].pm25;
+                                if (!!pm25_conc) {
+                                    const date = new Date(year, month, day, hour, min, sec);
+                                    values.push({
+                                        x: date,
+                                        y: pm25_conc
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                values_by_day_date[new Date(year, month, day)] = values;
+            }
+        }
+    }
+
+    datasets = [];
+    for (const [day_date, values] of Object.entries(values_by_day_date)) {
+        console.log(day_date);
+        const rgb = [rand_color(), rand_color(), rand_color()];
+        datasets.push({
+            label: formatDate(new Date(day_date)),
+            data: values,
+            backgroundColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.2)`,
+            borderColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
+            borderWidth: 2,
+            fill: false
+        });
+    }
+
+    // FIXME
+    const ctx = document.getElementById("canvas-chart-4").getContext("2d");
+    const chart = new Chart(ctx, {
+        type: "scatter",
+        data: { datasets },
+        options: {
+            responsive: true,
+            title: { display: true, text: 'Urban Sensing' },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    display: true,
+                    scaleLabel: { display: true, labelString: 'Date' },
+                    ticks: { major: { fontStyle: 'bold', fontColor: '#FF0000' } }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: { display: true, labelString: 'PM25 concentration' }
                 }]
             }
         }
