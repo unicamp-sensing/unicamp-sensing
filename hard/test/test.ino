@@ -30,6 +30,7 @@
 
 // GPS global settings
 #define TZ -3
+#define GPS_UPR 200000L // 300K => 13s delays | 200K => 5s delays | 160K => <5s delays
 TinyGPSPlus gps;          // The TinyGPS++ object
 SoftwareSerial ss(4, 5) ; // LIGAR RX EM D1 E TX EM D2
 
@@ -49,8 +50,8 @@ DHT dht(DHTPIN, DHTTYPE);
 // Set these to run example.
 #define FIREBASE_HOST "teste-bb0d8.firebaseio.com"
 #define FIREBASE_AUTH "mLOkguUxVGWlbYmAWdUYiHaYqWqDF9wHstkUIfTT"
-#define WIFI_SSID "AndroidAP"
-#define WIFI_PASSWORD "rzqm8226"
+#define WIFI_SSID "iPhone de vinicius"
+#define WIFI_PASSWORD "shimbalaie"
 #define TIMEZONE -3*3600
 #define DST 0
 
@@ -113,52 +114,9 @@ char* readTime(){
   Serial.println(buf);
   return buf;
 }
-
-
-void read_gps(void){
-  // Get if required data is valid
-  bool req = false;
-
-  //Reads GPS serial
-  while (ss.available()) {
-    gps.encode( ss.read() );
-    req = gps.time.isUpdated();
-    req *= gps.location.isValid()*gps.altitude.isValid();
-    req *= gps.time.isValid()*gps.speed.isValid();
-  }
-
-  if (gps.time.isUpdated())
-  {
-    Serial.println("------( Location Data )------");
-    Serial.print("LAT: ");
-    Serial.println(gps.location.lat());
-    Serial.print("LON: ");
-    Serial.println(gps.location.lng());
-    Serial.println("------( Altitude Data )------");
-    Serial.print(gps.altitude.meters());
-    Serial.println("m");
-    Serial.println("------( Speed Data )------");
-    Serial.println(gps.speed.mps()); // Speed in meters per second (double)
-    Serial.println("m/s");
-    Serial.println("------( Time Data )------");
-    int y = gps.date.year(); // Year (2000+) (u16)
-    int mo = gps.date.month(); // Month (1-12) (u8)
-    int d = gps.date.day(); // Day (1-31) (u8)
-    Serial.println(y*10000+mo*100+d);
-    Serial.print(gps.time.hour()+TZ);
-    Serial.print(":");
-    Serial.print(gps.time.minute());
-    Serial.print(":");
-    Serial.print(gps.time.second());
-    Serial.println();
-  }
-  
-  return;
-}
-
 ///////////////////////////////////////////////////////////////////////////////////
 
-void test() {
+void test_gps() {
   bool valid =  gps.location.isValid()*gps.altitude.isValid();
   valid *= gps.time.isValid()*gps.hdop.isValid()*gps.speed.isValid();
   
@@ -207,7 +165,7 @@ void read_particle(data &new_data) {
   while (millis()- starttime < sampletime_ms) {
     AQI.lowpulseoccupancyPM10 += pulseIn(DUST_SENSOR_DIGITAL_PIN_PM10, LOW);
     AQI.lowpulseoccupancyPM25 += pulseIn(DUST_SENSOR_DIGITAL_PIN_PM25, LOW);
-    while (ss.available() > 0) gps.encode( ss.read() );
+//    while (ss.available() > 0) gps.encode( ss.read() );
   }
   
   //update measurements
@@ -240,7 +198,6 @@ void sendSensor()
   
   // Read sensor data
   read_particle(new_data); // 10s read delay
-  read_gps(); // Get most recent data from GPS serial
   strcpy(new_data.timestr, readTime());
   
   new_data.lati = gps.location.lat();
@@ -253,58 +210,61 @@ void sendSensor()
   //add data to queue
   data_queue.push(new_data);
 
-  if (WiFi.status() == WL_CONNECTED) {
+  bool requirements = gps.time.isValid() && gps.location.isValid();
+  requirements *= WiFi.status() == WL_CONNECTED;
+
+  if (requirements) {
     while (!data_queue.empty()) {
       // Check and send humidity read
       data cur = data_queue.front();
 
-      Serial.print(cur.lati);
       Serial.print("|LAT:");
+      Serial.print(cur.lati);
       sprintf(path, "%s/%s/lat", cur.timestr, mac);
       Firebase.setFloat(path, cur.lati);
-      
-      Serial.print(cur.lon);
+
       Serial.print("|LON:");
+      Serial.print(cur.lon);
       sprintf(path, "%s/%s/lon", cur.timestr, mac);
       Firebase.setFloat(path, cur.lon);
 
-      Serial.print(cur.alt);
       Serial.print("|ALT:");
+      Serial.print(cur.alt);
       sprintf(path, "%s/%s/alt", cur.timestr, mac);
       Firebase.setFloat(path, cur.alt); 
 
-      Serial.print(cur.vel);
       Serial.print("|VEL:");
-      sprintf(path, "%s/%s/alt", cur.timestr, mac);
+      Serial.print(cur.vel);
+      sprintf(path, "%s/%s/vel", cur.timestr, mac);
       Firebase.setFloat(path, cur.vel);
       
       if (!isnan(cur.hum)) {
+        Serial.print("|HUM:");
         Serial.print(cur.hum);
-        Serial.print("|");
         sprintf(path, "%s/%s/hum", cur.timestr, mac);
         Firebase.setFloat(path, cur.hum);
       }
       
       // Check and send temperature data
       if (!isnan(cur.tmp)) {
+        Serial.print("|TMP:");
         Serial.print(cur.tmp);
-        Serial.print("\n");
         sprintf(path, "%s/%s/tmp", cur.timestr, mac);
         Firebase.setFloat(path, cur.tmp);
       }
 
       // Check and send temperature data
       if (!isnan(cur.pm10)) {
+        Serial.print("|PM10:");
         Serial.print(cur.pm10);
-        Serial.print("\n");
         sprintf(path, "%s/%s/pm10", cur.timestr, mac);
         Firebase.setFloat(path, cur.pm10);
       }
 
       // Check and send temperature data
       if (!isnan(cur.pm25)) {
+        Serial.print("|PM25:");
         Serial.print(cur.pm25);
-        Serial.print("\n");
         sprintf(path, "%s/%s/pm25", cur.timestr, mac);
         Firebase.setFloat(path, cur.pm25);
       }
@@ -312,6 +272,11 @@ void sendSensor()
       data_queue.pop();   
     }
   }
+}
+
+void readGps(void){
+  while (ss.available() > 0) gps.encode(ss.read());
+  timer0_write(ESP.getCycleCount() + GPS_UPR);   // Pre-load timer with a time value
 }
 
 void setup()
@@ -328,6 +293,8 @@ void setup()
   //Setup DSM501A
   pinMode(DUST_SENSOR_DIGITAL_PIN_PM10,INPUT);
   pinMode(DUST_SENSOR_DIGITAL_PIN_PM25,INPUT);
+
+  
 
   // wait 10s for DSM501 to warm up
   for (int i = 1; i <= 10; i++)
@@ -352,13 +319,18 @@ void setup()
   byte m[6];
   WiFi.macAddress(m);
   sprintf(mac, "%X%X%X%X%X%X\0", m[0],m[1],m[2],m[3],m[4],m[5]);
+
+  // Create interrupt for GPS read
+  noInterrupts();                                // Switch off interrupts whilst they are set up
+  timer0_isr_init();                             // Initialise Timer0
+  timer0_attachInterrupt(readGps);               // Goto the ISR function below when an interrupt occurs
+  timer0_write(ESP.getCycleCount() + GPS_UPR);   // Pre-load timer with a time value (1-second)
+  interrupts();   
   
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
 }
 
 void loop()
 {
-  test();
-  sendSensor();
-//  delay(10000);            
+  sendSensor();         
 }
