@@ -2,17 +2,40 @@
 #include <ESP8266WiFi.h>
 #include <string.h>
 
-#define DEBUG 1
+#define DEBUG 0
 #define TZ -3
 #define CENTURY 21
-SoftwareSerial ss(4, 5) ; // LIGAR RX EM D1 E TX EM D2
 
-void setup()
-{
-  Serial.begin(115200);
-  ss.begin(9600);
-  delay(100);
-}
+class GPS {
+  public:
+    SoftwareSerial *serial;
+    // Time related
+    bool newTime;
+    int sec;
+    int hour;
+    int min;
+    // Date related
+    bool newDate;
+    int day;
+    int month;
+    int year;
+    // Location related
+    bool newLocal;
+    float lat;
+    float lng;
+    float alt;
+    // Miscellaneous
+    bool newVel;
+    float vel;
+    
+    // Default Constructor 
+    GPS (SoftwareSerial& ss, int baud) {
+      serial = &ss; // LIGAR RX EM D1 E TX EM D2
+      serial->begin(baud); 
+    }
+
+    void read_sentence(char *sentence);
+};
 
 char* strcpyn(char* aux, char* str, int n) {
   for (int i = 0; i < n; ++i) aux[i] = str[i];
@@ -20,29 +43,7 @@ char* strcpyn(char* aux, char* str, int n) {
   return aux;
 }
 
-struct gps {
-  // Time related
-  bool newTime;
-  int sec;
-  int hour;
-  int min;
-  // Date related
-  bool newDate;
-  int day;
-  int month;
-  int year;
-  // Location related
-  bool newLocal;
-  float lat;
-  float lng;
-  float alt;
-  // Miscellaneous
-  bool newVel;
-  float vel;
-} gps;
-
-
-void gga_parsing(char *sentence) {
+void gga_parsing(char *sentence, GPS& gps) {
   char delim[] = ",";
   char aux[5], *ptr;
 
@@ -97,69 +98,7 @@ void gga_parsing(char *sentence) {
   return;
 }
 
-
-void read_sentence(char *sentence) {
-  int i = 0, stage = 1;
-  char nmea[100];
-
-  // Dump old serial input
-  while (ss.available()) ss.read();
-
-  // Parse new serial input
-  while (true) {
-    switch (stage) {
-      
-      case 1: // Finding the GGA sentence's starting point
-        
-        // Checks if theres data from the gps serial
-        if (!ss.available()) continue;
-
-        // Adjust sentence ID to first 6 chars
-        for (i = 0; i < 5; ++i) nmea[i] = nmea[i + 1];  
-        nmea[5] = ss.read();
-
-        // Check it its a match and setup for stage 2
-        if (!strncmp(nmea, sentence, 6)) {
-          if (DEBUG) Serial.println("Got starting point!");
-          stage = 2; 
-          i = 5;
-        }
-        
-      break;
-
-      case 2: // Reading the GGA sentence to the buffer
-        char curr;
-
-        // Reads and adds next char to the array (blanks if no value)
-        if (ss.available()) {
-          curr = ss.read(); // read
-          if (curr==',' && nmea[i]==',') nmea[++i] = ' '; // blank
-          nmea[++i] = curr; // add
-        }
-
-        // Checks if reached the end of the sentence
-        if (nmea[i] == '*') {
-          nmea[i] = '\0';
-          stage = 3;
-          if (DEBUG) Serial.println("Read sentence:");
-          if (DEBUG) Serial.println(nmea);
-        }
-        
-      break;
-
-      case 3: // Retrieving and casting info from the sentence
-        if (!strcmp("$GNGGA", sentence))
-          gga_parsing(nmea);
-        else if (!strcmp("$GNRMC", sentence))
-          rmc_parsing(nmea);
-      
-        return;
-    }
-  }
-  
-}
-
-void rmc_parsing(char *sentence) {
+void rmc_parsing(char *sentence, GPS& gps) {
   char delim[] = ",";
   char aux[5], *ptr;
 
@@ -195,7 +134,69 @@ void rmc_parsing(char *sentence) {
   return;
 }
 
-void test(void) {
+void GPS::read_sentence(char *sentence) {
+  int i = 0, stage = 1;
+  char nmea[100];
+
+  // Dump old serial input
+  while (serial->available()) serial->read();
+
+  // Parse new serial input
+  while (true) {
+    switch (stage) {
+      
+      case 1: // Finding the GGA sentence's starting point
+        
+        // Checks if theres data from the gps serial
+        if (!serial->available()) continue;
+
+        // Adjust sentence ID to first 6 chars
+        for (i = 0; i < 5; ++i) nmea[i] = nmea[i + 1];  
+        nmea[5] = serial->read();
+
+        // Check it its a match and setup for stage 2
+        if (!strncmp(nmea, sentence, 6)) {
+          if (DEBUG) Serial.println("Got starting point!");
+          stage = 2; 
+          i = 5;
+        }
+        
+      break;
+
+      case 2: // Reading the GGA sentence to the buffer
+        char curr;
+
+        // Reads and adds next char to the array (blanks if no value)
+        if (serial->available()) {
+          curr = serial->read(); // read
+          if (curr==',' && nmea[i]==',') nmea[++i] = ' '; // blank
+          nmea[++i] = curr; // add
+        }
+
+        // Checks if reached the end of the sentence
+        if (nmea[i] == '*') {
+          nmea[i] = '\0';
+          stage = 3;
+          if (DEBUG) Serial.println("Read sentence:");
+          if (DEBUG) Serial.println(nmea);
+        }
+        
+      break;
+
+      case 3: // Retrieving and casting info from the sentence
+        if (!strcmp("$GNGGA", sentence))
+          gga_parsing(nmea, *this);
+        else if (!strcmp("$GNRMC", sentence))
+          rmc_parsing(nmea, *this);
+      
+        return;
+    }
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+void test(GPS& gps) {
 
   Serial.print("DATE: ");
   Serial.print(gps.day);
@@ -231,10 +232,18 @@ int timer = 5000;
 int base = 0;
 bool flag = false;
 
+SoftwareSerial ss(4, 5);
+GPS gps(ss, 9600); 
+
+void setup()
+{
+  Serial.begin(115200);
+  delay(100);
+}
+
 void loop()
 {
   if (timer >= 5000) {
-    while (ss.available()) ss.read();
     base = millis();
     flag = !flag;
     timer = 0;
@@ -242,8 +251,8 @@ void loop()
     timer = millis() - base;
   }
 
-  if (flag) read_sentence("$GNGGA");
-  if (flag) read_sentence("$GNRMC");
-  if (flag) test();
+  if (flag) gps.read_sentence("$GNGGA");
+  if (flag) gps.read_sentence("$GNRMC");
+  if (flag) test(gps);
 
 }
