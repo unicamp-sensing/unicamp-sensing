@@ -1,10 +1,12 @@
-#ifndef GPS_LIB_H
-#define GPS_LIB_H
+#ifndef GPS_H
+#define GPS_H
 
 #include <SoftwareSerial.h>
 #define DEBUG 0
 #define TZ -3
 #define CENTURY 21
+
+void read_sentence(char *sentence);
 
 class GPS {
   public:
@@ -39,6 +41,12 @@ class GPS {
     }
 
     void read_sentence(char *sentence);
+
+    void update() {
+      read_sentence("$GNGGA");
+      read_sentence("$GNRMC");
+    }
+    
 };
 
 char* strcpyn(char* aux, char* str, int n) {

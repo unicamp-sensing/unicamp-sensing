@@ -1,6 +1,6 @@
 #include <SoftwareSerial.h>
 #include <ESP8266WiFi.h>
-#include "gpsLib.h"
+#include "gps.h"
 
 void test(GPS& gps) {
 
@@ -65,7 +65,6 @@ void loop()
     timer = millis() - base;
   }
 
-  if (flag) gps.read_sentence("$GNGGA");
-  if (flag) gps.read_sentence("$GNRMC");
+  if (flag) gps.update();
   if (flag) test(gps);
 }
