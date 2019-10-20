@@ -35,7 +35,7 @@ L.control.layers(toggleMaps, overlayMaps).addTo(geoMap);
 
 function drawMap(defaultTiles) {
     defaultTiles.addTo(geoMap);
-    geoMap.scrollWheelZoom.disable();
+    // geoMap.scrollWheelZoom.disable();
 }
 
 function createDataLayers() {
@@ -51,16 +51,46 @@ function createDataLayers() {
     };
 }
 
+async function getLatLonList() {
+    const data = await getRawData();
+    const latLonList = [];
+    for (const year in data) {
+        for (const month in data[year]) {
+            for (const day in data[year][month]) {
+                for (const hour in data[year][month][day]) {
+                    for (const min in data[year][month][day][hour]) {
+                        for (const sec in data[year][month][day][hour][min]) {
+                            for (const board in data[year][month][day][hour][min][sec]) {
+                                const boardData = data[year][month][day][hour][min][sec][board];
+                                // check if boardData is actually a dictionary
+                                if (boardData.constructor == Object) {
+                                    const { lat, lon } = boardData;
+                                    // check if it contains "lat" and "lon" keys
+                                    if (!!lat && !!lon) {
+                                        latLonList.push([lat, lon]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return latLonList;
+}
+
 // FIXME TODO add real values from Firebase
 async function addData(dataLayers) {
     // mock some data for now
-    console.log("Getting data...");
-    const data = await getRawData();
-    console.log(data);
-    radius = 30;
-    const addLatLng = (latLng1, latLng2) => [latLng1[0] + latLng2[0], latLng1[1] + latLng2[1]];
-    L.circle(addLatLng(unicamp, [0.001, 0]), radius, { color: "red" }).addTo(dataLayers["red"]);
-    L.circle(addLatLng(unicamp, [0.002, 0]), radius, { color: "blue" }).addTo(dataLayers["blue"]);
-    L.circle(addLatLng(unicamp, [0.003, 0]), radius, { color: "green" }).addTo(dataLayers["green"]);
-    L.circle(addLatLng(unicamp, [0.004, 0]), radius, { color: "purple" }).addTo(dataLayers["purple"]);
+    radius = 1;
+    const addLatLon = (latLon1, latLon2) => [latLon1[0] + latLon2[0], latLon1[1] + latLon2[1]];
+    // L.circle(addLatLon(unicamp, [0.001, 0]), radius, { color: "red" }).addTo(dataLayers["red"]);
+    // L.circle(addLatLon(unicamp, [0.002, 0]), radius, { color: "blue" }).addTo(dataLayers["blue"]);
+    // L.circle(addLatLon(unicamp, [0.003, 0]), radius, { color: "green" }).addTo(dataLayers["green"]);
+    // L.circle(addLatLon(unicamp, [0.004, 0]), radius, { color: "purple" }).addTo(dataLayers["purple"]);
+    const latLonList = await getLatLonList();
+    for (const latLon of latLonList) {
+        L.circle(latLon, radius, { color: "red" }).addTo(dataLayers["red"]);
+    }
 }
