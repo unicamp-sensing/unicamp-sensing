@@ -18,16 +18,16 @@ const toggleMaps = {
     "Stamen Toner Lite": tilesSTL
 };
 
-const unicamp = [-22.814, -47.069];
-
 ///////////////////////////////////////////////////////////////////////////////
 
 initFirebase();
 
+const unicamp = [-22.814, -47.069];
 const geoMap = L.map("geoMap").setView(unicamp, 16);
 drawMap(toggleMaps["OSM DE"]);
 
 const overlayMaps = createDataLayers();
+// addMockData(overlayMaps);
 addData(overlayMaps);
 L.control.layers(toggleMaps, overlayMaps).addTo(geoMap);
 
@@ -80,17 +80,22 @@ async function getLatLonList() {
     return latLonList;
 }
 
-// FIXME TODO add real values from Firebase
 async function addData(dataLayers) {
-    // mock some data for now
-    radius = 1;
+    radius = 2;
     const addLatLon = (latLon1, latLon2) => [latLon1[0] + latLon2[0], latLon1[1] + latLon2[1]];
-    // L.circle(addLatLon(unicamp, [0.001, 0]), radius, { color: "red" }).addTo(dataLayers["red"]);
-    // L.circle(addLatLon(unicamp, [0.002, 0]), radius, { color: "blue" }).addTo(dataLayers["blue"]);
-    // L.circle(addLatLon(unicamp, [0.003, 0]), radius, { color: "green" }).addTo(dataLayers["green"]);
-    // L.circle(addLatLon(unicamp, [0.004, 0]), radius, { color: "purple" }).addTo(dataLayers["purple"]);
     const latLonList = await getLatLonList();
     for (const latLon of latLonList) {
         L.circle(latLon, radius, { color: "red" }).addTo(dataLayers["red"]);
     }
+}
+
+function addMockData(dataLayers) {
+    const addLatLon = (latLon1, latLon2) => [latLon1[0] + latLon2[0], latLon1[1] + latLon2[1]];
+    
+    radius = 10;    
+    // mock some data for now
+    L.circle(addLatLon(unicamp, [0.001, 0]), radius, { color: "red" }).addTo(dataLayers["red"]);
+    L.circle(addLatLon(unicamp, [0.002, 0]), radius, { color: "blue" }).addTo(dataLayers["blue"]);
+    L.circle(addLatLon(unicamp, [0.003, 0]), radius, { color: "green" }).addTo(dataLayers["green"]);
+    L.circle(addLatLon(unicamp, [0.004, 0]), radius, { color: "purple" }).addTo(dataLayers["purple"]);
 }
