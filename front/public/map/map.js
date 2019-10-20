@@ -38,11 +38,13 @@ function drawMap(defaultTiles) {
     // geoMap.scrollWheelZoom.disable();
 }
 
+const valueKeyToLayer = { "tmp": "red", "hum": "blue", "pm10": "green", "pm25": "purple" };
+
 function createDataLayers() {
-    const red    = new L.layerGroup();
-    const blue   = new L.layerGroup();
-    const green  = new L.layerGroup();
-    const purple = new L.layerGroup();
+    const red    = new L.layerGroup(); // tmp
+    const blue   = new L.layerGroup(); // hum
+    const green  = new L.layerGroup(); // pm10
+    const purple = new L.layerGroup(); // pm2.5
     return {
         "red": red,
         "blue": blue,
@@ -51,9 +53,9 @@ function createDataLayers() {
     };
 }
 
-async function getLatLonList() {
+async function addData(dataLayers) {
+    const radius = 2;
     const data = await getRawData();
-    const latLonList = [];
     for (const year in data) {
         for (const month in data[year]) {
             for (const day in data[year][month]) {
@@ -64,10 +66,16 @@ async function getLatLonList() {
                                 const boardData = data[year][month][day][hour][min][sec][board];
                                 // check if boardData is actually a dictionary
                                 if (boardData.constructor == Object) {
-                                    const { lat, lon } = boardData;
+                                    const { lat, lon, ...values } = boardData;
                                     // check if it contains "lat" and "lon" keys
                                     if (!!lat && !!lon) {
-                                        latLonList.push([lat, lon]);
+                                        for (const valueKey of Object.keys(values)) {
+                                            const layer = valueKeyToLayer[valueKey]
+                                            if (!!layer) {
+                                                const color = layer; // FIXME
+                                                L.circle([lat, lon], radius, { color: color }).addTo(dataLayers[layer]);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -77,22 +85,11 @@ async function getLatLonList() {
             }
         }
     }
-    return latLonList;
-}
-
-async function addData(dataLayers) {
-    radius = 2;
-    const addLatLon = (latLon1, latLon2) => [latLon1[0] + latLon2[0], latLon1[1] + latLon2[1]];
-    const latLonList = await getLatLonList();
-    for (const latLon of latLonList) {
-        L.circle(latLon, radius, { color: "red" }).addTo(dataLayers["red"]);
-    }
 }
 
 function addMockData(dataLayers) {
-    const addLatLon = (latLon1, latLon2) => [latLon1[0] + latLon2[0], latLon1[1] + latLon2[1]];
-    
-    radius = 10;    
+    const radius = 10;    
+    const addLatLon = (latLon1, latLon2) => [latLon1[0] + latLon2[0], latLon1[1] + latLon2[1]];    
     // mock some data for now
     L.circle(addLatLon(unicamp, [0.001, 0]), radius, { color: "red" }).addTo(dataLayers["red"]);
     L.circle(addLatLon(unicamp, [0.002, 0]), radius, { color: "blue" }).addTo(dataLayers["blue"]);
