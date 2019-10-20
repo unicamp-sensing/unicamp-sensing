@@ -1,5 +1,7 @@
 #include <SoftwareSerial.h>
-#include <ESP8266WiFi.h>
+#include <stdlib.h>
+#include <stdio.h>  
+#include <time.h>
 #include "gps.h"
 
 void test(GPS& gps) {
@@ -34,6 +36,16 @@ void test(GPS& gps) {
     Serial.println(gps.alt);
   }
 
+  if (gps.newDop) {
+    Serial.print("PDOP: ");
+    Serial.println(gps.pdop, 2);
+    Serial.print("HDOP & VDOP: ");
+    Serial.print(gps.hdop, 2);
+    Serial.print(" | ");
+    Serial.print(gps.vdop, 2);
+    Serial.println();
+  }
+
   if (gps.newVel) {
     Serial.print("VEL: ");
     Serial.print(gps.vel);
@@ -43,6 +55,7 @@ void test(GPS& gps) {
 }
 
 int timer = 5000;
+int wait = (rand()%15)*1000;
 int base = 0;
 bool flag = false;
 
@@ -51,13 +64,22 @@ GPS gps(ss, 9600);
 
 void setup()
 {
+  srand(time(NULL));
   Serial.begin(115200);
   delay(100);
 }
 
 void loop()
 {
-  if (timer >= 5000) {
+
+//  if (ss.available())
+//    Serial.write(ss.read());
+//  return;
+  
+  if (timer >= wait) {
+    wait = (rand()%15)*1000;
+    Serial.print("--> Wait time: ");
+    Serial.println(wait/1000);
     base = millis();
     flag = !flag;
     timer = 0;

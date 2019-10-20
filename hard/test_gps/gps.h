@@ -29,7 +29,12 @@ class GPS {
     // Miscellaneous
     bool newVel;
     float vel;
-    
+    // Precision
+    bool newDop;
+    float pdop;
+    float hdop;
+    float vdop;
+
     // Default Constructor 
     GPS (SoftwareSerial& ss, int baud) {
       serial = &ss; // LIGAR RX EM D1 E TX EM D2
@@ -38,13 +43,15 @@ class GPS {
       bool newDate = false;
       bool newLocal = false;
       bool newVel = false;
+      bool newDop = false;
     }
 
     void read_sentence(char *sentence);
 
     void update() {
-      read_sentence("$GNGGA");
-      read_sentence("$GNRMC");
+      read_sentence("GGA");
+      read_sentence("RMC");
+      read_sentence("GSA");
     }
     
 };
@@ -57,7 +64,7 @@ char* strcpyn(char* aux, char* str, int n) {
 
 void gga_parsing(char *sentence, GPS& gps) {
   char delim[] = ",";
-  char aux[5], *ptr;
+  char aux[10], *ptr;
 
   strtok(sentence, delim); // Discard sentence ID
 
@@ -112,7 +119,7 @@ void gga_parsing(char *sentence, GPS& gps) {
 
 void rmc_parsing(char *sentence, GPS& gps) {
   char delim[] = ",";
-  char aux[5], *ptr;
+  char aux[10], *ptr;
 
   strtok(sentence, delim); // Discard sentence ID
   strtok(NULL, delim); // Discard time
@@ -146,7 +153,41 @@ void rmc_parsing(char *sentence, GPS& gps) {
   return;
 }
 
+void gsa_parsing(char *sentence, GPS& gps) {
+  char delim[] = ",";
+  char aux[10], *ptr;
+
+  strtok(sentence, delim); // Discard sentence ID
+  strtok(NULL, delim); // Discard auto selection
+  strtok(NULL, delim); // Discard fix dimensions
+  for (int i=0; i<12; i++) strtok(NULL, delim); // Discard PRNs
+
+  // PDOP
+  ptr = strtok(NULL, delim);
+  if ( ptr[0] != ' ' ) {
+    gps.pdop = strtof(ptr, NULL);
+    gps.newDop = true;
+  } else gps.newDop = false;
+
+  // VDOP
+  ptr = strtok(NULL, delim);
+  if ( ptr[0] != ' ' ) {
+    gps.hdop = strtof(ptr, NULL);
+    gps.newDop = true;
+  } else gps.newDop = false;
+
+  // HDOP
+  ptr = strtok(NULL, delim);
+  if ( ptr[0] != ' ' ) {
+    gps.vdop = strtof(ptr, NULL);
+    gps.newDop = true;
+  } else gps.newDop = false;
+
+  return;
+}
+
 void GPS::read_sentence(char *sentence) {
+  int gap = 6 - strlen(sentence); // Identifiers subset
   int i = 0, stage = 1;
   char nmea[100];
 
@@ -167,7 +208,7 @@ void GPS::read_sentence(char *sentence) {
         nmea[5] = serial->read();
 
         // Check it its a match and setup for stage 2
-        if (!strncmp(nmea, sentence, 6)) {
+        if (!strncmp(&nmea[gap], sentence, gap)) {
           if (DEBUG) Serial.println("Got starting point!");
           stage = 2; 
           i = 5;
@@ -196,12 +237,16 @@ void GPS::read_sentence(char *sentence) {
       break;
 
       case 3: // Retrieving and casting info from the sentence
-        if (!strcmp("$GNGGA", sentence))
+
+        if (strstr(sentence, "GGA"))
           gga_parsing(nmea, *this);
-        else if (!strcmp("$GNRMC", sentence))
+        else if (strstr(sentence, "RMC"))
           rmc_parsing(nmea, *this);
-      
+        else if (strstr(sentence, "GSA"))
+          gsa_parsing(nmea, *this);
         return;
+
+      break;
     }
   }
 }
