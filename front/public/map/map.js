@@ -18,9 +18,12 @@ const toggleMaps = {
     "Stamen Toner Lite": tilesSTL
 };
 
+const unicamp = [-22.814, -47.069];
+
 ///////////////////////////////////////////////////////////////////////////////
 
-const unicamp = [-22.814, -47.069];
+initFirebase();
+
 const geoMap = L.map("geoMap").setView(unicamp, 16);
 drawMap(toggleMaps["OSM DE"]);
 
@@ -49,8 +52,11 @@ function createDataLayers() {
 }
 
 // FIXME TODO add real values from Firebase
-function addData(dataLayers) {
+async function addData(dataLayers) {
     // mock some data for now
+    console.log("Getting data...");
+    const data = await getRawData();
+    console.log(data);
     radius = 30;
     const addLatLng = (latLng1, latLng2) => [latLng1[0] + latLng2[0], latLng1[1] + latLng2[1]];
     L.circle(addLatLng(unicamp, [0.001, 0]), radius, { color: "red" }).addTo(dataLayers["red"]);
