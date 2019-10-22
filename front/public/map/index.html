@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8" />
@@ -11,27 +11,45 @@
         href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
-    <!-- ref.: https://leafletjs.com/reference-1.5.0.html -->
     <script
         src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
         crossorigin=""></script>
 
+    <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script
+        type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="../libs/firebase.js"></script>
+
+    <script src="../parse.js"></script>
+    <script src="../utils.js"></script>
+    <script src="../init-libs.js"></script>
+
     <style>
+        html,
+        body {
+            height: 100%;
+        }
+
         #geoMap {
-            height: 480px;
-            margin: 8px 0px;
+            width: 100%;
+            height: 100%;
         }
     </style>
-
-    <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
 
 <body>
     <h1>GPS Data</h1>
-    <br>
     <div id="geoMap"></div>
-    <script src="geo.js"></script>
+    <script src="map.js"></script>
 </body>
 
 </html>

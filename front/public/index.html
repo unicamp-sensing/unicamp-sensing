@@ -7,20 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Urban Sensing - UNICAMP</title>
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <!-- <script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-app.js"></script> -->
     <script src="./libs/firebase.js"></script>
+
     <script src="./libs/FileSaver.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 
+    <script src="./parse.js"></script>
+    <script src="./utils.js"></script>
+    <script src="./init-libs.js"></script>
     <script src="./main.js"></script>
 </head>
 
 <body>
-    <canvas id="canvas-chart-tmp" width="400" height="200"></canvas>
-    <canvas id="canvas-chart-hum" width="400" height="200"></canvas>
+    <canvas id="canvas-chart-tmp"  width="400" height="200"></canvas>
+    <canvas id="canvas-chart-hum"  width="400" height="200"></canvas>
     <canvas id="canvas-chart-pm10" width="400" height="200"></canvas>
     <canvas id="canvas-chart-pm25" width="400" height="200"></canvas>
     <div>
