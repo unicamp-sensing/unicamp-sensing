@@ -38,7 +38,9 @@ function drawMap(defaultTiles) {
     // geoMap.scrollWheelZoom.disable();
 }
 
-const valueKeyToLayer = { "tmp": "red", "hum": "blue", "pm10": "green", "pm25": "purple" };
+const valueKeyToColor = { "tmp": "red", "hum": "blue", "pm10": "green", "pm25": "purple" };
+const valueKeyToLayer = { "tmp": "Temperature", "hum": "Humidity", "pm10": "PM10", "pm25": "PM2.5" };
+const valueKeyToUnit = { "tmp": "°C", "hum": "%RH", "pm10": "", "pm25": "" };
 
 function createDataLayers() {
     const red    = new L.layerGroup(); // tmp
@@ -46,10 +48,10 @@ function createDataLayers() {
     const green  = new L.layerGroup(); // pm10
     const purple = new L.layerGroup(); // pm2.5
     return {
-        "red": red,
-        "blue": blue,
-        "green": green,
-        "purple": purple
+        "Temperature": red,
+        "Humidity": blue,
+        "PM10": green,
+        "PM2.5": purple
     };
 }
 
@@ -70,10 +72,14 @@ async function addData(dataLayers) {
                                     // check if it contains "lat" and "lon" keys
                                     if (!!lat && !!lon) {
                                         for (const valueKey of Object.keys(values)) {
-                                            const layer = valueKeyToLayer[valueKey]
-                                            if (!!layer) {
-                                                const color = layer; // FIXME
-                                                L.circle([lat, lon], radius, { color: color }).addTo(dataLayers[layer]);
+                                            const color = valueKeyToColor[valueKey]
+                                            if (!!color) {
+                                                L.circle(
+                                                  [lat, lon],
+                                                  radius,
+                                                  { color: color, stroke: false })
+                                                  .bindPopup(`${valueKeyToLayer[valueKey]} = ${values[valueKey]}${valueKeyToUnit[valueKey]} at [${lat}, ${lon}]`)
+                                                  .addTo(dataLayers[valueKeyToLayer[valueKey]]);
                                             }
                                         }
                                     }
@@ -88,8 +94,8 @@ async function addData(dataLayers) {
 }
 
 function addMockData(dataLayers) {
-    const radius = 10;    
-    const addLatLon = (latLon1, latLon2) => [latLon1[0] + latLon2[0], latLon1[1] + latLon2[1]];    
+    const radius = 10;
+    const addLatLon = (latLon1, latLon2) => [latLon1[0] + latLon2[0], latLon1[1] + latLon2[1]];
     // mock some data for now
     L.circle(addLatLon(unicamp, [0.001, 0]), radius, { color: "red" }).addTo(dataLayers["red"]);
     L.circle(addLatLon(unicamp, [0.002, 0]), radius, { color: "blue" }).addTo(dataLayers["blue"]);
