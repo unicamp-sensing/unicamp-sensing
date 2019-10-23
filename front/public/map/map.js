@@ -41,6 +41,18 @@ function drawMap(defaultTiles) {
 const valueKeyToColor = { "tmp": "red", "hum": "blue", "pm10": "green", "pm25": "purple" };
 const valueKeyToLayer = { "tmp": "Temperature", "hum": "Humidity", "pm10": "PM10", "pm25": "PM2.5" };
 const valueKeyToUnit = { "tmp": "°C", "hum": "%RH", "pm10": "", "pm25": "" };
+const valueKeyToChromaScale = {
+    "tmp": chroma.scale(['yellow', 'red']),
+    "hum": chroma.scale(['AliceBlue', 'DarkBlue']),
+    "pm10": chroma.scale(['Chartreuse', 'SaddleBrown']),
+    "pm25": chroma.scale(['Chartreuse', 'SaddleBrown'])
+};
+const valueKeyToD3Scale = {
+    "tmp": d3.scaleLinear().domain([0, 40]).range([0, 1]),
+    "hum": d3.scaleLinear().domain([0, 100]).range([0, 1]),
+    "pm10": d3.scaleLinear().domain([0, 80]).range([0, 1]),
+    "pm25": d3.scaleLinear().domain([0, 80]).range([0, 1])
+};
 
 function createDataLayers() {
     const red    = new L.layerGroup(); // tmp
@@ -53,6 +65,12 @@ function createDataLayers() {
         "PM10": green,
         "PM2.5": purple
     };
+}
+
+function getScaledColor(valueKey, value) {
+    colorScale = valueKeyToChromaScale[valueKey];
+    adjustScale = valueKeyToD3Scale[valueKey];
+    return colorScale(adjustScale(value));
 }
 
 async function addData(dataLayers) {
@@ -72,12 +90,13 @@ async function addData(dataLayers) {
                                     // check if it contains "lat" and "lon" keys
                                     if (!!lat && !!lon) {
                                         for (const valueKey of Object.keys(values)) {
-                                            const color = valueKeyToColor[valueKey]
+                                            const color = valueKeyToColor[valueKey];
                                             if (!!color) {
+                                                const scaledColor = getScaledColor(valueKey, boardData[valueKey]);
                                                 L.circle(
                                                   [lat, lon],
                                                   radius,
-                                                  { color: color, stroke: false })
+                                                  { color: scaledColor, stroke: true })
                                                   .bindPopup(`${valueKeyToLayer[valueKey]} = ${values[valueKey]}${valueKeyToUnit[valueKey]} at [${lat}, ${lon}]`)
                                                   .addTo(dataLayers[valueKeyToLayer[valueKey]]);
                                             }
