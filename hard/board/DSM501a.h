@@ -10,8 +10,8 @@ class DSM501a {
     int PM25_PIN;
 
   public:
-    int pm10;
-    int pm25;
+    float pm10;
+    float pm25;
 
   public:
     unsigned long smptime; // Sample time in milliseconds

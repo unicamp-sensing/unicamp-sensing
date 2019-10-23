@@ -3,7 +3,7 @@
 // DSM501a setup
 DSM501a particle(DSM_PM10_PIN, DSM_PM25_PIN, DSM_SAMPLE_TIME);
 // GPS setup
-SoftwareSerial ss(GPS_RX_PIN, GPS_TX_PIN);
+SoftwareSerial ss(GPS_TX_PIN, GPS_RX_PIN);
 GPS gps(ss, 9600); 
 // DHT11 setup
 DHT aux(DHTPIN, DHTTYPE);
@@ -13,29 +13,11 @@ std::queue<Data> data_queue;
 // Mac address of device to use as id in the database
 char mac[13];
 
-void show(Data& cur){
-  Serial.print("|PM25:");
-  Serial.print(cur.pm25);
-  Serial.print("|PM10:");
-  Serial.print(cur.pm10);
-  Serial.print("|TMP:");
-  Serial.print(cur.tmp);
-  Serial.print("|HUM:");
-  Serial.print(cur.hum);
-  Serial.print("|VEL:");
-  Serial.print(cur.vel);
-  Serial.print("|ALT:");
-  Serial.print(cur.alt);
-  Serial.print("|LON:");
-  Serial.print(cur.lon);
-  Serial.print("|LAT:");
-  Serial.print(cur.lati);              
-}
-
 // Send value to firebase
 void sendFirebase(char* timestr, char* name, float val){
   char path[100];
   sprintf(path, "%s/%s/%s", timestr, mac, name);
+  if (SHOW) {Serial.print(path); Serial.print(" | "); Serial.println(val);}
   Firebase.setFloat(path, val);
 }
 
@@ -43,26 +25,41 @@ void sendFirebase(char* timestr, char* name, float val){
 // Function which reads and sends the data
 void runSensors()
 {
+  if (SHOW) Serial.println("--> runSensors()");
+  
   // Update data
+  if (SHOW) Serial.println("Updating:");
   particle.update(true);
+  if (SHOW) Serial.println("DSM501A Done!");
   dht.update();
+  if (SHOW) Serial.println("DHT11 Done!");
   gps.update();
-  // Construct class data to be sent
-  Data new_data(gps, particle, dht);
-  //add data to queue
-  data_queue.push(new_data);
+  if (SHOW) Serial.println("GPS Done!");
+
+  // Define requirements for colectting the data
+  bool requirements = gps.newTime && gps.newLocal;
+  
+  if (requirements){
+    if (SHOW) Serial.println("Stacking Data");
+    // Construct class data to be sent
+    Data new_data(gps, particle, dht);
+    //add data to queue
+    data_queue.push(new_data); 
+  } else if (SHOW) Serial.println("No GPS Signal");
+
+  if (SHOW) Serial.println("<-- runSensors()");
 }
 
 void sendInfo() {
-  // Define prerequisites to send data
-  bool requirements = gps.newTime && gps.newLocal;
-  requirements *= (WiFi.status() == WL_CONNECTED);
+  if (SHOW) Serial.println("--> sendInfo()");
 
   // Send data
-  if (requirements) {
+  if (WiFi.status() == WL_CONNECTED) {
+    if (SHOW) Serial.println("WiFi is connected");
     while (!data_queue.empty()) {
+      if (SHOW) Serial.println("Sending Data:");
       Data cur = data_queue.front();
-
+      
       sendFirebase(cur.timestr, "lat", cur.lati);
       sendFirebase(cur.timestr, "lon", cur.lon);
       sendFirebase(cur.timestr, "alt", cur.alt); 
@@ -80,16 +77,20 @@ void sendInfo() {
       if (!isnan(cur.pm25))
         sendFirebase(cur.timestr, "pm25", cur.pm25);
       
-      data_queue.pop();   
+      data_queue.pop();
+      if (SHOW) Serial.println("Sent");    
     }
   }
 
+  
+  if (SHOW) Serial.println("<-- sendInfo()");
 }
 
 void setup()
 {
   // Debug console
-  Serial.begin(115200);
+  if (SHOW) Serial.begin(115200);
+  if (SHOW) Serial.println("\nSetup Start...");
   
   // Start  DHT
   dht.begin();
@@ -107,11 +108,15 @@ void setup()
   byte m[6];
   WiFi.macAddress(m);
   sprintf(mac, "%X%X%X%X%X%X\0", m[0],m[1],m[2],m[3],m[4],m[5]);
+  
+  if (SHOW) Serial.println("Setup Done!");
 }
 
 void loop()
 {
+  if (SHOW) Serial.println("Start Loop...");
   runSensors();
   sendInfo();
-  delay(DELAY);         
+  delay(DELAY);
+  if (SHOW) Serial.println("End Loop...");         
 }

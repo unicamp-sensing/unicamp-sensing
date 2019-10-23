@@ -16,6 +16,9 @@
 #include "DSM501a.h"
 #include "gps.h"
 
+// Set debugging flag
+#define SHOW 0 
+
 // Delay between each data collection (ms)
 #define DELAY 3000
 
@@ -33,8 +36,8 @@
 #define DSM_SAMPLE_TIME 1.5     // Defined second for sampling collection 
 #define WARM_UP_TIME 10         // Define seconds for sensor warmup
 
-#define GPS_RX_PIN 4  // GPS RX pin on D2
-#define GPS_TX_PIN 5  // GPS TX pin on D1
+#define GPS_RX_PIN 5  // GPS RX pin on D1
+#define GPS_TX_PIN 4  // GPS TX pin on D2
 
 #define DHTTYPE DHT11  // DHT11 model
 #define DHTPIN 0       // DHT11 pin 2 on D3
