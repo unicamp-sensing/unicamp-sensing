@@ -28,4 +28,5 @@ Clone our repository and type the following commands:
 - `$ cd path/to/urban-sensing/`
 - `$ heroku git:remote -a unicamp-sensing`
 - `$ git push heroku master`
+
 Refer to [[link]](https://devcenter.heroku.com/articles/heroku-cli) for Heroku installation.
