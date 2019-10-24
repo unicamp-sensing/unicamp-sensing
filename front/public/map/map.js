@@ -24,7 +24,7 @@ initFirebase();
 
 const unicamp = [-22.814, -47.069];
 const geoMap = L.map("geoMap").setView(unicamp, 16);
-drawMap(toggleMaps["OSM DE"]);
+drawMap(toggleMaps["Stamen Toner Lite"]);
 
 const overlayMaps = createDataLayers();
 // addMockData(overlayMaps);
@@ -96,7 +96,7 @@ async function addData(dataLayers) {
                                                 L.circle(
                                                   [lat, lon],
                                                   radius,
-                                                  { color: scaledColor, stroke: true })
+                                                  { color: scaledColor, stroke: false, fillOpacity: 1.0 })
                                                   .bindPopup(`${valueKeyToLayer[valueKey]} = ${values[valueKey]}${valueKeyToUnit[valueKey]} at [${lat}, ${lon}]`)
                                                   .addTo(dataLayers[valueKeyToLayer[valueKey]]);
                                             }
