@@ -27,8 +27,8 @@
 #define FIREBASE_AUTH "mLOkguUxVGWlbYmAWdUYiHaYqWqDF9wHstkUIfTT"
 
 // WiFi Login info
-#define WIFI_SSID "iPhone de vinicius"
-#define WIFI_PASSWORD "shimbalaie"
+#define WIFI_SSID "Shimbalaie_2.4GHz"
+#define WIFI_PASSWORD "pipolina"
 
 // Sensors pins and settings
 #define DSM_PM10_PIN  12        // DSM501 Pin 2 on D6
