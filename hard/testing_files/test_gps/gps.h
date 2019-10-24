@@ -2,7 +2,7 @@
 #define GPS_H
 
 #include <SoftwareSerial.h>
-#define DEBUG 0
+#define DEBUG 1
 #define OVERTIME 5000
 #define TZ -3
 #define CENTURY 21
@@ -199,10 +199,14 @@ void gsa_parsing(char *sentence, GPS& gps) {
 void GPS::read_sentence(char *sentence) {
   int gap = 6 - strlen(sentence); // Identifiers subset
   int i = 0, stage = 1;
+  char all_read[1000];
+  int counter = 0;
   char nmea[100];
 
   // Dump old serial input
   while (serial->available()) serial->read();
+  if (DEBUG) {Serial.print("Getting "); Serial.println(sentence);}
+          
 
   int base_time = millis();
   // Parse new serial input
@@ -215,8 +219,11 @@ void GPS::read_sentence(char *sentence) {
         if (!serial->available()) continue;
 
         // Adjust sentence ID to first 6 chars
-        for (i = 0; i < 5; ++i) nmea[i] = nmea[i + 1];  
+        for (i = 0; i < 5; ++i) {
+          nmea[i] = nmea[i + 1];  
+        }
         nmea[5] = serial->read();
+        all_read[counter++] = nmea[5];
 
         // Check it its a match and setup for stage 2
         if (!strncmp(&nmea[gap], sentence, gap)) {
@@ -263,6 +270,9 @@ void GPS::read_sentence(char *sentence) {
 
   // If time overflow, discard read
   if (DEBUG) Serial.println("GPS Overtime (Set False Data)");
+  if (DEBUG) Serial.println("Serial Input Read:");
+  if (DEBUG) Serial.println(all_read);
+  if (DEBUG) Serial.println("--------------------------------------------");
   newTime = false;
   newDate = false;
   newLocal = false;
