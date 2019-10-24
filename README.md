@@ -9,7 +9,11 @@ Data is gathered with:
 *  NEO-6MV2 GPS module;
 *  DSM501A air particle sensor.
 
-Access through [link](http://unicamp-sensing.herokuapp.com/)
+Access through [[link]](http://unicamp-sensing.herokuapp.com/)
+
+## Schematics
+
+![Schematics](https://gitlab.ic.unicamp.br/ra187690/urban-sensing/raw/master/docs/schematic_projetos.png)
 
 ## Dependencies
 
