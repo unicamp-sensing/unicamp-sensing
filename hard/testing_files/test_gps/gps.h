@@ -3,6 +3,7 @@
 
 #include <SoftwareSerial.h>
 #define DEBUG 0
+#define OVERTIME 5000
 #define TZ -3
 #define CENTURY 21
 
@@ -71,7 +72,7 @@ void gga_parsing(char *sentence, GPS& gps) {
   // Time
   ptr = strtok(NULL, delim);
   if ( ptr[0] != ' ' ) {
-    gps.hour = TZ + (int)strtol(strcpyn(aux, ptr, 2), NULL, 10);
+    gps.hour = (24+TZ+(int)strtol(strcpyn(aux, ptr, 2), NULL, 10))%24; // Fix Time Zone
     gps.min = (int)strtol(strcpyn(aux, &ptr[2], 2), NULL, 10);
     gps.sec = (int)strtol(strcpyn(aux, &ptr[4], 2), NULL, 10);
     gps.newTime = true;
@@ -120,9 +121,18 @@ void gga_parsing(char *sentence, GPS& gps) {
 void rmc_parsing(char *sentence, GPS& gps) {
   char delim[] = ",";
   char aux[10], *ptr;
+  int day_fix = 0;
 
   strtok(sentence, delim); // Discard sentence ID
-  strtok(NULL, delim); // Discard time
+  
+  // Time
+  ptr = strtok(NULL, delim);
+  if ( ptr[0] != ' ' ) {
+    int hour = (int)strtol(strcpyn(aux, ptr, 2), NULL, 10);
+    if (TZ+hour < 0) day_fix = -1;  // Subtract one day
+    if (TZ+hour >= 24) day_fix = 1; // Add one day
+  }
+
   strtok(NULL, delim); // Discard status
   strtok(NULL, delim); // Discard latitude
   strtok(NULL, delim); // Discard hemisphere
@@ -141,7 +151,7 @@ void rmc_parsing(char *sentence, GPS& gps) {
   // Date
   ptr = strtok(NULL, delim);
   if ( ptr[0] != ' ' ) {
-    gps.day = (int)strtol(strcpyn(aux, ptr, 2), NULL, 10);
+    gps.day = day_fix+(int)strtol(strcpyn(aux, ptr, 2), NULL, 10);
     gps.month = (int)strtol(strcpyn(aux, &ptr[2], 2), NULL, 10);
     gps.year = (int)(CENTURY - 1) * 100;
     gps.year += (int)strtol(strcpyn(aux, &ptr[4], 2), NULL, 10);
@@ -194,8 +204,9 @@ void GPS::read_sentence(char *sentence) {
   // Dump old serial input
   while (serial->available()) serial->read();
 
+  int base_time = millis();
   // Parse new serial input
-  while (true) {
+  while (millis()- base_time < OVERTIME) {
     switch (stage) {
       
       case 1: // Finding the GGA sentence's starting point
@@ -249,6 +260,14 @@ void GPS::read_sentence(char *sentence) {
       break;
     }
   }
+
+  // If time overflow, discard read
+  if (DEBUG) Serial.println("GPS Overtime (Set False Data)");
+  newTime = false;
+  newDate = false;
+  newLocal = false;
+  newVel = false;
+  newDop = false;
 }
 
 #endif

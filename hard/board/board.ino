@@ -25,7 +25,7 @@ void sendFirebase(char* timestr, char* name, float val){
 // Function which reads and sends the data
 void runSensors()
 {
-  if (SHOW) Serial.println("--> runSensors()");
+  if (SHOW) Serial.println("---> runSensors()");
   
   // Update data
   if (SHOW) Serial.println("Updating:");
@@ -45,17 +45,17 @@ void runSensors()
     Data new_data(gps, particle, dht);
     //add data to queue
     data_queue.push(new_data); 
-  } else if (SHOW) Serial.println("No GPS Signal");
+  } 
+  else if (SHOW) Serial.println("****No GPS Signal****");
 
-  if (SHOW) Serial.println("<-- runSensors()");
+  if (SHOW) Serial.println("<--- runSensors()");
 }
 
 void sendInfo() {
-  if (SHOW) Serial.println("--> sendInfo()");
+  if (SHOW) Serial.println("---> sendInfo()");
 
   // Send data
   if (WiFi.status() == WL_CONNECTED) {
-    if (SHOW) Serial.println("WiFi is connected");
     while (!data_queue.empty()) {
       if (SHOW) Serial.println("Sending Data:");
       Data cur = data_queue.front();
@@ -78,45 +78,51 @@ void sendInfo() {
         sendFirebase(cur.timestr, "pm25", cur.pm25);
       
       data_queue.pop();
-      if (SHOW) Serial.println("Sent");    
+      if (SHOW) Serial.println("Sent");     
     }
   }
+  else if (SHOW) Serial.println("****No WiFi Signal****"); 
 
   
-  if (SHOW) Serial.println("<-- sendInfo()");
+  if (SHOW) Serial.println("<--- sendInfo()");
 }
 
 void setup()
 {
   // Debug console
   if (SHOW) Serial.begin(115200);
-  if (SHOW) Serial.println("\nSetup Start...");
+  if (SHOW) Serial.println("\n---> Setup()");
   
   // Start  DHT
   dht.begin();
+  if (SHOW) Serial.println("DHT Set");
 
   // Start DSM501A
   particle.begin(WARM_UP_TIME);
+  if (SHOW) Serial.println("DSM501a Set");
 
   // Start firebase
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  if (SHOW) Serial.println("Firebase Set");
   
   // Connect to wifi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  if (SHOW) Serial.println("WiFi Set");
 
   // Getting mac address
   byte m[6];
   WiFi.macAddress(m);
   sprintf(mac, "%X%X%X%X%X%X\0", m[0],m[1],m[2],m[3],m[4],m[5]);
+  if (SHOW) Serial.println("Got MAC Address");
   
-  if (SHOW) Serial.println("Setup Done!");
+  if (SHOW) Serial.println("<--- setup()!");
 }
 
 void loop()
 {
-  if (SHOW) Serial.println("Start Loop...");
+  if (SHOW) Serial.println("---> loop()");
   runSensors();
   sendInfo();
   delay(DELAY);
-  if (SHOW) Serial.println("End Loop...");         
+  if (SHOW) Serial.println("<--- loop()");         
 }

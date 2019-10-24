@@ -77,7 +77,7 @@ void loop()
 //  return;
   
   if (timer >= wait) {
-    wait = (rand()%15)*1000;
+    wait = (10+rand()%10)*1000;
     Serial.print("--> Wait time: ");
     Serial.println(wait/1000);
     base = millis();

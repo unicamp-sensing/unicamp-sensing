@@ -17,7 +17,7 @@
 #include "gps.h"
 
 // Set debugging flag
-#define SHOW 0 
+#define SHOW 1 
 
 // Delay between each data collection (ms)
 #define DELAY 3000
