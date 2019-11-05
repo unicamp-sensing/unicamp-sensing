@@ -21,8 +21,7 @@ function boardValuesByDayDate(data) {
                         for (const sec in data[year][month][day][hour][min]) {
                             for (const board in data[year][month][day][hour][min][sec]) {
                                   const date = new Date(year, month, day, hour, min, sec);
-                                  // console.log(data[year][month][day][hour][min][sec][board])
-                                  if(sensorRange(data[year][month][day][hour][min][sec][board])){
+                                  if(sensorRangeValid(data[year][month][day][hour][min][sec][board])){
                                     values.push({
                                         x: date,
                                         y: data[year][month][day][hour][min][sec][board]
@@ -39,9 +38,11 @@ function boardValuesByDayDate(data) {
     return valuesByDayDate;
 }
 
-function sensorRange(values){
+function sensorRangeValid(values){
   if(values['tmp'] < 0 || values['tmp'] > 50){return false;}
   if(values['hum'] < 20 || values['hum'] > 90){return false;}
+  if(values['pm10'] < 0 || values['pm10'] > 500){return false;}
+  if(values['pm25'] < 0 || values['pm25'] > 500){return false;}
   return true;
 
 }
