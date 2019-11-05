@@ -39,10 +39,10 @@ function boardValuesByDayDate(data) {
 }
 
 function sensorRangeValid(values){
-  if(values['tmp'] < 0 || values['tmp'] > 50){return false;}
-  if(values['hum'] < 20 || values['hum'] > 90){return false;}
-  if(values['pm10'] < 0 || values['pm10'] > 500){return false;}
-  if(values['pm25'] < 0 || values['pm25'] > 500){return false;}
+  if (values['tmp'] < 0 || values['tmp'] > 50) return false;
+  if (values['hum'] < 20 || values['hum'] > 90) return false;
+  if (values['pm10'] < 0 || values['pm10'] > 500) return false;
+  if (values['pm25'] < 0 || values['pm25'] > 500) return false;
   return true;
 
 }
