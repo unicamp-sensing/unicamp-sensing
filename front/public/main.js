@@ -16,6 +16,13 @@ function init() {
     });
 }
 
+const valueKeyToRange = {
+    "tmp":  {"min": 0, "max": 40}, // temperature
+    "hum":  {"min": 0, "max": 100}, // humidity
+    "pm10": {"min": 0, "max": 80}, // PM 10
+    "pm25": {"min": 0, "max": 80}  // PM 2.5
+}
+
 async function plotData(labels) {
     const data = await getRawData();
 
@@ -54,8 +61,8 @@ async function plotData(labels) {
 
                 marker: {
                     color: ys,
-                    cmax: 40,
-                    cmin: 0
+                    cmax: valueKeyToRange[valueKey].max,
+                    cmin: valueKeyToRange[valueKey].min
                 }
             });
         }
