@@ -1,7 +1,4 @@
 
-
-
-
 async function getRawData() {
     const dataRef = firebase.database().ref("/");
     const dataSnapshot = await dataRef.once("value");

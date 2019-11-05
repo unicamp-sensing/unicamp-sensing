@@ -16,20 +16,6 @@ function init() {
     });
 }
 
-const valueKeyToRange = {
-    "tmp":  {"min": 0, "max": 40}, // temperature
-    "hum":  {"min": 0, "max": 150}, // humidity
-    "pm10": {"min": 0, "max": 200}, // PM 10
-    "pm25": {"min": 0, "max": 250}  // PM 2.5
-}
-
-const valueToColor = {
-    "tmp":  {scale: "Bluered", reverse: false},
-    "hum":  {scale: "YlGnBu", reverse: true},
-    "pm10": {scale: "YlOrRd", reverse: true},
-    "pm25": {scale: "Hot", reverse: true},
-}
-
 
 async function plotData(labels) {
     const data = await getRawData();
