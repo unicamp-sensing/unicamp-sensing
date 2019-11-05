@@ -1,4 +1,7 @@
 
+
+
+
 async function getRawData() {
     const dataRef = firebase.database().ref("/");
     const dataSnapshot = await dataRef.once("value");
@@ -9,7 +12,7 @@ async function getRawData() {
 function boardValuesByDayDate(data) {
     const valuesByDayDate = {};
     for (const year in data) {
-      if(parseInt(year) < 2019){continue;}
+      if (parseInt(year) < 2019){ continue;}
           for (const month in data[year]) {
             for (const day in data[year][month]) {
                 const values = [];
@@ -17,13 +20,14 @@ function boardValuesByDayDate(data) {
                     for (const min in data[year][month][day][hour]) {
                         for (const sec in data[year][month][day][hour][min]) {
                             for (const board in data[year][month][day][hour][min][sec]) {
-                                  console.log(year)
                                   const date = new Date(year, month, day, hour, min, sec);
-                                  values.push({
-                                      x: date,
-                                      y: data[year][month][day][hour][min][sec][board]
-                                  });
-
+                                  // console.log(data[year][month][day][hour][min][sec][board])
+                                  if(sensorRange(data[year][month][day][hour][min][sec][board])){
+                                    values.push({
+                                        x: date,
+                                        y: data[year][month][day][hour][min][sec][board]
+                                    });
+                                }
                             }
                         }
                     }
@@ -33,4 +37,11 @@ function boardValuesByDayDate(data) {
         }
     }
     return valuesByDayDate;
+}
+
+function sensorRange(values){
+  if(values['tmp'] < 0 || values['tmp'] > 50){return false;}
+  if(values['hum'] < 20 || values['hum'] > 90){return false;}
+  return true;
+
 }
