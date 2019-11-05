@@ -70,13 +70,17 @@ async function plotData(labels) {
 
     var layout = {
         xaxis: {
-            range: ['2019-10-10', '2019-11-10'], // FIXME
+            range: ['2019-10-10', '2019-12-10'], // FIXME
             type: 'date'
         }
     };
 
+    console.log("pm10", datasets["pm10"])
+
     Plotly.newPlot("div-tmp", datasets['tmp'], { title: "Temperature (°C)", ...layout });
     Plotly.newPlot("div-hum", datasets['hum'], { title: "Humidity (%RH)", ...layout });
+    Plotly.newPlot("div-pm10", datasets['pm10'], { title: "Particle Matter - 10 micrometers (??)", ...layout });
+    Plotly.newPlot("div-pm25", datasets['pm25'], { title: "Particle Matter - 2.5 micrometers (??)", ...layout });
 }
 
 async function download() {
