@@ -20,6 +20,22 @@ const toggleMaps = {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+const valueKeyToChromaScale = {
+    tmp:  chroma.scale(['yellow', 'red']),
+    hum:  chroma.scale(['AliceBlue', 'DarkBlue']),
+    pm10: chroma.scale(['Chartreuse', 'SaddleBrown']),
+    pm25: chroma.scale(['Chartreuse', 'SaddleBrown'])
+};
+
+const valueKeyToD3Scale = {
+    tmp:  d3.scaleLinear().domain([valueKeyToRange.tmp.min, valueKeyToRange.tmp.max]).range([0, 1]),
+    hum:  d3.scaleLinear().domain([valueKeyToRange.hum.min, valueKeyToRange.hum.max]).range([0, 1]),
+    pm10: d3.scaleLinear().domain([valueKeyToRange.pm10.min, valueKeyToRange.pm10.max]).range([0, 1]),
+    pm25: d3.scaleLinear().domain([valueKeyToRange.pm25.min, valueKeyToRange.pm25.max]).range([0, 1])
+};
+
+
+
 initFirebase();
 
 const unicamp = [-22.814, -47.069];
@@ -35,21 +51,6 @@ L.control.layers(toggleMaps, overlayMaps).addTo(geoMap);
 function drawMap(defaultTiles) {
     defaultTiles.addTo(geoMap);
 }
-
-const valueKeyToLayer = { "tmp": "Temperature", "hum": "Humidity", "pm10": "PM10", "pm25": "PM2.5" };
-const valueKeyToUnit = { "tmp": "°C", "hum": "%RH", "pm10": "", "pm25": "" };
-const valueKeyToChromaScale = {
-    "tmp":  chroma.scale(['yellow', 'red']),
-    "hum":  chroma.scale(['AliceBlue', 'DarkBlue']),
-    "pm10": chroma.scale(['Chartreuse', 'SaddleBrown']),
-    "pm25": chroma.scale(['Chartreuse', 'SaddleBrown'])
-};
-const valueKeyToD3Scale = {
-    "tmp":  d3.scaleLinear().domain([0, 40]).range([0, 1]),
-    "hum":  d3.scaleLinear().domain([0, 100]).range([0, 1]),
-    "pm10": d3.scaleLinear().domain([0, 80]).range([0, 1]),
-    "pm25": d3.scaleLinear().domain([0, 80]).range([0, 1])
-};
 
 function createDataLayers() {
     return {

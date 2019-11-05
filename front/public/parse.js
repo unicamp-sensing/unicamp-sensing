@@ -1,7 +1,4 @@
 
-
-
-
 async function getRawData() {
     const dataRef = firebase.database().ref("/");
     const dataSnapshot = await dataRef.once("value");
@@ -38,11 +35,10 @@ function boardValuesByDayDate(data) {
     return valuesByDayDate;
 }
 
-function sensorRangeValid(values){
-  if (values['tmp'] < 0 || values['tmp'] > 50) return false;
-  if (values['hum'] < 20 || values['hum'] > 90) return false;
-  if (values['pm10'] < 0 || values['pm10'] > 500) return false;
-  if (values['pm25'] < 0 || values['pm25'] > 500) return false;
-  return true;
-
+function sensorRangeValid(values) {
+    if (values['tmp'] < 0 || values['tmp'] > 50) return false;
+    if (values['hum'] < 20 || values['hum'] > 90) return false;
+    if (values['pm10'] < 0 || values['pm10'] > 500) return false;
+    if (values['pm25'] < 0 || values['pm25'] > 500) return false;
+    return true;
 }
