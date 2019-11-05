@@ -9,18 +9,21 @@ async function getRawData() {
 function boardValuesByDayDate(data) {
     const valuesByDayDate = {};
     for (const year in data) {
-        for (const month in data[year]) {
+      if(parseInt(year) < 2019){continue;}
+          for (const month in data[year]) {
             for (const day in data[year][month]) {
                 const values = [];
                 for (const hour in data[year][month][day]) {
                     for (const min in data[year][month][day][hour]) {
                         for (const sec in data[year][month][day][hour][min]) {
                             for (const board in data[year][month][day][hour][min][sec]) {
-                                const date = new Date(year, month, day, hour, min, sec);
-                                values.push({
-                                    x: date,
-                                    y: data[year][month][day][hour][min][sec][board]
-                                });
+                                  console.log(year)
+                                  const date = new Date(year, month, day, hour, min, sec);
+                                  values.push({
+                                      x: date,
+                                      y: data[year][month][day][hour][min][sec][board]
+                                  });
+
                             }
                         }
                     }
