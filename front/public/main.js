@@ -39,7 +39,9 @@ async function plotData(labels) {
 
             xs = values.map((val) => val.x);
             ys = values.map((val) => val.y);
-
+            // len = xs.length
+            // console.log(xs.length);
+            console.log(ys);
             // generate a random color for the day
             const rgb = [randColor(), randColor(), randColor()];
 
@@ -49,7 +51,12 @@ async function plotData(labels) {
                 name: moment(dayDate.toString()).format('DD/MM/YY'),
                 x: xs,
                 y: ys,
-                line: { color: `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` }
+
+                marker: {
+                    color: ys,
+                    cmax: 40,
+                    cmin: 0
+                }
             });
         }
     }
