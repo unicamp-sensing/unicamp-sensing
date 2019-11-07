@@ -40,9 +40,6 @@ async function plotData(labels) {
 
             xs = values.map((val) => val.x);
             ys = values.map((val) => val.y);
-            // len = xs.length
-            // console.log(xs.length);
-            console.log(ys);
             // generate a random color for the day
             const rgb = [randColor(), randColor(), randColor()];
 
@@ -72,8 +69,6 @@ async function plotData(labels) {
             type: 'date'
         }
     };
-
-    console.log("pm10", datasets["pm10"])
 
     Plotly.newPlot("div-tmp", datasets['tmp'], { title: "Temperature (°C)", ...layout });
     Plotly.newPlot("div-hum", datasets['hum'], { title: "Humidity (%RH)", ...layout });
