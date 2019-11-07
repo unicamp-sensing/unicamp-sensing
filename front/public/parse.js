@@ -35,10 +35,14 @@ function boardValuesByDayDate(data) {
     return valuesByDayDate;
 }
 
+function in_range(values, key) {
+    return (values[key] < valueKeyToRange[key].min || values[key] > valueKeyToRange[key].max)
+}
+
 function sensorRangeValid(values) {
-    if (values['tmp'] < 0 || values['tmp'] > 50) return false;
-    if (values['hum'] < 20 || values['hum'] > 90) return false;
-    if (values['pm10'] < 0 || values['pm10'] > 500) return false;
-    if (values['pm25'] < 0 || values['pm25'] > 500) return false;
+    if (in_range(values, 'tmp')) return false;
+    if (in_range(values, 'hum')) return false;
+    if (in_range(values, 'pm10')) return false;
+    if (in_range(values, 'pm25')) return false;
     return true;
 }
