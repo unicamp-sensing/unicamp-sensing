@@ -35,9 +35,8 @@ function exportCsvFile(header, rows, fileTitle) {
     saveAs(blob, fileName);
 }
 
-// FIXME add lat, lon
 function rawDataToCsvArray(data) {
-    let csvArray = ["year,month,day,hour,min,sec,board,humidity,temperature"];
+    let csvArray = ["year,month,day,hour,min,sec,board,humidity,temperature,pm10,pm2.5,lat,lon"];
     for (const year in data) {
         for (const month in data[year]) {
             for (const day in data[year][month]) {
@@ -45,11 +44,21 @@ function rawDataToCsvArray(data) {
                     for (const min in data[year][month][day][hour]) {
                         for (const sec in data[year][month][day][hour][min]) {
                             for (const board in data[year][month][day][hour][min][sec]) {
-                                const { hum: humidity, tmp: temperature } = data[year][month][day][hour][min][sec][board];
+                                const { hum: humidity, tmp: temperature, ...boardValues } = data[year][month][day][hour][min][sec][board];
                                 if (!humidity || !temperature) {
                                     console.log("invalid entry at:", year, month, day, hour, min, sec, board);
                                 } else {
-                                    csvArray.push(`${year},${month},${day},${hour},${min},${sec},${board},${humidity},${temperature}`);
+                                    const { pm10, pm25 } = boardValues;
+                                    if (!pm10 || !pm25) {
+                                        csvArray.push(`${year},${month},${day},${hour},${min},${sec},${board},${humidity},${temperature},,,,`);
+                                    } else {
+                                        const { lat, lon } = boardValues;
+                                        if (!lat || !lon) {
+                                            csvArray.push(`${year},${month},${day},${hour},${min},${sec},${board},${humidity},${temperature},${pm10},${pm25},,`);
+                                        } else {
+                                            csvArray.push(`${year},${month},${day},${hour},${min},${sec},${board},${humidity},${temperature},${pm10},${pm25},${lat},${lon}`);
+                                        }
+                                    }
                                 }
                             }
                         }
