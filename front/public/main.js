@@ -54,10 +54,10 @@ async function plotData(labels) {
                 marker: {
                     color: ys,
                     showscale: true,
-                    colorscale: valueToColor[valueKey].scale,
-                    reversescale: valueToColor[valueKey].reverse,
-                    cmax: valueKeyToRange[valueKey].max,
-                    cmin: valueKeyToRange[valueKey].min
+                    colorscale: Props[valueKey].plot.time.color.scale,
+                    reversescale: Props[valueKey].plot.time.color.reverse,
+                    cmax: Props[valueKey].range.max,
+                    cmin: Props[valueKey].range.min
                 }
             });
         }

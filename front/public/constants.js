@@ -1,19 +1,59 @@
-const valueKeys = ["tmp", "hum", "pm10", "pm25"];
+/**
+ * General properties and constants we need for each of the values that are collected */
 
-const valueKeyToRange = {
-    tmp:  { min: 0, max: 40 },  // temperature
-    hum:  { min: 0, max: 150 }, // humidity
-    pm10: { min: 0, max: 200 }, // PM 10
-    pm25: { min: 0, max: 250 }  // PM 2.5
+const Props = {
+    tmp: {
+        name: "Temperature",
+        unit: "°C",
+        range: { min: 0, max: 50 },
+        plot: {
+            time: {
+                color: { reverse: false, scale: "Bluered" },
+            },
+            map: {
+                layer: "Temperature",
+            },
+        }
+    },
+    hum: {
+        name: "Humidity",
+        unit: "%RH",
+        range: { min: 0, max: 100 },
+        plot: {
+            time: {
+                color: { reverse: true, scale: "YlGnBu" },
+            },
+            map: {
+                layer: "Humidity",
+            },
+        }
+    },
+    pm10: {
+        name: "PM10",
+        unit: "", // FIXME
+        range: { min: 0, max: 250 },
+        plot: {
+            time: {
+                color: { reverse: true, scale: "YlOrRd" },
+            },
+            map: {
+                layer: "PM10",
+            },
+        }
+    },
+    pm25: {
+        name: "PM2.5",
+        unit: "", // FIXME
+        range: { min: 0, max: 250 },
+        plot: {
+            time: {
+                color: { reverse: true, scale: "Hot" },
+            },
+            map: {
+                layer: "PM2.5",
+            },
+        }
+    },
 };
 
-const valueToColor = {
-    tmp:  { scale: "Bluered", reverse: false },
-    hum:  { scale: "YlGnBu",  reverse: true  },
-    pm10: { scale: "YlOrRd",  reverse: true  },
-    pm25: { scale: "Hot",     reverse: true  },
-};
-
-const valueKeyToLayer = { tmp: "Temperature", hum: "Humidity", pm10: "PM10", pm25: "PM2.5" };
-
-const valueKeyToUnit = { tmp: "°C", hum: "%RH", pm10: "", pm25: "" };
+const valueKeys = Object.keys(Props);

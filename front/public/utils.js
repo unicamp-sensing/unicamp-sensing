@@ -3,6 +3,10 @@ const $ = id => document.getElementById(id);
 
 ///////////////////////////////////////////////////////////////////////////////
 
+const all = list => list.every(x => !!x); // true iff all values are truthy
+const any = list => list.some(x => !!x);  // true iff at least one value is truthy
+// always falsy values are: false, 0, '', "", null, undefined, NaN
+
 const randColor = () => Math.round(255 * Math.random());
 
 function formatDate(date) {

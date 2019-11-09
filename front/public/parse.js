@@ -8,7 +8,8 @@ async function getRawData() {
 function boardValuesByDayDate(data) {
     const valuesByDayDate = {};
     for (const year in data) {
-        if (parseInt(year) < 2019) { continue; }
+        if (parseInt(year) < 2019)
+            continue;
         for (const month in data[year]) {
             for (const day in data[year][month]) {
                 const values = [];
@@ -35,6 +36,6 @@ function boardValuesByDayDate(data) {
 }
 
 function sensorRangeValid(values) {
-    const inRange = (key) => valueKeyToRange[key].min <= values[key] && values[key] <= valueKeyToRange[key].max;
-    return valueKeys.map(key => inRange(key)).every(x => x); // true iff all values are in the valid range
+    const inRange = (vKey) => Props[vKey].range.min <= values[vKey] && values[vKey] <= Props[vKey].range.max;
+    return all(valueKeys.map(vKey => inRange(vKey)));
 }

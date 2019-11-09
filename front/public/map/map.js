@@ -28,13 +28,11 @@ const valueKeyToChromaScale = {
 };
 
 const valueKeyToD3Scale = {
-    tmp:  d3.scaleLinear().domain([valueKeyToRange.tmp.min, valueKeyToRange.tmp.max]).range([0, 1]),
-    hum:  d3.scaleLinear().domain([valueKeyToRange.hum.min, valueKeyToRange.hum.max]).range([0, 1]),
-    pm10: d3.scaleLinear().domain([valueKeyToRange.pm10.min, valueKeyToRange.pm10.max]).range([0, 1]),
-    pm25: d3.scaleLinear().domain([valueKeyToRange.pm25.min, valueKeyToRange.pm25.max]).range([0, 1])
+    tmp:  d3.scaleLinear().domain([Props['tmp'].range.min, Props['tmp'].range.max]).range([0, 1]),
+    hum:  d3.scaleLinear().domain([Props['hum'].range.min, Props['hum'].range.max]).range([0, 1]),
+    pm10: d3.scaleLinear().domain([Props['pm10'].range.min, Props['pm10'].range.max]).range([0, 1]),
+    pm25: d3.scaleLinear().domain([Props['pm25'].range.min, Props['pm25'].range.max]).range([0, 1])
 };
-
-
 
 initFirebase();
 
@@ -55,10 +53,15 @@ function drawMap(defaultTiles) {
 function createDataLayers() {
     return {
         "Temperature": new L.layerGroup(),
-        "Humidity":    new L.layerGroup(),
-        "PM10":        new L.layerGroup(),
-        "PM2.5":       new L.layerGroup()
+        "Humidity": new L.layerGroup(),
+        "PM10": new L.layerGroup(),
+        "PM2.5": new L.layerGroup()
     };
+    // const layers = {};
+    // for (valueKey of valueKeys) {
+    //     layers[Props[valueKey].plot.map.layer] = new L.layerGroup();
+    // }
+    // return layers;
 }
 
 function getScaledColor(valueKey, value) {
@@ -83,17 +86,12 @@ async function addData(dataLayers) {
                                     const { lat, lon, ...values } = boardData;
                                     // check if it contains "lat" and "lon" keys
                                     if (!!lat && !!lon) {
-                                        for (const valueKey of Object.keys(values)) {
-                                            const layer = valueKeyToLayer[valueKey];
-                                            if (!!layer) {
-                                                const scaledColor = getScaledColor(valueKey, boardData[valueKey]);
-                                                L.circle(
-                                                  [lat, lon],
-                                                  radius,
-                                                  { color: scaledColor, stroke: false, fillOpacity: 1.0 })
-                                                  .bindPopup(`${layer} = ${values[valueKey]}${valueKeyToUnit[valueKey]} at [${lat}, ${lon}]`)
-                                                  .addTo(dataLayers[layer]);
-                                            }
+                                        for (const valueKey of Object.keys(values).filter(it => valueKeys.includes(it))) {
+                                            const layer = Props[valueKey].plot.map.layer;
+                                            const scaledColor = getScaledColor(valueKey, boardData[valueKey]);
+                                            L.circle([lat, lon], radius, { color: scaledColor, stroke: false, fillOpacity: 1.0 })
+                                             .bindPopup(`${layer} = ${values[valueKey]}${Props[valueKey].unit} at [${lat}, ${lon}]`)
+                                             .addTo(dataLayers[layer]);
                                         }
                                     }
                                 }
