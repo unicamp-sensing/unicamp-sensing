@@ -73,6 +73,7 @@ async function plotData(labels) {
     Plotly.newPlot("div-hum", datasets['hum'], { title: "Humidity (%RH)", ...layout });
     Plotly.newPlot("div-pm10", datasets['pm10'], { title: "Particle Matter 10", ...layout });
     Plotly.newPlot("div-pm25", datasets['pm25'], { title: "Particle Matter 2.5", ...layout });
+    stopLoading(document.getElementById("loading"));
 }
 
 async function download() {

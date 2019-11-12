@@ -69,3 +69,7 @@ function rawDataToCsvArray(data) {
     }
     return csvArray;
 }
+
+function stopLoading(text) {
+    text.innerHTML = "";
+}
