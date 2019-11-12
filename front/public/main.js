@@ -65,7 +65,6 @@ async function plotData(labels) {
 
     var layout = {
         xaxis: {
-            range: ['2019-10-10', '2019-12-10'], // FIXME
             type: 'date'
         }
     };
