@@ -22,6 +22,9 @@
 // Delay between each data collection (ms)
 #define DELAY 3000
 
+// Define how many cached datapoints are sent
+#define BURST
+
 // Firebase addres and key
 #define FIREBASE_HOST "teste-bb0d8.firebaseio.com"
 #define FIREBASE_AUTH "mLOkguUxVGWlbYmAWdUYiHaYqWqDF9wHstkUIfTT"
@@ -46,10 +49,12 @@
 class Data {
   public:
     char timestr[200];
-    double lati; // Latitude
-    double lon;  // Longitude
-    double alt;  // Altitude
-    double vel;  // Velocity
+    float lati; // Latitude
+    float lon;  // Longitude
+    float hdop; // Horizontal Error
+    float vdop; // Vertical Error
+    float alt;  // Altitude
+    float vel;  // Velocity
     float tmp;   // temperature
     float hum;   // humidity
     float pm10;  // particle concentration for < 1um
@@ -69,6 +74,8 @@ class Data {
       strcpy(timestr, parseTime(gps));
       lati = gps.lat;
       lon = gps.lng;
+      hdop = gps.hdop;
+      vdop = gps.vdop;
       alt = gps.alt;
       vel = gps.vel;
       hum = dht.hum;

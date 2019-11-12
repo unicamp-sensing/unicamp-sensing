@@ -53,10 +53,11 @@ void runSensors()
 
 void sendInfo() {
   if (SHOW) Serial.println("---> sendInfo()");
+  int to_send = 1 + BURST; // Send current + burst of cached data
 
   // Send data
   if (WiFi.status() == WL_CONNECTED) {
-    while (!data_queue.empty()) {
+    while (!data_queue.empty() && to_send--) {
       if (SHOW) Serial.println("Sending Data:");
       Data cur = data_queue.front();
       
@@ -64,6 +65,8 @@ void sendInfo() {
       sendFirebase(cur.timestr, "lon", cur.lon);
       sendFirebase(cur.timestr, "alt", cur.alt); 
       sendFirebase(cur.timestr, "vel", cur.vel);
+      sendFirebase(cur.timestr, "hdop", cur.hdop);
+      sendFirebase(cur.timestr, "vdop", cur.vdop);
       
       if (!isnan(cur.hum))
         sendFirebase(cur.timestr, "hum", cur.hum);
