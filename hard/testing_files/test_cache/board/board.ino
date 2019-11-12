@@ -125,6 +125,7 @@ void cache_overflow() {
   // the data collection frequency, estimate the time for caching
   int count = 0;
   while (true) {
+    Serial.print("Inserting: ");
     Serial.println(++count);
     Data new_data(gps, particle, dht);
     data_queue.push(new_data);
