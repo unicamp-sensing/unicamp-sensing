@@ -21,8 +21,8 @@
         }
 
         #map {
-            height: 365px;
-            width: 960px;
+            height: 70%;
+            width: 100%;
             margin-bottom: 1em;
         }
 
@@ -55,7 +55,7 @@
     <div id='map' data-source="quakes_christchurch_20100901-20101001_mag-gt3.json"></div>
     <script type="text/javascript">
         (function() {
-            var extent, scale,
+            let extent, scale,
                 classes = 9,
                 scheme_id = "BuPu",
                 reverse = false;
@@ -63,10 +63,33 @@
                 container = L.DomUtil.get('map'),
                 map = L.map(container).setView([-43.6, 172.3], 10);
 
-            L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
-                attribution: '<a href="http://content.stamen.com/dotspotting_toner_cartography_available_for_download">Stamen Toner</a>, <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-                maxZoom: 17
-            }).addTo(map);
+            //////////////
+            const tileUrlsOSMDE = "http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png";
+            const tilesOSMDE = L.tileLayer(tileUrlsOSMDE, {
+                maxZoom: 18,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            });
+
+            const tileUrlSTL = "http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}";
+            const tilesSTL = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                subdomains: 'abcd',
+                minZoom: 0,
+                maxZoom: 20,
+                ext: 'png'
+            });
+
+            const toggleMaps = {
+                "Default": L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
+                    attribution: '<a href="http://content.stamen.com/dotspotting_toner_cartography_available_for_download">Stamen Toner</a>, <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+                    maxZoom: 17
+                }),
+                "OSM DE": tilesOSMDE,
+                "Stamen Toner Lite": tilesSTL
+            };
+            toggleMaps['Default'].addTo(map);
+            L.control.layers(toggleMaps).addTo(map);
+            //////////////
 
             d3.json(container.dataset.source, function(collection) {
                 L.pointsLayer(collection, {
@@ -74,7 +97,7 @@
                     applyStyle: circle_style
                 }).addTo(map);
 
-                var chart = timeseries_chart(scheme)
+                let chart = timeseries_chart(scheme)
                     .x(get_time).xLabel("Earthquake origin time")
                     .y(get_magnitude).yLabel("Magnitude")
                     .brushmove(on_brush);
@@ -91,9 +114,9 @@
             }
 
             function on_brush(brush) {
-                var s = brush.extent();
+                let s = brush.extent();
                 d3.selectAll(".circle").classed("selected", function(d) {
-                    var time = get_time(d);
+                    let time = get_time(d);
                     return s[0] <= time && time <= s[1];
                 });
             }
@@ -119,13 +142,13 @@
                 circles.on('click', function(d, i) {
                     L.DomEvent.stopPropagation(d3.event);
 
-                    var t = '<h3><%- id %></h3>' +
+                    let t = '<h3><%- id %></h3>' +
                         '<ul>' +
                         '<li>Magnitude: <%- mag %></li>' +
                         '<li>Depth: <%- depth %>km</li>' +
                         '</ul>';
 
-                    var data = {
+                    let data = {
                         id: d.id,
                         mag: d.properties.magnitude,
                         depth: d.properties.depth
@@ -140,35 +163,37 @@
             }
 
             function timeseries_chart(color) {
-                var margin = { top: 5, right: 5, bottom: 40, left: 45 },
-                    width = 960 - margin.left - margin.right,
-                    height = 80;
+                const mapRect = d3.select('#map').node().getBoundingClientRect();
 
-                var x = d3.time.scale(),
+                let margin = { top: 5, right: 5, bottom: 40, left: 45 },
+                    width = mapRect.width - margin.left - margin.right,
+                    height = 1.5 * (mapRect.height / 7); // mapRect.height = 70% of screen
+
+                let x = d3.time.scale(),
                     y = d3.scale.linear(),
                     x_label = "X",
                     y_label = "Y",
                     brush = d3.svg.brush().x(x).on("brush", _brushmove);
 
-                var get_x = no_op,
-                    get_y = no_op;
+                let get_x = () => {},
+                    get_y = () => {};
 
                 function timeseries(selection) {
                     selection.each(function(d) {
                         x.range([0, width]);
                         y.range([height, 0]);
 
-                        var series = d3.select(this).append("svg").attr("id", "quake-timeseries")
+                        let series = d3.select(this).append("svg").attr("id", "quake-timeseries")
                             .attr("width", width + margin.left + margin.right)
                             .attr("height", height + margin.top + margin.bottom)
                             .append("g").attr("id", "date-brush")
                             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                        var x_axis = series.append("g")
+                        let x_axis = series.append("g")
                             .attr("class", "x axis")
                             .attr("transform", "translate(0," + height + ")");
 
-                        var y_axis = series.append("g")
+                        let y_axis = series.append("g")
                             .attr("class", "y axis");
 
                         x_axis.append("text")
@@ -258,8 +283,6 @@
                 function _brushmove() {
                     brushmove.call(null, brush);
                 }
-
-                function no_op() {}
 
                 return timeseries;
             }
