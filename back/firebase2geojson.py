@@ -1,38 +1,3 @@
-# Firebase structure:
-# {
-#   <year> : {
-#     <month> : {
-#       <day> : {
-#         <hour> : {
-#           <minute> : {
-#             <second> : {
-#               <board_MAC_addr> : {
-#                 "hum" : <humidity>, "tmp" : <temperature>,
-#                 "lat" : <latitude>, "lon" : <longitude>,
-#                 "pm10" : <PM10>,    "pm25" : <PM2.5>
-#               }, ...
-#           ⋮
-#   }, ...
-# }
-
-# GeoJSON structure:
-# {
-#    "type": "FeatureCollection",
-#    "features": [
-#       {
-#          "type": "Feature",
-#          "geometry": { "type": "Point", "coordinates": [<lat>, <lon>] },
-#          "properties": {
-#             "time": "<year>-<month>-<day>T<hour>:<minute>:<second>Z",
-#             "hum": <humidity>, "tmp": <temperature>,
-#             "lat": <latitude>, "lon": <longitude>,
-#             "pm10": <PM10>,    "pm25": <PM2.5>
-#          }
-#       }, ...
-#    ]
-# }
-# obs.: time: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" (Z means "zero hour offset", i.e. UTC)
-
 import sys
 
 def convert(json):
@@ -53,3 +18,8 @@ if __name__ == "__main__":
     print(convert(json))
 
 # ref.: https://gist.github.com/sgillies/1233327#file-geojson-spec-1-0-L96
+#       https://geoffboeing.com/2015/10/exporting-python-data-geojson/
+#       https://stackoverflow.com/a/47325088
+#       https://gis.stackexchange.com/a/221040
+#       https://github.com/geopandas/geopandas
+#       https://geopandas.readthedocs.io/en/latest/gallery/create_geopandas_from_pandas.html
