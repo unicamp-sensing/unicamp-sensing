@@ -23,15 +23,18 @@
 #define DELAY 3000
 
 // Define how many cached datapoints are sent
-#define BURST
+#define BURST 2
+
+// Define maximum amount of nodes to cache
+#define BOUND 5
 
 // Firebase addres and key
 #define FIREBASE_HOST "teste-bb0d8.firebaseio.com"
 #define FIREBASE_AUTH "mLOkguUxVGWlbYmAWdUYiHaYqWqDF9wHstkUIfTT"
 
 // WiFi Login info
-#define WIFI_SSID "Shimbalaie_2.4GHz"
-#define WIFI_PASSWORD "pipolina"
+#define WIFI_SSID "iPhone de vinicius"
+#define WIFI_PASSWORD "shimbalaie"
 
 // Sensors pins and settings
 #define DSM_PM10_PIN  12        // DSM501 Pin 2 on D6
@@ -48,7 +51,7 @@
 // Struct to store data to be sent
 class Data {
   public:
-    char timestr[200];
+    char timestr[25];
     float lati; // Latitude
     float lon;  // Longitude
     float hdop; // Horizontal Error
