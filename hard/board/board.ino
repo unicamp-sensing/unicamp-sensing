@@ -10,12 +10,14 @@ DHT aux(DHTPIN, DHTTYPE);
 DHTwrap dht(aux);
 // Create data queue as a offline cache
 std::queue<Data> data_queue;
+// Count how many nodes in the queu
+int cache = 0;
 // Mac address of device to use as id in the database
 char mac[13];
 
 // Send value to firebase
 void sendFirebase(char* timestr, char* name, float val){
-  char path[100];
+  char path[50];
   sprintf(path, "%s/%s/%s", timestr, mac, name);
   if (SHOW) {Serial.print(path); Serial.print(" | "); Serial.println(val);}
   Firebase.setFloat(path, val);
@@ -26,6 +28,13 @@ void sendFirebase(char* timestr, char* name, float val){
 void runSensors()
 {
   if (SHOW) Serial.println("---> runSensors()");
+
+  if (cache >= BOUND) {
+    if (SHOW) Serial.print("Cache reached limit: ");
+    if (SHOW) Serial.print(cache);
+    if (SHOW) Serial.println("nodes in queue");
+    return;
+  }
   
   // Update data
   if (SHOW) Serial.println("Updating:");
@@ -40,7 +49,12 @@ void runSensors()
   bool requirements = gps.newTime && gps.newLocal;
   
   if (requirements){
-    if (SHOW) Serial.println("Stacking Data");
+    cache++;
+    if (SHOW) {
+      Serial.print("Stacking Data: ");
+      Serial.print(cache);
+      Serial.println(" nodes in queue");
+    }
     // Construct class data to be sent
     Data new_data(gps, particle, dht);
     //add data to queue
@@ -81,6 +95,7 @@ void sendInfo() {
         sendFirebase(cur.timestr, "pm25", cur.pm25);
       
       data_queue.pop();
+      cache--;
       if (SHOW) Serial.println("Sent");     
     }
   }

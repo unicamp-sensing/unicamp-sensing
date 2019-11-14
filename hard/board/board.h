@@ -26,7 +26,7 @@
 #define BURST 2
 
 // Define maximum amount of nodes to cache
-#define BOUND 5
+#define BOUND 600
 
 // Firebase addres and key
 #define FIREBASE_HOST "teste-bb0d8.firebaseio.com"

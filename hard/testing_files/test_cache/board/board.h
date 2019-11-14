@@ -45,11 +45,13 @@
 // Struct to store data to be sent
 class Data {
   public:
-    char timestr[200];
-    double lati; // Latitude
-    double lon;  // Longitude
-    double alt;  // Altitude
-    double vel;  // Velocity
+    char timestr[21];
+    float lati; // Latitude
+    float lon;  // Longitude
+    float hdop; // Horizontal Error
+    float vdop; // Vertical Error
+    float alt;  // Altitude
+    float vel;  // Velocity
     float tmp;   // temperature
     float hum;   // humidity
     float pm10;  // particle concentration for < 1um
