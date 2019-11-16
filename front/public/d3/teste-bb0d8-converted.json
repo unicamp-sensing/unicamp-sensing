@@ -6,26 +6,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          0.0,
-          0.0
-        ]
-      },
-      "properties": {
-        "hum": 11,
-        "lat": 0,
-        "lon": 0,
-        "pm10": 46.9782,
-        "pm25": 44.96468,
-        "tmp": 40,
-        "board_MAC_addr": "A020A61910AC",
-        "time": "2000-00-00T-03:00:00-03:00"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           -47.06424,
           -22.81397
         ]

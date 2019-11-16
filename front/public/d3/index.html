@@ -105,7 +105,18 @@
                     .y(get_tmp).yLabel("Temperature (°C)")
                     .brushmove(on_brush);
 
-                d3.select("body").datum(collection.features).call(chart);
+                // FIXME
+                console.log(new Set(collection.features.map(function(feature) {
+                    return feature.properties.time.substring(0, 14)
+                })));
+                startTime = new Date(2019, 11 - 1, 12, 16); // FIXME we should use month - 1
+                endTime = new Date(2019, 11 - 1, 14, 18); // FIXME we should use month - 1
+                const shownFeatures = collection.features.filter(function(feature) {
+                    datetime = new Date(feature.properties.time);
+                    return startTime <= datetime && datetime <= endTime;
+                });
+                d3.select("body").datum(shownFeatures).call(chart);
+                // d3.select("body").datum(collection.features).call(chart);
             });
 
             function get_time(d) {
@@ -242,19 +253,19 @@
 
                         // FIXME
                         x_extent = d3.extent(d, get_x); // returns [min, max] values in the given iterable
-                        console.log(`x_extent: ${x_extent}`);
-                        x_extent[0] = new Date(x_extent[0].setHours(x_extent[0].getHours() - 10));
-                        x_extent[1] = new Date(x_extent[1].setHours(x_extent[1].getHours() + 10));
-                        console.log(`x_extent': ${x_extent}`);
+                        // console.log(`x_extent: ${x_extent}`);
+                        x_extent[0] = new Date(x_extent[0].setHours(x_extent[0].getHours() - 1));
+                        x_extent[1] = new Date(x_extent[1].setHours(x_extent[1].getHours() + 1));
+                        // console.log(`x_extent': ${x_extent}`);
                         x.domain(x_extent);
                         x_axis.call(d3.svg.axis().scale(x).orient("bottom"));
 
                         // FIXME
                         y_extent = d3.extent(d, get_y); // returns [min, max] values in the given iterable
-                        console.log(`y_extent: ${y_extent}`);
+                        // console.log(`y_extent: ${y_extent}`);
                         y_extent[0] -= 2;
                         y_extent[1] += 2;
-                        console.log(`y_extent: ${y_extent}`);
+                        // console.log(`y_extent: ${y_extent}`);
                         y.domain(y_extent);
                         y_axis.call(d3.svg.axis().scale(y).orient("left"));
 
