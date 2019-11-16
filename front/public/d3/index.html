@@ -243,8 +243,8 @@
                         // FIXME
                         x_extent = d3.extent(d, get_x); // returns [min, max] values in the given iterable
                         console.log(`x_extent: ${x_extent}`);
-                        x_extent[0] = new Date(x_extent[0].setHours(x_extent[0].getHours() - 1));
-                        x_extent[1] = new Date(x_extent[1].setHours(x_extent[1].getHours() + 1));
+                        x_extent[0] = new Date(x_extent[0].setHours(x_extent[0].getHours() - 10));
+                        x_extent[1] = new Date(x_extent[1].setHours(x_extent[1].getHours() + 10));
                         console.log(`x_extent': ${x_extent}`);
                         x.domain(x_extent);
                         x_axis.call(d3.svg.axis().scale(x).orient("bottom"));
@@ -269,10 +269,7 @@
                             .attr("opacity", .4)
                             .attr("r", 2)
                             .attr("transform", function(d) {
-                                // FIXME
-                                // console.log(`get_x(d): ${get_x(d)} x(get_x(d)): ${x(get_x(d))}`);
-                                // console.log(`get_y(d): ${get_y(d)} y(get_y(d)): ${y(get_y(d))}`);
-                                return "translate(" + x(get_x(d) - 20) + "," + y(get_y(d) + 1) + ")";
+                                return "translate(" + x(get_x(d)) + "," + y(get_y(d)) + ")";
                             });
                     });
                 }

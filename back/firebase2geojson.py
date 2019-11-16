@@ -3,7 +3,7 @@ import json
 import geojson
 from geojson import Feature, Point, FeatureCollection
 
-def board_values(required_keys=['lat', 'lon'], print_errors=False):
+def board_values(required_keys=['lat', 'lon'], print_errors=True):
     ''' Iterator for the board values that contain all keys on `required_keys`\n
         Returns a list of triplets: (`board_values_dict`, `date_str`, `time_str`) '''
     print(f"required keys: {', '.join(required_keys)}")
@@ -21,7 +21,7 @@ def board_values(required_keys=['lat', 'lon'], print_errors=False):
                                         triplets.append((_board_values, f"{year}-{month}-{day}", f"{hour}:{minute}:{second}"))
                     except Exception as e:
                         if print_errors:
-                            print(f"exception at {year}-{month}-{day} {hour}h:\n{e}")
+                            print(f"exception at {year}-{month}-{day} {hour}h: {e}")
     return triplets
 
 def triplet2feature(triplet, kept_keys=['hum', 'tmp', 'pm10', 'pm25', 'lat', 'lon', 'board_MAC_addr']):
@@ -30,7 +30,8 @@ def triplet2feature(triplet, kept_keys=['hum', 'tmp', 'pm10', 'pm25', 'lat', 'lo
     board_values_dict, date_str, time_str = triplet
     
     properties = { k: v for k, v in board_values_dict.items() if k in kept_keys }
-    properties.update({ 'time': f"{date_str}T{time_str}Z" }) # FIXME Z is used to signal UTC time (https://www.w3.org/TR/NOTE-datetime)
+    # NOTE: BRT is UTC-3 (https://www.w3.org/TR/NOTE-datetime)
+    properties.update({ 'time': f"{date_str}T{time_str}-03:00" })
     
     lat, lon = float(board_values_dict['lat']), float(board_values_dict['lon'])
     # NOTE: GeoJSON coordinates are [lon, lat]
