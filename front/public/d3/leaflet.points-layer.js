@@ -98,6 +98,7 @@ L.PointsLayer = L.Class.extend({
     },
 
     _project: function(x) {
+        // NOTE: GeoJSON coordinates are [lon, lat]
         var point = this._map.latLngToLayerPoint([x[1], x[0]]);
         return [point.x, point.y];
     },

@@ -1,0 +1,2905 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81397
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81397,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 35,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:29:35Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:29:48Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:29:59Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:30:10Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06426,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06426,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:30:21Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06426,
+          -22.81395
+        ]
+      },
+      "properties": {
+        "hum": 68,
+        "lat": -22.81395,
+        "lon": -47.06426,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:30:32Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06426,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06426,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:30:43Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06426,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06426,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:30:54Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:31:05Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06426,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06426,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:31:16Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06426,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06426,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:31:27Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:31:39Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81395
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81395,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:31:50Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06424,
+          -22.81397
+        ]
+      },
+      "properties": {
+        "hum": 31,
+        "lat": -22.81397,
+        "lon": -47.06424,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:38:24Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81394
+        ]
+      },
+      "properties": {
+        "hum": 64,
+        "lat": -22.81394,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:38:36Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81395
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81395,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:38:47Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 57,
+        "lat": -22.81396,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 21,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:38:58Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06426,
+          -22.81398
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81398,
+        "lon": -47.06426,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 33,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:39:09Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0642,
+          -22.81401
+        ]
+      },
+      "properties": {
+        "hum": 17,
+        "lat": -22.81401,
+        "lon": -47.0642,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:40:53Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06421,
+          -22.81398
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81398,
+        "lon": -47.06421,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:41:02Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06421,
+          -22.81399
+        ]
+      },
+      "properties": {
+        "hum": 64,
+        "lat": -22.81399,
+        "lon": -47.06421,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:41:17Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06421,
+          -22.81398
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81398,
+        "lon": -47.06421,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:41:27Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06424,
+          -22.814
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.814,
+        "lon": -47.06424,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:41:38Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06422,
+          -22.81399
+        ]
+      },
+      "properties": {
+        "hum": 61,
+        "lat": -22.81399,
+        "lon": -47.06422,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:41:50Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06423,
+          -22.81399
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81399,
+        "lon": -47.06423,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:41:59Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06424,
+          -22.81399
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81399,
+        "lon": -47.06424,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:42:08Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81399
+        ]
+      },
+      "properties": {
+        "hum": 68,
+        "lat": -22.81399,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:42:17Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06428,
+          -22.81398
+        ]
+      },
+      "properties": {
+        "hum": 57,
+        "lat": -22.81398,
+        "lon": -47.06428,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:42:26Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06431,
+          -22.81393
+        ]
+      },
+      "properties": {
+        "hum": 57,
+        "lat": -22.81393,
+        "lon": -47.06431,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:43:44Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06429,
+          -22.81395
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81395,
+        "lon": -47.06429,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:44:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06427,
+          -22.81397
+        ]
+      },
+      "properties": {
+        "hum": 63,
+        "lat": -22.81397,
+        "lon": -47.06427,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:44:11Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06414,
+          -22.81391
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81391,
+        "lon": -47.06414,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 30,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:45:03Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06415,
+          -22.81392
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81392,
+        "lon": -47.06415,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:45:12Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06418,
+          -22.81393
+        ]
+      },
+      "properties": {
+        "hum": 61,
+        "lat": -22.81393,
+        "lon": -47.06418,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:45:21Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06418,
+          -22.81395
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81395,
+        "lon": -47.06418,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 34,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:45:30Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06418,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81396,
+        "lon": -47.06418,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:45:39Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06421,
+          -22.814
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.814,
+        "lon": -47.06421,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:49:16Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0642,
+          -22.81399
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81399,
+        "lon": -47.0642,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:49:32Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06419,
+          -22.81398
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81398,
+        "lon": -47.06419,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T15:49:44Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06411,
+          -22.81407
+        ]
+      },
+      "properties": {
+        "hum": 48,
+        "lat": -22.81407,
+        "lon": -47.06411,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 25,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:22:27Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06413,
+          -22.81409
+        ]
+      },
+      "properties": {
+        "hum": 48,
+        "lat": -22.81409,
+        "lon": -47.06413,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 25,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:22:39Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06413,
+          -22.8141
+        ]
+      },
+      "properties": {
+        "hum": 49,
+        "lat": -22.8141,
+        "lon": -47.06413,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 25,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:22:50Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06413,
+          -22.81409
+        ]
+      },
+      "properties": {
+        "hum": 50,
+        "lat": -22.81409,
+        "lon": -47.06413,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 25,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:23:01Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06413,
+          -22.81409
+        ]
+      },
+      "properties": {
+        "hum": 53,
+        "lat": -22.81409,
+        "lon": -47.06413,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 25,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:23:12Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06413,
+          -22.81408
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81408,
+        "lon": -47.06413,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 25,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:23:23Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06411,
+          -22.81406
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81406,
+        "lon": -47.06411,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:23:34Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06409,
+          -22.81405
+        ]
+      },
+      "properties": {
+        "hum": 57,
+        "lat": -22.81405,
+        "lon": -47.06409,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:23:45Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06399,
+          -22.81404
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81404,
+        "lon": -47.06399,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:23:56Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06384,
+          -22.81399
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81399,
+        "lon": -47.06384,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:24:08Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06374,
+          -22.81396
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81396,
+        "lon": -47.06374,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:24:19Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0637,
+          -22.81395
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81395,
+        "lon": -47.0637,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:24:31Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06367,
+          -22.8139
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.8139,
+        "lon": -47.06367,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:24:42Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06369,
+          -22.81386
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81386,
+        "lon": -47.06369,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:24:53Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06368,
+          -22.81384
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81384,
+        "lon": -47.06368,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:25:04Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06366,
+          -22.8138
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.8138,
+        "lon": -47.06366,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:25:15Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06359,
+          -22.81375
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81375,
+        "lon": -47.06359,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:25:26Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06356,
+          -22.81371
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81371,
+        "lon": -47.06356,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:25:36Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06353,
+          -22.81359
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81359,
+        "lon": -47.06353,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:25:46Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06349,
+          -22.81348
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81348,
+        "lon": -47.06349,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:25:57Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06337,
+          -22.81342
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81342,
+        "lon": -47.06337,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:26:08Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06324,
+          -22.81341
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81341,
+        "lon": -47.06324,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:26:20Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06314,
+          -22.81339
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81339,
+        "lon": -47.06314,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:26:29Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06304,
+          -22.81337
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81337,
+        "lon": -47.06304,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:26:38Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06293,
+          -22.81336
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81336,
+        "lon": -47.06293,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:26:47Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06282,
+          -22.81338
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81338,
+        "lon": -47.06282,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:26:56Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06274,
+          -22.81339
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81339,
+        "lon": -47.06274,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:27:05Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06266,
+          -22.81341
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81341,
+        "lon": -47.06266,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:27:14Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06256,
+          -22.81344
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81344,
+        "lon": -47.06256,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:27:23Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06249,
+          -22.81344
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81344,
+        "lon": -47.06249,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:27:32Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06239,
+          -22.81345
+        ]
+      },
+      "properties": {
+        "hum": 57,
+        "lat": -22.81345,
+        "lon": -47.06239,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:27:41Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0623,
+          -22.81345
+        ]
+      },
+      "properties": {
+        "hum": 57,
+        "lat": -22.81345,
+        "lon": -47.0623,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:27:50Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06221,
+          -22.81346
+        ]
+      },
+      "properties": {
+        "hum": 57,
+        "lat": -22.81346,
+        "lon": -47.06221,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:27:59Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06214,
+          -22.81349
+        ]
+      },
+      "properties": {
+        "hum": 57,
+        "lat": -22.81349,
+        "lon": -47.06214,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:28:08Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06205,
+          -22.81351
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81351,
+        "lon": -47.06205,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:28:17Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06197,
+          -22.81352
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81352,
+        "lon": -47.06197,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:28:26Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0619,
+          -22.81354
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81354,
+        "lon": -47.0619,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:28:35Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06184,
+          -22.81356
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81356,
+        "lon": -47.06184,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:28:43Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06177,
+          -22.81358
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81358,
+        "lon": -47.06177,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:28:51Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0616,
+          -22.81361
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81361,
+        "lon": -47.0616,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:29:08Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06142,
+          -22.81362
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81362,
+        "lon": -47.06142,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:29:24Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06124,
+          -22.81363
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81363,
+        "lon": -47.06124,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:29:40Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06116,
+          -22.81372
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81372,
+        "lon": -47.06116,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:29:58Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06113,
+          -22.81393
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81393,
+        "lon": -47.06113,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:30:17Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06112,
+          -22.81409
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81409,
+        "lon": -47.06112,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:30:34Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06112,
+          -22.81423
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81423,
+        "lon": -47.06112,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:30:51Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0611,
+          -22.81442
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81442,
+        "lon": -47.0611,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:31:08Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06108,
+          -22.81453
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81453,
+        "lon": -47.06108,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:31:21Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06107,
+          -22.81461
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81461,
+        "lon": -47.06107,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:31:31Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06106,
+          -22.81471
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81471,
+        "lon": -47.06106,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:31:43Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06105,
+          -22.81482
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81482,
+        "lon": -47.06105,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:31:54Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06104,
+          -22.81494
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81494,
+        "lon": -47.06104,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:32:05Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06104,
+          -22.81506
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81506,
+        "lon": -47.06104,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:32:17Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06103,
+          -22.81519
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81519,
+        "lon": -47.06103,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:32:29Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06112,
+          -22.81544
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81544,
+        "lon": -47.06112,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:33:03Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06121,
+          -22.81546
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81546,
+        "lon": -47.06121,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:33:12Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0613,
+          -22.81547
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81547,
+        "lon": -47.0613,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:33:21Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06141,
+          -22.81548
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81548,
+        "lon": -47.06141,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:33:30Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06147,
+          -22.81547
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81547,
+        "lon": -47.06147,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:33:39Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06157,
+          -22.81546
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81546,
+        "lon": -47.06157,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:33:47Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06166,
+          -22.8155
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.8155,
+        "lon": -47.06166,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:33:56Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06177,
+          -22.8155
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.8155,
+        "lon": -47.06177,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:34:05Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06188,
+          -22.8155
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.8155,
+        "lon": -47.06188,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:34:14Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06198,
+          -22.81549
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81549,
+        "lon": -47.06198,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:34:23Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06202,
+          -22.8154
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.8154,
+        "lon": -47.06202,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:34:32Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06207,
+          -22.81533
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81533,
+        "lon": -47.06207,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:34:41Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06207,
+          -22.81527
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81527,
+        "lon": -47.06207,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:34:49Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06199,
+          -22.81529
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81529,
+        "lon": -47.06199,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:35:08Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06189,
+          -22.81527
+        ]
+      },
+      "properties": {
+        "hum": 53,
+        "lat": -22.81527,
+        "lon": -47.06189,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:35:24Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06189,
+          -22.81524
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81524,
+        "lon": -47.06189,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:35:40Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0619,
+          -22.81521
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81521,
+        "lon": -47.0619,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:35:58Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06205,
+          -22.81535
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81535,
+        "lon": -47.06205,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:36:16Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06206,
+          -22.81549
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81549,
+        "lon": -47.06206,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:36:31Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06213,
+          -22.81557
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81557,
+        "lon": -47.06213,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:36:42Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06219,
+          -22.81562
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81562,
+        "lon": -47.06219,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:36:53Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06228,
+          -22.81569
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81569,
+        "lon": -47.06228,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:37:05Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06241,
+          -22.81573
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81573,
+        "lon": -47.06241,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:37:17Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0625,
+          -22.8157
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.8157,
+        "lon": -47.0625,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:37:28Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06255,
+          -22.81562
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81562,
+        "lon": -47.06255,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:37:39Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06258,
+          -22.8155
+        ]
+      },
+      "properties": {
+        "hum": 53,
+        "lat": -22.8155,
+        "lon": -47.06258,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:37:50Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06258,
+          -22.81536
+        ]
+      },
+      "properties": {
+        "hum": 53,
+        "lat": -22.81536,
+        "lon": -47.06258,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:38:03Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06256,
+          -22.81533
+        ]
+      },
+      "properties": {
+        "hum": 53,
+        "lat": -22.81533,
+        "lon": -47.06256,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:38:14Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06267,
+          -22.81525
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81525,
+        "lon": -47.06267,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 28,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:38:25Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06271,
+          -22.81517
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81517,
+        "lon": -47.06271,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:38:36Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06279,
+          -22.81505
+        ]
+      },
+      "properties": {
+        "hum": 54,
+        "lat": -22.81505,
+        "lon": -47.06279,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:38:47Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06283,
+          -22.81494
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81494,
+        "lon": -47.06283,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:38:59Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06285,
+          -22.81482
+        ]
+      },
+      "properties": {
+        "hum": 55,
+        "lat": -22.81482,
+        "lon": -47.06285,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:39:10Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06288,
+          -22.81471
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81471,
+        "lon": -47.06288,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:39:21Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06293,
+          -22.81461
+        ]
+      },
+      "properties": {
+        "hum": 56,
+        "lat": -22.81461,
+        "lon": -47.06293,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:39:32Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06297,
+          -22.81458
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81458,
+        "lon": -47.06297,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:39:43Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06302,
+          -22.8145
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.8145,
+        "lon": -47.06302,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:39:54Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06304,
+          -22.81435
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81435,
+        "lon": -47.06304,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:40:05Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06309,
+          -22.81421
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81421,
+        "lon": -47.06309,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:40:16Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06316,
+          -22.81409
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81409,
+        "lon": -47.06316,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:40:28Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0632,
+          -22.814
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.814,
+        "lon": -47.0632,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:40:39Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06326,
+          -22.81391
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81391,
+        "lon": -47.06326,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:40:51Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06334,
+          -22.8138
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.8138,
+        "lon": -47.06334,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:41:02Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06343,
+          -22.81369
+        ]
+      },
+      "properties": {
+        "hum": 60,
+        "lat": -22.81369,
+        "lon": -47.06343,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 26,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:41:14Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0635,
+          -22.81364
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81364,
+        "lon": -47.0635,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:41:25Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06359,
+          -22.81367
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81367,
+        "lon": -47.06359,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:41:36Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06365,
+          -22.81371
+        ]
+      },
+      "properties": {
+        "hum": 59,
+        "lat": -22.81371,
+        "lon": -47.06365,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:41:47Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06365,
+          -22.81378
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81378,
+        "lon": -47.06365,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:41:59Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06103,
+          -22.81544
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81544,
+        "lon": -47.06103,
+        "pm10": 0.01,
+        "pm25": 0.01,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:42:05Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06372,
+          -22.81381
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81381,
+        "lon": -47.06372,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:42:10Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06379,
+          -22.81381
+        ]
+      },
+      "properties": {
+        "hum": 58,
+        "lat": -22.81381,
+        "lon": -47.06379,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:42:21Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.06387,
+          -22.81386
+        ]
+      },
+      "properties": {
+        "hum": 57,
+        "lat": -22.81386,
+        "lon": -47.06387,
+        "pm10": 0.000172,
+        "pm25": 0.000172,
+        "tmp": 27,
+        "board_MAC_addr": "A020A61910AC",
+        "time": "2019-11-14T17:42:36Z"
+      }
+    }
+  ]
+}

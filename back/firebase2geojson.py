@@ -24,16 +24,17 @@ def board_values(required_keys=['lat', 'lon'], print_errors=False):
                             print(f"exception at {year}-{month}-{day} {hour}h:\n{e}")
     return triplets
 
-def triplet2feature(triplet, kept_keys=['hum', 'tmp', 'pm10', 'pm25', 'lat', 'lon']):
+def triplet2feature(triplet, kept_keys=['hum', 'tmp', 'pm10', 'pm25', 'lat', 'lon', 'board_MAC_addr']):
     ''' Converts a (`board_values_dict`, `date_str`, `time_str`) to a `geojson.Feature` object\n
         The list `kept_keys` defines which values will be stored as properties of the feature '''
     board_values_dict, date_str, time_str = triplet
     
     properties = { k: v for k, v in board_values_dict.items() if k in kept_keys }
-    properties.update({ 'time': f"{date_str}T{time_str}Z" }) # FIXME Z is used to signal UTC time
+    properties.update({ 'time': f"{date_str}T{time_str}Z" }) # FIXME Z is used to signal UTC time (https://www.w3.org/TR/NOTE-datetime)
     
     lat, lon = float(board_values_dict['lat']), float(board_values_dict['lon'])
-    return Feature(geometry=Point((lat, lon)), properties=properties)
+    # NOTE: GeoJSON coordinates are [lon, lat]
+    return Feature(geometry=Point((lon, lat)), properties=properties)
 
 def convert(firebase_json):
     ''' Converts `firebase_json` from a Firebase structured string to a `geojson.FeatureCollection` '''

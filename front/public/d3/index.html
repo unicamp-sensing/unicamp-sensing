@@ -12,6 +12,8 @@
     <script src="colorbrewer.js"></script>
     <script src="leaflet.points-layer.js"></script>
 
+    <script src="../constants.js"></script>
+
     <style type="text/css">
         html,
         body {
@@ -52,7 +54,7 @@
 </head>
 
 <body>
-    <div id='map' data-source="quakes_christchurch_20100901-20101001_mag-gt3.json"></div>
+    <div id='map' data-source="teste-bb0d8-converted.json"></div>
     <!-- ref.: http://bl.ocks.org/tnightingale/4718717 -->
     <script type="text/javascript">
         (function() {
@@ -62,7 +64,7 @@
                 reverse = false;
             scheme = colorbrewer[scheme_id][classes],
                 container = L.DomUtil.get('map'),
-                map = L.map(container).setView([-43.6, 172.3], 10);
+                map = L.map(container).setView([-22.814, -47.069], 15);
 
             //////////////
             const tileUrlsOSMDE = "http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png";
@@ -99,19 +101,19 @@
                 }).addTo(map);
 
                 let chart = timeseries_chart(scheme)
-                    .x(get_time).xLabel("Earthquake origin time")
-                    .y(get_magnitude).yLabel("Magnitude")
+                    .x(get_time).xLabel("Time of data collection")
+                    .y(get_tmp).yLabel("Temperature (°C)")
                     .brushmove(on_brush);
 
                 d3.select("body").datum(collection.features).call(chart);
             });
 
             function get_time(d) {
-                return d3.time.format.iso.parse(d.properties.origintime);
+                return d3.time.format.iso.parse(d.properties.time);
             }
 
-            function get_magnitude(d) {
-                return +d.properties.magnitude;
+            function get_tmp(d) {
+                return d.properties.tmp;
             }
 
             function on_brush(brush) {
@@ -123,68 +125,77 @@
             }
 
             function get_radius(d) {
-                return d.properties.magnitude * d.properties.magnitude;
+                const currentZoom = map.getZoom();
+                return (
+                    (currentZoom <= 11) ? 6 :
+                    (currentZoom <= 13) ? 1 :
+                    (currentZoom <= 16) ? 3 :
+                    (currentZoom <= 17) ? 4 : 5);
             }
 
             function circle_style(circles) {
                 if (!(extent && scale)) {
-                    extent = d3.extent(circles.data(), function(d) { return d.properties.depth; });
+                    extent = d3.extent(circles.data(), function(d) { return d.properties.tmp; }); // FIXME
                     scale = d3.scale.log()
                         .domain(reverse ? extent.reverse() : extent)
                         .range(d3.range(classes));
+                    console.log(`scale: ${scale} classes: ${classes} range: ${d3.range(classes)}`);
                 }
                 circles.attr('opacity', 0.4)
                     .attr('stroke', scheme[classes - 1])
                     .attr('stroke-width', 1)
                     .attr('fill', function(d) {
-                        return scheme[(scale(d.properties.depth) * 10).toFixed()];
+                        return scheme[(scale(d.properties.tmp) * 10).toFixed()]; // FIXME
                     });
 
                 circles.on('click', function(d, i) {
                     L.DomEvent.stopPropagation(d3.event);
 
-                    let t = '<h3><%- id %></h3>' +
+                    let t = '<h3><%- board %></h3>' +
                         '<ul>' +
-                        '<li>Magnitude: <%- mag %></li>' +
-                        '<li>Depth: <%- depth %>km</li>' +
+                        '<li>Temperature: <%- tmp %>°C</li>' +
+                        '<li>Time:        <%- datetime %></li>' +
+                        '<li>Coordinates: (<%- lat %>, <%- lon %>)</li>' +
                         '</ul>';
 
                     let data = {
-                        id: d.id,
-                        mag: d.properties.magnitude,
-                        depth: d.properties.depth
+                        board: d.board_MAC_addr,
+                        tmp: d.properties.tmp,
+                        datetime: d.properties.time,
+                        lat: d.properties.lat,
+                        lon: d.properties.lon
                     };
 
+                    // NOTE: GeoJSON coordinates are [lon, lat]
                     L.popup()
                         .setLatLng([d.geometry.coordinates[1], d.geometry.coordinates[0]])
                         .setContent(_.template(t, data))
                         .openOn(map);
-
                 });
             }
 
             function timeseries_chart(color) {
                 const mapRect = d3.select('#map').node().getBoundingClientRect();
 
-                let margin = { top: 5, right: 5, bottom: 40, left: 45 },
+                let margin = { top: 5, right: 5, bottom: 40, left: 50 },
                     width = mapRect.width - margin.left - margin.right,
                     height = 1.5 * (mapRect.height / 7); // mapRect.height = 70% of screen
 
-                let x = d3.time.scale(),
+                let x = d3.time.scale().domain([new Date(2019, 10, 07, 17, 26), new Date(2019, 10, 07, 17, 38)]),
                     y = d3.scale.linear(),
                     x_label = "X",
                     y_label = "Y",
                     brush = d3.svg.brush().x(x).on("brush", _brushmove);
 
                 let get_x = () => {},
-                    get_y = () => {};
+                    get_y = () => {}; // no op
 
                 function timeseries(selection) {
                     selection.each(function(d) {
-                        x.range([0, width]);
+                        x.range([0, width - 20]);
                         y.range([height, 0]);
 
-                        let series = d3.select(this).append("svg").attr("id", "quake-timeseries")
+                        let series = d3.select(this).append("svg").attr("id", "unicamp-timeseries")
                             .attr("width", width + margin.left + margin.right)
                             .attr("height", height + margin.top + margin.bottom)
                             .append("g").attr("id", "date-brush")
@@ -199,15 +210,15 @@
 
                         x_axis.append("text")
                             .attr("class", "label")
-                            .attr("x", width)
-                            .attr("y", 30)
+                            .attr("x", margin.left + width / 2)
+                            .attr("y", 35)
                             .style("text-anchor", "end")
                             .text(x_label);
 
                         y_axis.append("text")
                             .attr("class", "label")
                             .attr("transform", "rotate(-90)")
-                            .attr("y", -40)
+                            .attr("y", -45)
                             .attr("dy", ".71em")
                             .style("text-anchor", "end")
                             .text(y_label);
@@ -229,10 +240,22 @@
                             .style("fill", color[2])
                             .attr("opacity", 0.4);
 
-                        x.domain(d3.extent(d, get_x));
+                        // FIXME
+                        x_extent = d3.extent(d, get_x); // returns [min, max] values in the given iterable
+                        console.log(`x_extent: ${x_extent}`);
+                        x_extent[0] = new Date(x_extent[0].setHours(x_extent[0].getHours() - 1));
+                        x_extent[1] = new Date(x_extent[1].setHours(x_extent[1].getHours() + 1));
+                        console.log(`x_extent': ${x_extent}`);
+                        x.domain(x_extent);
                         x_axis.call(d3.svg.axis().scale(x).orient("bottom"));
 
-                        y.domain(d3.extent(d, get_y));
+                        // FIXME
+                        y_extent = d3.extent(d, get_y); // returns [min, max] values in the given iterable
+                        console.log(`y_extent: ${y_extent}`);
+                        y_extent[0] -= 2;
+                        y_extent[1] += 2;
+                        console.log(`y_extent: ${y_extent}`);
+                        y.domain(y_extent);
                         y_axis.call(d3.svg.axis().scale(y).orient("left"));
 
                         series.append("g").attr("class", "timeseries")
@@ -246,37 +269,55 @@
                             .attr("opacity", .4)
                             .attr("r", 2)
                             .attr("transform", function(d) {
-                                return "translate(" + x(get_x(d)) + "," + y(get_y(d)) + ")";
+                                // FIXME
+                                // console.log(`get_x(d): ${get_x(d)} x(get_x(d)): ${x(get_x(d))}`);
+                                // console.log(`get_y(d): ${get_y(d)} y(get_y(d)): ${y(get_y(d))}`);
+                                return "translate(" + x(get_x(d) - 20) + "," + y(get_y(d) + 1) + ")";
                             });
                     });
                 }
 
                 timeseries.x = function(accessor) {
-                    if (!arguments.length) return get_x;
+                    if (!arguments.length) {
+                        console.log(`ERROR at .x (arguments.length is ${arguments.length})`)
+                        return get_x;
+                    }
                     get_x = accessor;
                     return timeseries;
                 };
 
                 timeseries.y = function(accessor) {
-                    if (!arguments.length) return get_y;
+                    if (!arguments.length) {
+                        console.log(`ERROR at .y (arguments.length is ${arguments.length})`)
+                        return get_y;
+                    }
                     get_y = accessor;
                     return timeseries;
                 };
 
                 timeseries.xLabel = function(label) {
-                    if (!arguments.length) return x_label;
+                    if (!arguments.length) {
+                        console.log(`ERROR at .xLabel (arguments.length is ${arguments.length})`);
+                        return x_label;
+                    }
                     x_label = label;
                     return timeseries;
                 }
 
                 timeseries.yLabel = function(label) {
-                    if (!arguments.length) return y_label;
+                    if (!arguments.length) {
+                        console.log(`ERROR at .yLabel (arguments.length is ${arguments.length})`)
+                        return y_label;
+                    }
                     y_label = label;
                     return timeseries;
                 }
 
                 timeseries.brushmove = function(cb) {
-                    if (!arguments.length) return brushmove;
+                    if (!arguments.length) {
+                        console.log(`ERROR at .brushmove (arguments.length is ${arguments.length})`)
+                        return brushmove;
+                    }
                     brushmove = cb;
                     return timeseries;
                 };
