@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 setup=false # Default considers the environment is ready
 time=60 # Default time limit for each test
 port=$1 # Default serial port connected to the board
@@ -77,14 +77,20 @@ for test in ./tests/* ; do
         sudo cat $port >> logs/${test#*/*/}.log
         
         # Check for keyword
-        if [ ! -z "$(tail -1 ${test#*/*/}.log | grep -w "Pass")" ]; then    
+        if [ ! -z "$(tail -1 logs/${test#*/*/}.log | grep -w "Pass")" ]; then    
             echo "PASSED!!!"
             break
-        elif [ ! -z "$(tail -1 ${test#*/*/}.log | grep -w "Fail")" ]; then
+        elif [ ! -z "$(tail -1 logs/${test#*/*/}.log | grep -w "Fail")" ]; then
             echo "FAILED!!!"
             break
         fi
 
     done
+
+    if [ $(($(date +%s) - start)) -le $time ]; then
+        echo "TIMEOUT: The time limit of ${time}s was exceeded."
+        echo " - Try incresing the time limit with the flag '-t'"
+        echo " - Check if the test is serial printing the keywords (Pass/Fail)"
+    fi
 
 done
