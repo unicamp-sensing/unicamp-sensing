@@ -8,28 +8,20 @@ function init() {
 
     $("button-download").addEventListener("click", download);
 
-    charts = plotData({
-        "tmp": "Temperature (°C)",
-        "hum": "Humidity (%RH)", // relative humidity
-        "pm10": "PM10 Concentration",
-        "pm25": "PM2.5 Concentration"
-    });
+    charts = plotData();
 }
 
 
-async function plotData(labels) {
+async function plotData() {
     const data = await getRawData();
 
     const valuesByDayDate = boardValuesByDayDate(data);
     datasets = {
-        "tmp": [], // temperature
-        "hum": [], // humidity
+        "tmp": [],  // temperature
+        "hum": [],  // humidity
         "pm10": [], // PM 10
-        "pm25": [] // PM 2.5
+        "pm25": []  // PM 2.5
     };
-
-    // const values = Object.values(valuesByDayDate).flat();
-    // const dates = values.map((val) => val.x);
 
     for (const [dayDate, boardValues] of Object.entries(valuesByDayDate)) {
         for (const valueKey of Object.keys(datasets)) {
@@ -50,7 +42,6 @@ async function plotData(labels) {
                 x: xs,
                 y: ys,
                 showlegend: false,
-
                 marker: {
                     color: ys,
                     showscale: true,
@@ -69,10 +60,11 @@ async function plotData(labels) {
         }
     };
 
-    Plotly.newPlot("div-tmp", datasets['tmp'], { title: "Temperature (°C)", ...layout });
-    Plotly.newPlot("div-hum", datasets['hum'], { title: "Humidity (%RH)", ...layout });
-    Plotly.newPlot("div-pm10", datasets['pm10'], { title: "Particle Matter 10", ...layout });
+    Plotly.newPlot("div-tmp",  datasets['tmp'],  { title: "Temperature (°C)",    ...layout });
+    Plotly.newPlot("div-hum",  datasets['hum'],  { title: "Humidity (%RH)",      ...layout });
+    Plotly.newPlot("div-pm10", datasets['pm10'], { title: "Particle Matter 10",  ...layout });
     Plotly.newPlot("div-pm25", datasets['pm25'], { title: "Particle Matter 2.5", ...layout });
+    
     stopLoading(document.getElementById("loading"));
 }
 
