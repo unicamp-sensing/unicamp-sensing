@@ -61,8 +61,8 @@ for test in ./tests/* ; do
     printf "\n=======> $test\n"
 
     printf "\nCreating log...\n"
-    rm -f ${test#*/*/}.log
-    touch ${test#*/*/}.log
+    rm -f logs/${test#*/*/}.log
+    touch logs/${test#*/*/}.log
 
     printf "\nCompiling Test...\n"
     sudo arduino-cli compile -p $port --fqbn esp8266:esp8266:nodemcuv2 $test > /dev/null
@@ -74,7 +74,7 @@ for test in ./tests/* ; do
     while [ $(($(date +%s) - start)) -le $time ]; do  
 
         # Update log
-        sudo cat $port >> ${test#*/*/}.log
+        sudo cat $port >> logs/${test#*/*/}.log
         
         # Check for keyword
         if [ ! -z "$(tail -1 ${test#*/*/}.log | grep -w "Pass")" ]; then    

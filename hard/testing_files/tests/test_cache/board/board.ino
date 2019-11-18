@@ -13,6 +13,13 @@ std::queue<Data> data_queue;
 // Mac address of device to use as id in the database
 char mac[13];
 
+
+// TEST FUNCTIONS ///////
+#include "cache_test.h"//
+/////////////////////////
+
+
+
 // Send value to firebase
 void sendFirebase(char* timestr, char* name, float val){
   char path[100];
@@ -118,26 +125,18 @@ void setup()
   if (SHOW) Serial.println("<--- setup()!");
 }
 
-void cache_overflow() {
-  // Insert data into the queue until the board crashes
-  // Upon counting the ammount of nodes that can be inserted
-  // in the list we can estimate the maximum cache and, knowing
-  // the data collection frequency, estimate the time for caching
-  int count = 0;
-  while (true) {
-    Serial.print("Inserting: ");
-    Serial.println(++count);
-    Data new_data(gps, particle, dht);
-    data_queue.push(new_data);
-  }
-}
-
 void loop()
 {
   if (SHOW) Serial.println("---> loop()");
   runSensors();
   sendInfo();
-  cache_overflow();
+
+  // THE IMPORTANT PART: ///////
+  // Call the testing function//
+  cache_overflow(data_queue, gps, particle, dht);
+  //////////////////////////////
+  
+  
   delay(DELAY);
   if (SHOW) Serial.println("<--- loop()");         
 }
