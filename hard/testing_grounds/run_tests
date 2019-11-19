@@ -4,8 +4,10 @@ setup=false # Default considers the environment is ready
 time=60 # Default time limit for each test
 library=false # Should the libraries be installed?
 port="" # Default serial port connected to the board
-test_list=()
+test_list=() # List of tests to execute (if empty runs all)
 
+
+# PARAMETERS HANDLING
 while test $# -gt 0; do
     case "$1" in
         -h|--help)
@@ -57,11 +59,8 @@ while test $# -gt 0; do
     esac
 done
 
-# Theres a couple of things that must be done to prepare the
-# testing environment:
-# - Install golang and arduino-cli
-# - Adding the board and libraries to the cli
-# This needs to be done only once.
+
+# ENVIRONMENT SETUP (-s flag)
 if [ "$setup" = true ]; then
     set -e # Interrupt if any error ocurrs
     echo "=====> [ PREPARING ENVIRONMENT ] <====="
@@ -89,21 +88,10 @@ if [ "$setup" = true ]; then
 
     echo "=====> [ READY ] <====="
     exit 0
-fi
 
-# In case new libraries are added to libraries.txt,
-# simply using the flag -l will install them
-if [ "$library" = true ]; then
-    printf "\n\nInstalling libraries...\n\n"
-    while read -r line; do 
-        printf "Getting '${line}'\n"
-        arduino-cli lib install "$line" > /dev/null  
-    done < "libraries.txt"
-fi
+# IF NOT SETTING UP, CHECKS PORT PARAMETER
+elif [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
 
-# Must receive as the first parameter the path which contains the file to
-# where the serial writes from the board are sent (EX: /dev/ttyUSB0)
-if [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
     echo ""
     echo "MISSING ARGUMENT: The serial port connected to the board was not defined"
     echo "Try the following:"
@@ -113,11 +101,23 @@ if [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
     echo " - Pass the atribute as the LAST argument of the script"
     echo ""
     exit 1
+
 fi
 
-# Configure serial port for reading
+
+# LIBRARIES INSTALLATION (-l flag)
+if [ "$library" = true ]; then
+    printf "\n\nInstalling libraries...\n\n"
+    while read -r line; do 
+        printf "Getting '${line}'\n"
+        arduino-cli lib install "$line" > /dev/null  
+    done < "libraries.txt"
+fi
+
+# Configure serial port for communicating with the board
 sudo stty -F $port cs8 115200
 
+# CHECK TESTS TO BE RUN (-f Flag)
 if [ ${#test_list[@]} -eq 0 ]; then 
     printf "\n\nRunning all tests (PORT: $port):\n\n"
     test_list=(./tests/*); 
@@ -126,7 +126,7 @@ else
     printf "${test_list[@]}"
 fi
 
-
+# RUNNING AND CHECKING TESTS
 for test in ${test_list[@]} ; do
     printf "\n=======> ${test#*/*/}\n"
 
