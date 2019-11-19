@@ -3,11 +3,10 @@
 setup=false # Default considers the environment is ready
 time=60 # Default time limit for each test
 library=false # Should the libraries be installed?
-port=$1 # Default serial port connected to the board
-test_list=(a v s g)
+port="" # Default serial port connected to the board
+test_list=()
 
 while test $# -gt 0; do
-    echo "$1"
     case "$1" in
         -h|--help)
             echo "Automated testing script"
@@ -15,10 +14,11 @@ while test $# -gt 0; do
             echo "./run_script serial-port [options]"
             echo " "
             echo "options:"
-            echo "-h, --help          show brief help"
-            echo "-t                  specify a time limit for each test"
-            echo "-s                  setup environment"
-            echo "-l                  Install libraries"
+            echo "-h, --help       Show brief help"
+            echo "-t               Specify a time limit for each test"
+            echo "-s               Setup environment"
+            echo "-f               Execute specific test files"
+            echo "-l               Install libraries"
             exit 0
             ;;
         -s) 
@@ -45,13 +45,14 @@ while test $# -gt 0; do
         -f)
             shift
             while [ $# -gt 0 ] && [ ${1::1} != '-' ]; do
-                test_list+=('$1')
+                echo "$1"
+                test_list+=(./tests/$1)
                 shift
             done
-            echo $test_list
             ;;
         *)
-            break
+            port=$1
+            shift
             ;;
     esac
 done
@@ -117,12 +118,16 @@ fi
 # Configure serial port for reading
 sudo stty -F $port cs8 115200
 
+if [ ${#test_list[@]} -eq 0 ]; then 
+    printf "\n\nRunning all tests (PORT: $port):\n\n"
+    test_list=(./tests/*); 
+else 
+    printf "\n\nRunning tests (PORT: $port):\n"
+    printf "${test_list[@]}"
+fi
 
 
-
-
-printf "\n\nRunning all tests (PORT: $port):\n\n"
-for test in ./tests/* ; do
+for test in ${test_list[@]} ; do
     printf "\n=======> ${test#*/*/}\n"
 
     printf "\nPreparing Log...\n"
