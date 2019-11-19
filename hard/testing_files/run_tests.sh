@@ -1,40 +1,28 @@
 #!/bin/bash
-set -e
 setup=false # Default considers the environment is ready
 time=60 # Default time limit for each test
+library=false # Should the libraries be installed?
 port=$1 # Default serial port connected to the board
 # echo ${port::1}
 
 # Checks which flags are set
-while getopts st: option
+while getopts slt: option
 do
 case "${option}"
 in
 s) setup=true;;
+l) library=true;;
 t) time=${OPTARG};;
 esac
 done
 
-# Must receive as the first parameter the path which contains the file to
-# where the serial writes from the board are sent (EX: /dev/ttyUSB0)
-if [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
-    echo ""
-    echo "MISSING ARGUMENT: The serial port connected to the board was not defined"
-    echo "Try the following:"
-    echo " - Run the 'arduino-cli board list' command"
-    echo " - Find the row/entry with the desired board"
-    echo " - Get the atribute/colunm 'Port' of such row/entry"
-    echo " - Pass the atribute as the first argument of the script"
-    echo ""
-    exit 1
-fi
-
 # Theres a couple of things that must be done to prepare the
 # testing environment:
-# - Install golang and then the arduino-cli
+# - Install golang and arduino-cli
 # - Adding the board and libraries to the cli
 # This needs to be done only once.
 if [ "$setup" = true ]; then
+    set -e # Interrupt if any error ocurrs
     echo "=====> [ PREPARING ENVIRONMENT ] <====="
     
     printf "\n\nUpdating packages....\n\n"
@@ -50,28 +38,64 @@ if [ "$setup" = true ]; then
     sudo cp ~/go/bin/arduino-cli /bin/
     arduino-cli core update-index
 
+    if [ "$library" = true ]; then
+        printf "\n\nInstalling libraries...\n\n"
+        while read -r line; do 
+            printf "Getting '${line}'\n"
+            arduino-cli lib install "$line" > /dev/null   
+        done < "libraries.txt"
+    fi
+
     echo "=====> [ READY ] <====="
+    exit 0
 fi
 
+# In case new libraries are added to libraries.txt,
+# simply using the flag -l will install them
+if [ "$library" = true ]; then
+    printf "\n\nInstalling libraries...\n\n"
+    while read -r line; do 
+        printf "Getting '${line}'\n"
+        arduino-cli lib install "$line" > /dev/null  
+    done < "libraries.txt"
+fi
+
+# Must receive as the first parameter the path which contains the file to
+# where the serial writes from the board are sent (EX: /dev/ttyUSB0)
+if [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
+    echo ""
+    echo "MISSING ARGUMENT: The serial port connected to the board was not defined"
+    echo "Try the following:"
+    echo " - Run the 'arduino-cli board list' command"
+    echo " - Find the row/entry with the desired board"
+    echo " - Get the atribute/colunm 'Port' of such row/entry"
+    echo " - Pass the atribute as the first argument of the script"
+    echo ""
+    exit 1
+fi
 
 sudo stty -F $port cs8 115200
 
 printf "\n\nRunning all tests (PORT: $port):\n\n"
 for test in ./tests/* ; do
-    printf "\n=======> $test\n"
+    printf "\n=======> ${test#*/*/}\n"
 
-    printf "\nCreating log...\n"
+    printf "\nPreparing Log...\n"
     rm -f logs/${test#*/*/}.log
     touch logs/${test#*/*/}.log
+    if [ $? -ne 0 ]; then echo "FAILED to create log, SKIPPING..."; continue; fi
 
     printf "\nCompiling Test...\n"
     sudo arduino-cli compile -p $port --fqbn esp8266:esp8266:nodemcuv2 $test > /dev/null
-    printf "\nLoading Board...\n"
+    if [ $? -ne 0 ]; then printf "\nFAILED compilation, SKIPPING...\n"; continue; fi
+
+    printf "\nUploading to Board...\n"
     sudo arduino-cli upload -p $port --fqbn esp8266:esp8266:nodemcuv2 $test > /dev/null
+    if [ $? -ne 0 ]; then printf "\nFAILED upload, SKIPPING...\n"; continue; fi
 
     printf "\nRunning ${test}...\n"
     start=$(date +%s)
-    while [ $(($(date +%s) - start)) -le $time ]; do  
+    while true; do  
 
         # Update log
         sudo cat $port >> logs/${test#*/*/}.log
@@ -85,12 +109,13 @@ for test in ./tests/* ; do
             break
         fi
 
-    done
+        if [ $(($(date +%s) - start)) -gt $time ]; then
+            echo "TIMEOUT: The time limit of ${time}s was exceeded."
+            echo " - Try incresing the time limit with the flag '-t'"
+            echo " - Check if the test is serial printing the keywords (Pass/Fail)"
+            break
+        fi
 
-    if [ $(($(date +%s) - start)) -le $time ]; then
-        echo "TIMEOUT: The time limit of ${time}s was exceeded."
-        echo " - Try incresing the time limit with the flag '-t'"
-        echo " - Check if the test is serial printing the keywords (Pass/Fail)"
-    fi
+    done
 
 done
