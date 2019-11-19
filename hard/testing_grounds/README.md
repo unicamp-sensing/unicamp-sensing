@@ -39,5 +39,7 @@ To compile some tests, libraries may be needed. *If the library is available* fo
     - If found, add the line `library-name@version` to *libraries.txt*.
     - Run `run_script.sh` with the `-l` flag set to install libraries.
 
+**NOTE**: If a specific library is not supported by the arduino-cli, it can be added manualy to que libraries folder utilized by the CLI. Simply download the `.zip` from the library's repo and unzip inside the `~/Arduino/libraries` folder. 
+
 ### The **logs** folder
 In order to comunicate with the script and debugging purposes, every test has it's serial port logged in a `.txt` file int `/logs` which has the same name of the `.ino` sketch which created it. These can be accessed for post analisys of the tests results. Keep in mind that every time a test is executed, it's old log is deleted.
