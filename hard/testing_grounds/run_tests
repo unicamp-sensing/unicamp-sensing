@@ -46,11 +46,14 @@ while test $# -gt 0; do
             ;;
         -f)
             shift
-            while [ $# -gt 0 ] && [ ${1::1} != '-' ]; do
-                echo "$1"
+            while [ $# -gt 1 ] && [ ${1::1} != '-' ]; do
                 test_list+=(./tests/$1)
                 shift
             done
+            ;;
+        -e)
+            shift
+            set -e
             ;;
         *)
             port=$1
@@ -125,6 +128,15 @@ else
     printf "\n\nRunning tests (PORT: $port):\n"
     printf "${test_list[@]}"
 fi
+
+# CHECKING STRUCTURE
+if [ ! -d "./tests" ]; then
+    echo "MISSING FOLDER: The folder '/tests' was not found."
+    echo "Create the folder and make sure it contains the testing sketches."
+    echo ""
+fi
+if [ ! -d "./logs" ]; then mkdir logs; fi
+
 
 # RUNNING AND CHECKING TESTS
 for test in ${test_list[@]} ; do
