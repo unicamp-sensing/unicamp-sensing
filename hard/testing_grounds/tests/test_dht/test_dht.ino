@@ -17,5 +17,10 @@ void loop() {
   Serial.println(dht.hum);
   Serial.print("TMP: ");
   Serial.println(dht.tmp);
+
+  bool test = !isnan(dht.tmp) && !isnan(dht.hum);
+  if (test) Serial.println("Pass");
+  else Serial.println("Fail");
+
   delay(1000);
 }

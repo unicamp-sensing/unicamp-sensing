@@ -14,15 +14,16 @@ This is the testing enviroment's core. It will automate the compilation and load
     - Execute the script with `./path-to-folder\run_tests`
 
 Format: `run_script.sh {-s | serial-port} [options]`
- - flag `-s`:
+- flag `-s`:
     - Prepares the evironment for the script (downloads required software)
- - serial-port:
+- serial-port:
     - Is the path of the serial port I/O file (EX: `/dev/ttyUSB0`)
- - Flags:
+- Flags:
     - `-s` : Will run the enviroment setup routine. Only needs to be used once
     - `-t` : Defines the maximum amount of seconds each test has to complete
     - `-l` : Install all libraies contained in the `libraries.txt` file
     - `-f` : Receives a list of tests names to be run (if not set, runs all tests)
+    - `-e` : Terminates script if any test errors or fails.
 
 ### The **tests** folder
 This folder will contain the `.ino` testing sketches which will be compiled and loaded onto the board. The sketches do most of the work testing the board's components. To comunicate with the testing script, every test has it's own log. To aprove or fail a test, simply print on of the keywords `Pass` or `Fail` onto the serial port during the sketch's execution.

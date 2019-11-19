@@ -5,6 +5,7 @@ time=60 # Default time limit for each test
 library=false # Should the libraries be installed?
 port="" # Default serial port connected to the board
 test_list=() # List of tests to execute (if empty runs all)
+fail_stop=false # Terminates if a test errors or fails
 
 
 # PARAMETERS HANDLING
@@ -46,7 +47,7 @@ while test $# -gt 0; do
             ;;
         -f)
             shift
-            while [ $# -gt 1 ] && [ ${1::1} != '-' ]; do
+            while [ $# -gt 0 ] && [ ${1::1} != '-' ] && [[ ! $1 == *"/"* ]]; do
                 test_list+=(./tests/$1)
                 shift
             done
@@ -54,6 +55,7 @@ while test $# -gt 0; do
         -e)
             shift
             set -e
+            fail_stop=true
             ;;
         *)
             port=$1
@@ -125,8 +127,9 @@ if [ ${#test_list[@]} -eq 0 ]; then
     printf "\n\nRunning all tests (PORT: $port):\n\n"
     test_list=(./tests/*); 
 else 
-    printf "\n\nRunning tests (PORT: $port):\n"
-    printf "${test_list[@]}"
+    printf "\n\nRunning tests (PORT: $port):\n| "
+    printf '%s | ' "${test_list[@]#*/*/}"
+    printf "\n"
 fi
 
 # CHECKING STRUCTURE
@@ -155,7 +158,7 @@ for test in ${test_list[@]} ; do
     sudo arduino-cli upload -p $port --fqbn esp8266:esp8266:nodemcuv2 $test > /dev/null
     if [ $? -ne 0 ]; then printf "\nFAILED upload, SKIPPING...\n"; continue; fi
 
-    printf "\nRunning ${test}...\n"
+    printf "\nRunning ${test#*/*/}...\n"
     start=$(date +%s)
     while true; do  
 
@@ -168,6 +171,7 @@ for test in ${test_list[@]} ; do
             break
         elif [ ! -z "$(tail -1 logs/${test#*/*/}.log | grep -w "Fail")" ]; then
             echo "FAILED!!!"
+            if [ "$fail_stop" = true ]; then exit 1; fi
             break
         fi
 
