@@ -1,24 +1,28 @@
 # Testing Grounds
 
 ## Purpose
-This folder consists of automated tests for hardware related software. It's intended for checking the board's software and caracteristics as its schematics change and its sensors deteriorate.  Some of the current tests involve sensors functionality & integration, handcrafted libraries proper functionality, testing wrappers, testing memory caracteristics and some other hardware related stuff.
-The environment was built using the 'arduino-cli' software and aims to be as modular and automated as possible, ensuring the ease of adding/removing tests and executing them with minimal effort through the CLI.
+The `testing_grounds/` folder consists of automated hardware related tests. It's intended for checking the board's software and sensors.  Some of the current tests involves sensors functionality & integration, handcrafted libraries correcteness and memory allocation. The environment was built using the 'arduino-cli' software and aims to be as modular and automated as possible, ensuring the ease of adding/removing and executing tests without the need of an IDE.
 
 ## Structure
-This section revolves around the finality of each folder and file within the Testing Grounds.
+This section revolves around the finality of each folder and file within the **Testing Grounds**.
 
 ### The **run_tests.sh** script
-This is the core of the testing enviroment. It will automate the compilation and loading of the testing sketches contained in `\tests`. The script can also be used to setup the testing environment and to install libraries listed in `libraries.txt`. The bash script must have execution permition to be used.
-- Give execution permition to the script with `chmod +x run_tests`
-- Execute the script with `./path-to-folde\run_tests`
+This is the testing enviroment's core. It will automate the compilation and loading of the testing sketches contained in `\tests`. The script can also be used for setting up the environment and installing libraries listed in `libraries.txt`. The bash script must have execution permition to be used.
 
-Format: `run_script.sh [options] serial-port`
- - PORT:
-    - Contains the path of the serial port I/O file (EX: `/dev/ttyUSB0`).
+- How to execute:
+    - Give execution permition to the script with `chmod +x run_tests`
+    - Execute the script with `./path-to-folder\run_tests`
+
+Format: `run_script.sh {-s | serial-port} [options]`
+ - flag `-s`:
+    - Prepares the evironment for the script (downloads required software)
+ - serial-port:
+    - Is the path of the serial port I/O file (EX: `/dev/ttyUSB0`)
  - Flags:
-    - `-s` : Will run the enviroment setup routine. Only needs to be used once.
-    - `-t` : Defines the maximum amount of seconds each test has to complete.
-    - `-l` : Install all libraies contained in the `libraries.txt` file.
+    - `-s` : Will run the enviroment setup routine. Only needs to be used once
+    - `-t` : Defines the maximum amount of seconds each test has to complete
+    - `-l` : Install all libraies contained in the `libraries.txt` file
+    - `-f` : Receives a list of tests names to be run (if not set, runs all tests)
 
 ### The **tests** folder
 This folder will contain the `.ino` testing sketches which will be compiled and loaded onto the board. The sketches do most of the work testing the board's components. To comunicate with the testing script, every test has it's own log. To aprove or fail a test, simply print on of the keywords `Pass` or `Fail` onto the serial port during the sketch's execution.
