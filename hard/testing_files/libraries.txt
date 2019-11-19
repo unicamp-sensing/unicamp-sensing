@@ -1,0 +1,7 @@
+\\ Adding new libraries for the testing sketches:
+\\ - Use the command 'arduino-cli lib search <library name>' for finding if there's such library
+\\ - Add a line like <library name>@<version> to this file
+\\ - install the library with the run_tests.sh script
+DHT sensor library@1.3.7
+Adafruit Unified Sensor@1.0.3
+ArduinoJson@5.13.1
