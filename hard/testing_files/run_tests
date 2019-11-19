@@ -1,19 +1,59 @@
 #!/bin/bash
+
 setup=false # Default considers the environment is ready
 time=60 # Default time limit for each test
 library=false # Should the libraries be installed?
 port=$1 # Default serial port connected to the board
-# echo ${port::1}
+test_list=(a v s g)
 
-# Checks which flags are set
-while getopts slt: option
-do
-case "${option}"
-in
-s) setup=true;;
-l) library=true;;
-t) time=${OPTARG};;
-esac
+while test $# -gt 0; do
+    echo "$1"
+    case "$1" in
+        -h|--help)
+            echo "Automated testing script"
+            echo " "
+            echo "./run_script serial-port [options]"
+            echo " "
+            echo "options:"
+            echo "-h, --help          show brief help"
+            echo "-t                  specify a time limit for each test"
+            echo "-s                  setup environment"
+            echo "-l                  Install libraries"
+            exit 0
+            ;;
+        -s) 
+            shift
+            setup=true
+            echo "Setup environment option set"
+            ;;
+        -l) 
+            shift
+            library=true
+            echo "Libraries installation option set"
+            ;;
+        -t) 
+            shift
+            if test $1 -gt 0; then
+                time=$1
+            else
+                echo "ERROR -t : Invalid time"
+                exit 1
+            fi
+            shift
+            echo "Time limit set to ${time}"
+            ;;
+        -f)
+            shift
+            while [ $# -gt 0 ] && [ ${1::1} != '-' ]; do
+                test_list+=('$1')
+                shift
+            done
+            echo $test_list
+            ;;
+        *)
+            break
+            ;;
+    esac
 done
 
 # Theres a couple of things that must be done to prepare the
@@ -69,12 +109,17 @@ if [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
     echo " - Run the 'arduino-cli board list' command"
     echo " - Find the row/entry with the desired board"
     echo " - Get the atribute/colunm 'Port' of such row/entry"
-    echo " - Pass the atribute as the first argument of the script"
+    echo " - Pass the atribute as the LAST argument of the script"
     echo ""
     exit 1
 fi
 
+# Configure serial port for reading
 sudo stty -F $port cs8 115200
+
+
+
+
 
 printf "\n\nRunning all tests (PORT: $port):\n\n"
 for test in ./tests/* ; do

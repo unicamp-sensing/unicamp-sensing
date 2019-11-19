@@ -8,9 +8,11 @@ The environment was built using the 'arduino-cli' software and aims to be as mod
 This section revolves around the finality of each folder and file within the Testing Grounds.
 
 ### The **run_tests.sh** script
-This is the core of the testing enviroment. It will automate the compilation and loading of the testing sketches contained in `\tests`. The script can also be used to setup the testing environment and to install libraries listed in `libraries.txt`. 
+This is the core of the testing enviroment. It will automate the compilation and loading of the testing sketches contained in `\tests`. The script can also be used to setup the testing environment and to install libraries listed in `libraries.txt`. The bash script must have execution permition to be used.
+- Give execution permition to the script with `chmod +x run_tests`
+- Execute the script with `./path-to-folde\run_tests`
 
-Format: `run_script.sh PORT [FLAGS]`
+Format: `run_script.sh [options] serial-port`
  - PORT:
     - Contains the path of the serial port I/O file (EX: `/dev/ttyUSB0`).
  - Flags:
