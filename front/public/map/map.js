@@ -41,8 +41,13 @@ const geoMap = L.map("geoMap").setView(unicamp, 16);
 drawMap(toggleMaps["Stamen Toner Lite"]);
 
 const overlayMaps = createDataLayers();
-addData(overlayMaps);
+var intervalID = setInterval(addDataStub, 5000);
 L.control.layers(toggleMaps, overlayMaps).addTo(geoMap);
+
+function addDataStub() {
+    addData(overlayMaps);
+    console.log('Updating overlayMaps')
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 
