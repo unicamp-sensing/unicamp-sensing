@@ -71,16 +71,16 @@ if [ "$setup" = true ]; then
     echo "=====> [ PREPARING ENVIRONMENT ] <====="
     
     printf "\n\nUpdating packages....\n\n"
-    sudo apt update -y
+    sudo apt update -y > /dev/null
 
-    printf "\n\nGetting golang....\n\n"
-    sudo apt install golang
+    printf "\n\nGetting curl....\n\n"
+    sudo apt install curl -y > /dev/null
 
     printf "\n\nGetting arduino-cli....\n\n"
-    go get -u github.com/arduino/arduino-cli
+    sudo curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
 
     printf "\n\nReading test environment....\n\n"
-    sudo cp ~/go/bin/arduino-cli /bin/
+    sudo mv ./bin/arduino-cli /bin/ && rm -d bin
     arduino-cli core update-index
 
     if [ "$library" = true ]; then
@@ -90,12 +90,24 @@ if [ "$setup" = true ]; then
             arduino-cli lib install "$line" > /dev/null   
         done < "libraries.txt"
     fi
-
+    
+    echo $(arduino-cli version)
     echo "=====> [ READY ] <====="
     exit 0
 
-# IF NOT SETTING UP, CHECKS PORT PARAMETER
-elif [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
+# LIBRARIES INSTALLATION (-l flag)
+elif [ "$library" = true ]; then
+    printf "\n\nInstalling libraries...\n\n"
+    while read -r line; do 
+        printf "Getting '${line}'\n"
+        arduino-cli lib install "$line" > /dev/null  
+    done < "libraries.txt"
+    printf "\nLibraries installed\n\n"
+    exit 0
+fi
+
+# CHECKS PORT PARAMETER
+if [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
 
     echo ""
     echo "MISSING ARGUMENT: The serial port connected to the board was not defined"
@@ -107,16 +119,6 @@ elif [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
     echo ""
     exit 1
 
-fi
-
-
-# LIBRARIES INSTALLATION (-l flag)
-if [ "$library" = true ]; then
-    printf "\n\nInstalling libraries...\n\n"
-    while read -r line; do 
-        printf "Getting '${line}'\n"
-        arduino-cli lib install "$line" > /dev/null  
-    done < "libraries.txt"
 fi
 
 # Configure serial port for communicating with the board
