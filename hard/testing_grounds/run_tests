@@ -165,7 +165,7 @@ for test in ${test_list[@]} ; do
     sudo arduino-cli upload -p $port --fqbn esp8266:esp8266:nodemcuv2 $test > /dev/null
     if [ $? -ne 0 ]; then printf "\nFAILED upload, SKIPPING...\n"; continue; fi
 
-    printf "\nRunning ${test#*/*/}...\n"
+    printf "\nRunning ${test#*/*/}...\n\n"
     start=$(date +%s)
     while true; do  
 
@@ -190,5 +190,7 @@ for test in ${test_list[@]} ; do
         fi
 
     done
+    
+    echo ""
 
 done
