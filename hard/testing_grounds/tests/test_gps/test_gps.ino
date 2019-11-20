@@ -52,6 +52,10 @@ void test(GPS& gps) {
     Serial.println();
   }
   
+  if (gps.lat <= -22 && gps.lng <= -47) {
+    Serial.println();
+    Serial.println("Pass");
+  }
 }
 
 int timer = 5000;
@@ -72,10 +76,6 @@ void setup()
 void loop()
 {
 
-//  if (ss.available())
-//    Serial.write(ss.read());
-//  return;
-  
   if (timer >= wait) {
     wait = (10+rand()%10)*1000;
     Serial.print("--> Wait time: ");

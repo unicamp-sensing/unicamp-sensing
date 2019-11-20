@@ -7,14 +7,28 @@ void setup()
 {
   // Debug console
   Serial.begin(115200);
-  particle.begin(0);
+  particle.begin(3);
   Serial.println("Ready!");
 }
 
 void loop()
 {
-  Serial.print("PM10: ");
-  Serial.println(particle.getPM10(1));
-  Serial.print("PM25: ");
-  Serial.println(particle.getPM25(1));
+  int p25, p10;
+
+  for (int i = 0; i < 5; ++i) {
+    p10 = particle.getPM10(1);
+    Serial.print("PM10: ");
+    Serial.println(p10);
+    p25 = particle.getPM25(1);
+    Serial.print("PM25: ");
+    Serial.println(particle.getPM25(1));
+    
+    if (p10 < 1 || p25 < 1) {
+      Serial.println("Fail");
+    }
+    delay(1000);
+  }
+  
+  Serial.println("Pass");
+  delay(1000);
 }
