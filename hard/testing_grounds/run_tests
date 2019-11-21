@@ -77,8 +77,7 @@ if [ "$setup" = true ]; then
     sudo apt install curl -y > /dev/null
 
     printf "\n\nGetting arduino-cli....\n\n"
-    curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh
-    BINDIR=/bin sh
+    curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh && BINDIR=/bin sh
 
     printf "\n\nReading test environment....\n\n"
 
