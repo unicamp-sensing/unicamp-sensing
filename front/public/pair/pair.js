@@ -12,27 +12,29 @@
     toggleMaps["Stamen Toner Lite"].addTo(map);
     L.control.layers(toggleMaps).addTo(map);
 
+    const VALUE_KEY = 'tmp'; // TODO iterate throught the valueKeys list
+
     d3.json(container.dataset.source, function(collection) {
         L.pointsLayer(collection, {
             radius: getRadius,
-            applyStyle: circleStyle
+            applyStyle: circleStyle[VALUE_KEY]
         }).addTo(map);
 
         let chart = timeseriesChart(scheme)
             .x(getTime).xLabel("Time of data collection")
-            .y(get_tmp).yLabel("Temperature (°C)")
+            .y(get_tmp).yLabel(Props[VALUE_KEY].name)
             .brushmove(onBrush);
 
         // FIXME
-        console.log(new Set(collection.features.map(function(feature) {
-            return feature.properties.time.substring(0, 14)
-        })));
-        startTime = new Date(2019, 11 - 1, 12, 16); // FIXME we should use month - 1
-        endTime = new Date(2019, 11 - 1, 14, 18); // FIXME we should use month - 1
-        const shownFeatures = collection.features.filter(function(feature) {
-            datetime = new Date(feature.properties.time);
-            return startTime <= datetime && datetime <= endTime;
-        });
+        // console.log(new Set(collection.features.map(function(feature) {
+        //     return feature.properties.time.substring(0, 14)
+        // })));
+        // startTime = new Date(2019, 11 - 1, 12, 16); // FIXME we should use month - 1
+        // endTime = new Date(2019, 11 - 1, 14, 18); // FIXME we should use month - 1
+        // const shownFeatures = collection.features.filter(function(feature) {
+        //     datetime = new Date(feature.properties.time);
+        //     return startTime <= datetime && datetime <= endTime;
+        // });
         // d3.select("body").datum(shownFeatures).call(chart);
         d3.select("body").datum(collection.features).call(chart);
     });
@@ -41,8 +43,8 @@
         return d3.time.format.iso.parse(d.properties.time);
     }
 
-    function get_tmp(d) {
-        return d.properties.tmp;
+    function getFromValueKey(d, valueKey) {
+        return d.properties[valueKey];
     }
 
     function onBrush(brush) {
@@ -62,46 +64,41 @@
             (currentZoom <= 17) ? 4 : 5);
     }
 
-    function circleStyle(circles) {
-        if (!(extent && scale)) {
-            extent = d3.extent(circles.data(), function(d) { return d.properties.tmp; }); // FIXME
-            scale = d3.scale.log()
-                .domain(reverse ? extent.reverse() : extent)
-                .range(d3.range(classes));
-            console.log(`scale: ${scale} classes: ${classes} range: ${d3.range(classes)}`);
-        }
-        circles.attr('opacity', 0.4)
-            .attr('stroke', scheme[classes - 1])
-            .attr('stroke-width', 1)
-            .attr('fill', function(d) {
-                return scheme[(scale(d.properties.tmp) * 10).toFixed()]; // FIXME
+    const circleStyle = {
+        VALUE_KEY: function tmpCircleStyle(circles) {
+            if (!extent || !scale) {
+                extent = d3.extent(circles.data(), (d) => d.properties[VALUE_KEY]);
+                scale = d3.scale.log().domain(reverse ? extent.reverse() : extent).range(d3.range(classes));
+            }
+
+            circles.attr('opacity', 0.4)
+                   .attr('stroke', scheme[classes - 1]).attr('stroke-width', 1)
+                   .attr('fill', (d) => scheme[(scale(d.properties[VALUE_KEY]) * 10).toFixed()]);
+
+            circles.on('click', function(d, i) {
+                L.DomEvent.stopPropagation(d3.event);
+
+                let t = '<h3><%- board %></h3>' + '<ul>' +
+                        '<li>Temperature: <%- tmp %>°C</li>' +
+                        '<li>Time:        <%- datetime %></li>' +
+                        '<li>Coordinates: (<%- lat %>, <%- lon %>)</li>' + '</ul>';
+
+                let data = {
+                    board: d.board_MAC_addr,
+                    VALUE_KEY: d.properties[VALUE_KEY],
+                    datetime: moment(new Date(d.properties.time)).format('MMMM Do YYYY, h:mm:ss a'),
+                    lat: d.properties.lat,
+                    lon: d.properties.lon
+                };
+
+                // NOTE: GeoJSON coordinates are [lon, lat]
+                L.popup()
+                 .setLatLng([d.geometry.coordinates[1], d.geometry.coordinates[0]])
+                 .setContent(_.template(t, data))
+                 .openOn(map);
             });
-
-        circles.on('click', function(d, i) {
-            L.DomEvent.stopPropagation(d3.event);
-
-            let t = '<h3><%- board %></h3>' +
-                '<ul>' +
-                '<li>Temperature: <%- tmp %>°C</li>' +
-                '<li>Time:        <%- datetime %></li>' +
-                '<li>Coordinates: (<%- lat %>, <%- lon %>)</li>' +
-                '</ul>';
-
-            let data = {
-                board: d.board_MAC_addr,
-                tmp: d.properties.tmp,
-                datetime: moment(new Date(d.properties.time)).format('MMMM Do YYYY, h:mm:ss a'),
-                lat: d.properties.lat,
-                lon: d.properties.lon
-            };
-
-            // NOTE: GeoJSON coordinates are [lon, lat]
-            L.popup()
-                .setLatLng([d.geometry.coordinates[1], d.geometry.coordinates[0]])
-                .setContent(_.template(t, data))
-                .openOn(map);
-        });
-    }
+        }
+    };
 
     function timeseriesChart(color) {
         const mapRect = d3.select('#map').node().getBoundingClientRect();
@@ -169,22 +166,22 @@
                     .style("fill", color[2])
                     .attr("opacity", 0.4);
 
-                // FIXME
-                x_extent = d3.extent(d, getX); // returns [min, max] values in the given iterable
-                // console.log(`x_extent: ${x_extent}`);
-                x_extent[0] = new Date(x_extent[0].setHours(x_extent[0].getHours() - 1));
-                x_extent[1] = new Date(x_extent[1].setHours(x_extent[1].getHours() + 1));
-                // console.log(`x_extent': ${x_extent}`);
-                x.domain(x_extent);
-                xAxis.call(d3.svg.axis().scale(x).orient("bottom"));
+                // get [min, max] values in the given iterable
+                xExtent = d3.extent(d, getX);
+                yExtent = d3.extent(d, getY);
 
-                // FIXME
-                y_extent = d3.extent(d, getY); // returns [min, max] values in the given iterable
-                // console.log(`y_extent: ${y_extent}`);
-                y_extent[0] -= 2;
-                y_extent[1] += 2;
-                // console.log(`y_extent: ${y_extent}`);
-                y.domain(y_extent);
+                // console.log(`xExtent: ${xExtent}`);
+                // xExtent[0] = new Date(xExtent[0].setHours(xExtent[0].getHours() - 1));
+                // xExtent[1] = new Date(xExtent[1].setHours(xExtent[1].getHours() + 1));
+                // console.log(`xExtent': ${xExtent}`);
+                // console.log(`yExtent: ${yExtent}`);
+                // yExtent[0] -= 2;
+                // yExtent[1] += 2;
+                // console.log(`yExtent: ${yExtent}`);
+
+                x.domain(xExtent);
+                xAxis.call(d3.svg.axis().scale(x).orient("bottom"));
+                y.domain(yExtent);
                 yAxis.call(d3.svg.axis().scale(y).orient("left"));
 
                 series.append("g").attr("class", "timeseries")
