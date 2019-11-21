@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <link rel='stylesheet' type='text/css' media='screen' href='./style.css'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Urban Sensing - UNICAMP</title>
+    <title>Unicamp Sensing</title>
+    
+    <!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/slicknav.min.css"/>
 
-    <script src="./libs/firebase.js"></script>
-
-    <script src="./libs/FileSaver.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-    <script src="./constants.js"></script>
-    <script src="./parse.js"></script>
-    <script src="./utils.js"></script>
-    <script src="./init_libs.js"></script>
-    <script src="./main.js"></script>
+	<!-- Main Stylesheets -->
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/my_style.css"/>
 </head>
-
 <body>
-    <div id="div-tmp"></div>
-    <div id="div-hum"></div>
-    <div id="div-pm10"></div>
-    <div id="div-pm25"></div>
-
-    <div>
-        <h1 id="loading">Loading...</h1>
-    </div>
-
-    <div>
-        <button id="button-download">Download data</button>
-    </div>
+    <!-- Header Section -->
+	<header class="header-section">
+            <a href="index.html" class="site-logo">
+                <!-- <img src="img/logo.png" alt=""> -->
+                <h2 id="my-title">Unicamp Sensing</h2>
+            </a>
+            <nav class="header-nav">
+                <ul class="main-menu">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about-us.html">Timeplot</a></li>
+                    <li><a href="#">Map</a></li>
+                    <li><a href="#">Map + Timeplot</a></li>
+                    <li><a href="news.html">Github</a></li>
+                    <!-- <li><a href="contact.html">Contact</a></li> -->
+                </ul>
+                <div class="header-right">
+                    <div class="user-panel">
+                        <a href="#" class="register">Download data as CSV</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- Header Section end -->
+    
 </body>
-
 </html>
