@@ -1,0 +1,196 @@
+#!/bin/bash
+
+setup=false # Default considers the environment is ready
+time=60 # Default time limit for each test
+library=false # Should the libraries be installed?
+port="" # Default serial port connected to the board
+test_list=() # List of tests to execute (if empty runs all)
+fail_stop=false # Terminates if a test errors or fails
+
+
+# PARAMETERS HANDLING
+while test $# -gt 0; do
+    case "$1" in
+        -h|--help)
+            echo "Automated testing script"
+            echo " "
+            echo "./run_script serial-port [options]"
+            echo " "
+            echo "options:"
+            echo "-h, --help       Show brief help"
+            echo "-t               Specify a time limit for each test"
+            echo "-s               Setup environment"
+            echo "-f               Execute specific test files"
+            echo "-l               Install libraries"
+            exit 0
+            ;;
+        -s) 
+            shift
+            setup=true
+            echo "Setup environment option set"
+            ;;
+        -l) 
+            shift
+            library=true
+            echo "Libraries installation option set"
+            ;;
+        -t) 
+            shift
+            if test $1 -gt 0; then
+                time=$1
+            else
+                echo "ERROR -t : Invalid time"
+                exit 1
+            fi
+            shift
+            echo "Time limit set to ${time}"
+            ;;
+        -f)
+            shift
+            while [ $# -gt 0 ] && [ ${1::1} != '-' ] && [[ ! $1 == *"/"* ]]; do
+                test_list+=(./tests/$1)
+                shift
+            done
+            ;;
+        -e)
+            shift
+            set -e
+            fail_stop=true
+            ;;
+        *)
+            port=$1
+            shift
+            ;;
+    esac
+done
+
+
+# ENVIRONMENT SETUP (-s flag)
+if [ "$setup" = true ]; then
+    set -e # Interrupt if any error ocurrs
+    echo "=====> [ PREPARING ENVIRONMENT ] <====="
+    
+    printf "\n\nUpdating packages....\n\n"
+    sudo apt update -y > /dev/null
+
+    printf "\n\nGetting curl....\n\n"
+    sudo apt install curl -y > /dev/null
+
+    printf "\n\nGetting arduino-cli....\n\n"
+    curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh
+    BINDIR=/bin sh
+
+    printf "\n\nReading test environment....\n\n"
+
+    printf "board_manager:\n  additional_urls:\n    " > arduino-cli.yaml
+    printf "- http://arduino.esp8266.com/stable/package_esp8266com_index.json\n" >> arduino-cli.yaml
+    arduino-cli core update-index
+    arduino-cli core install esp8266:esp8266
+    rm arduino-cli.yaml
+
+    if [ "$library" = true ]; then
+        printf "\n\nInstalling libraries...\n\n"
+        while read -r line; do 
+            printf "Getting '${line}'\n"
+            arduino-cli lib install "$line" > /dev/null   
+        done < "libraries.txt"
+    fi
+    
+    echo $(arduino-cli version)
+    echo "=====> [ READY ] <====="
+    exit 0
+
+# LIBRARIES INSTALLATION (-l flag)
+elif [ "$library" = true ]; then
+    printf "\n\nInstalling libraries...\n\n"
+    while read -r line; do 
+        printf "Getting '${line}'\n"
+        arduino-cli lib install "$line" > /dev/null  
+    done < "libraries.txt"
+    printf "\nLibraries installed\n\n"
+    exit 0
+fi
+
+# CHECKS PORT PARAMETER
+if [ -z $port ] || [ $(echo $port | head -c 1) = "-" ]; then
+
+    echo ""
+    echo "MISSING ARGUMENT: The serial port connected to the board was not defined"
+    echo "Try the following:"
+    echo " - Run the 'arduino-cli board list' command"
+    echo " - Find the row/entry with the desired board"
+    echo " - Get the atribute/colunm 'Port' of such row/entry"
+    echo " - Pass the atribute as the LAST argument of the script"
+    echo ""
+    exit 1
+
+fi
+
+# Configure serial port for communicating with the board
+sudo stty -F $port cs8 115200
+
+# CHECK TESTS TO BE RUN (-f Flag)
+if [ ${#test_list[@]} -eq 0 ]; then 
+    printf "\n\nRunning all tests (PORT: $port):\n\n"
+    test_list=(./tests/*); 
+else 
+    printf "\n\nRunning tests (PORT: $port):\n| "
+    printf '%s | ' "${test_list[@]#*/*/}"
+    printf "\n"
+fi
+
+# CHECKING STRUCTURE
+if [ ! -d "./tests" ]; then
+    echo "MISSING FOLDER: The folder '/tests' was not found."
+    echo "Create the folder and make sure it contains the testing sketches."
+    echo ""
+fi
+if [ ! -d "./logs" ]; then mkdir logs; fi
+
+
+# RUNNING AND CHECKING TESTS
+for test in ${test_list[@]} ; do
+    printf "\n=======> ${test#*/*/}\n"
+
+    printf "\nPreparing Log...\n"
+    rm -f logs/${test#*/*/}.log
+    touch logs/${test#*/*/}.log
+    if [ $? -ne 0 ]; then echo "FAILED to create log, SKIPPING..."; continue; fi
+
+    printf "\nCompiling Test...\n"
+    sudo arduino-cli compile -p $port --fqbn esp8266:esp8266:nodemcuv2 $test > /dev/null
+    if [ $? -ne 0 ]; then printf "\nFAILED compilation, SKIPPING...\n"; continue; fi
+
+    printf "\nUploading to Board...\n"
+    sudo arduino-cli upload -p $port --fqbn esp8266:esp8266:nodemcuv2 $test > /dev/null
+    if [ $? -ne 0 ]; then printf "\nFAILED upload, SKIPPING...\n"; continue; fi
+
+    printf "\nRunning ${test#*/*/}...\n\n"
+    start=$(date +%s)
+    while true; do  
+
+        # Update log
+        sudo cat $port >> logs/${test#*/*/}.log
+        
+        # Check for keyword
+        if [ ! -z "$(tail -1 logs/${test#*/*/}.log | grep -w "Pass")" ]; then    
+            echo "PASSED!!!"
+            break
+        elif [ ! -z "$(tail -1 logs/${test#*/*/}.log | grep -w "Fail")" ]; then
+            echo "FAILED!!!"
+            if [ "$fail_stop" = true ]; then exit 1; fi
+            break
+        fi
+
+        if [ $(($(date +%s) - start)) -gt $time ]; then
+            echo "TIMEOUT: The time limit of ${time}s was exceeded."
+            echo " - Try incresing the time limit with the flag '-t'"
+            echo " - Check if the test is serial printing the keywords (Pass/Fail)"
+            break
+        fi
+
+    done
+    
+    echo ""
+
+done

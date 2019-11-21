@@ -47,3 +47,9 @@ Clone our repository and type the following commands:
 
 Refer to [[link]](https://devcenter.heroku.com/articles/heroku-cli) for Heroku installation.
 
+# Hardware Information
+## Configuration
+- The data collection frequency can be delayed setting the constant at `hard/board/board.h`. The DELAY is idle time, but the DSM sampling time must be carefully set.
+- The sensor can stack about 600 datapoints (depends on the queue's node size). Depending on the data collection frequency the amount of offline time which data can be preserved will vary (minimum of about 1 hour).
+- When sending cached data, the "burst" of cached data can be defined at `hard/board/board.h`. Setting too high can cause the collection of data to halt due to the necessary time for uploading the data. Setting too low might cause data loss due to lack of space in the cache. 
+

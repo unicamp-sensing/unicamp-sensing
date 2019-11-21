@@ -10,14 +10,19 @@ DHT aux(DHTPIN, DHTTYPE);
 DHTwrap dht(aux);
 // Create data queue as a offline cache
 std::queue<Data> data_queue;
-// Count how many nodes in the queu
-int cache = 0;
 // Mac address of device to use as id in the database
 char mac[13];
 
+
+// TEST FUNCTIONS ///////
+#include "test_cache.h"//
+/////////////////////////
+
+
+
 // Send value to firebase
 void sendFirebase(char* timestr, char* name, float val){
-  char path[50];
+  char path[100];
   sprintf(path, "%s/%s/%s", timestr, mac, name);
   if (SHOW) {Serial.print(path); Serial.print(" | "); Serial.println(val);}
   Firebase.setFloat(path, val);
@@ -28,13 +33,6 @@ void sendFirebase(char* timestr, char* name, float val){
 void runSensors()
 {
   if (SHOW) Serial.println("---> runSensors()");
-
-  if (cache >= BOUND) {
-    if (SHOW) Serial.print("Cache reached limit: ");
-    if (SHOW) Serial.print(cache);
-    if (SHOW) Serial.println("nodes in queue");
-    return;
-  }
   
   // Update data
   if (SHOW) Serial.println("Updating:");
@@ -49,12 +47,7 @@ void runSensors()
   bool requirements = gps.newTime && gps.newLocal;
   
   if (requirements){
-    cache++;
-    if (SHOW) {
-      Serial.print("Stacking Data: ");
-      Serial.print(cache);
-      Serial.println(" nodes in queue");
-    }
+    if (SHOW) Serial.println("Stacking Data");
     // Construct class data to be sent
     Data new_data(gps, particle, dht);
     //add data to queue
@@ -67,11 +60,10 @@ void runSensors()
 
 void sendInfo() {
   if (SHOW) Serial.println("---> sendInfo()");
-  int to_send = 1 + BURST; // Send current + burst of cached data
 
   // Send data
   if (WiFi.status() == WL_CONNECTED) {
-    while (!data_queue.empty() && to_send--) {
+    while (!data_queue.empty()) {
       if (SHOW) Serial.println("Sending Data:");
       Data cur = data_queue.front();
       
@@ -79,8 +71,6 @@ void sendInfo() {
       sendFirebase(cur.timestr, "lon", cur.lon);
       sendFirebase(cur.timestr, "alt", cur.alt); 
       sendFirebase(cur.timestr, "vel", cur.vel);
-      sendFirebase(cur.timestr, "hdop", cur.hdop);
-      sendFirebase(cur.timestr, "vdop", cur.vdop);
       
       if (!isnan(cur.hum))
         sendFirebase(cur.timestr, "hum", cur.hum);
@@ -95,7 +85,6 @@ void sendInfo() {
         sendFirebase(cur.timestr, "pm25", cur.pm25);
       
       data_queue.pop();
-      cache--;
       if (SHOW) Serial.println("Sent");     
     }
   }
@@ -116,7 +105,7 @@ void setup()
   if (SHOW) Serial.println("DHT Set");
 
   // Start DSM501A
-  particle.begin(WARM_UP_TIME);
+  particle.begin(0);
   if (SHOW) Serial.println("DSM501a Set");
 
   // Start firebase
@@ -141,6 +130,13 @@ void loop()
   if (SHOW) Serial.println("---> loop()");
   runSensors();
   sendInfo();
+
+  // THE IMPORTANT PART: ///////
+  // Call the testing function//
+  cache_overflow(data_queue, gps, particle, dht);
+  //////////////////////////////
+  
+  
   delay(DELAY);
   if (SHOW) Serial.println("<--- loop()");         
 }

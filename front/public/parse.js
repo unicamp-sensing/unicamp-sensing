@@ -5,30 +5,33 @@ async function getRawData() {
     return data;
 }
 
-function boardValuesByDayDate(data) {
+
+
+function boardValuesByDayDate(data, month_in_0_to_11=true) {
     const valuesByDayDate = {};
     for (const year in data) {
-        if (parseInt(year) < 2019)
-            continue;
-        for (const month in data[year]) {
-            for (const day in data[year][month]) {
-                const values = [];
-                for (const hour in data[year][month][day]) {
-                    for (const min in data[year][month][day][hour]) {
-                        for (const sec in data[year][month][day][hour][min]) {
-                            for (const board in data[year][month][day][hour][min][sec]) {
-                                const date = new Date(year, month, day, hour, min, sec);
-                                if (sensorRangeValid(data[year][month][day][hour][min][sec][board])) {
-                                    values.push({
-                                        x: date,
-                                        y: data[year][month][day][hour][min][sec][board]
-                                    });
+        if (parseInt(year) >= 2019) {
+            for (const month in data[year]) {
+                for (const day in data[year][month]) {
+                    const values = [];
+                    for (const hour in data[year][month][day]) {
+                        for (const min in data[year][month][day][hour]) {
+                            for (const sec in data[year][month][day][hour][min]) {
+                                for (const board in data[year][month][day][hour][min][sec]) {
+                                    //Date expects month in 0 to 11 range
+                                    const date = new Date(year, month-(month_in_0_to_11? 1 : 0), day, hour, min, sec);
+                                    if (sensorRangeValid(data[year][month][day][hour][min][sec][board])) {
+                                        values.push({
+                                            x: date,
+                                            y: data[year][month][day][hour][min][sec][board]
+                                        });
+                                    }
                                 }
                             }
                         }
                     }
+                    valuesByDayDate[new Date(year, month-(month_in_0_to_11? 1 : 0), day)] = values;
                 }
-                valuesByDayDate[new Date(year, month, day)] = values;
             }
         }
     }
