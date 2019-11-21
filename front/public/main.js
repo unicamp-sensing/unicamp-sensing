@@ -16,6 +16,7 @@ function init() {
     });
 }
 
+
 async function plotData(labels) {
     const data = await getRawData();
 
@@ -27,6 +28,9 @@ async function plotData(labels) {
         "pm25": [] // PM 2.5
     };
 
+    // const values = Object.values(valuesByDayDate).flat();
+    // const dates = values.map((val) => val.x);
+
     for (const [dayDate, boardValues] of Object.entries(valuesByDayDate)) {
         for (const valueKey of Object.keys(datasets)) {
             // get the value we're interested in
@@ -34,47 +38,42 @@ async function plotData(labels) {
                 return { x: val.x, y: val.y[valueKey] }
             }).filter(val => !!val.y);
 
+            xs = values.map((val) => val.x);
+            ys = values.map((val) => val.y);
             // generate a random color for the day
             const rgb = [randColor(), randColor(), randColor()];
-            
+
             datasets[valueKey].push({
-                label: formatDate(new Date(dayDate)),
-                data: values,
-                backgroundColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.2)`,
-                borderColor: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
-                borderWidth: 2,
-                fill: false
+                mode: "markers",
+                type: "scatter",
+                name: moment(dayDate.toString()).format('DD/MM/YY'),
+                x: xs,
+                y: ys,
+                showlegend: false,
+
+                marker: {
+                    color: ys,
+                    showscale: true,
+                    colorscale: Props[valueKey].plot.time.color.scale,
+                    reversescale: Props[valueKey].plot.time.color.reverse,
+                    cmax: Props[valueKey].range.max,
+                    cmin: Props[valueKey].range.min
+                }
             });
         }
     }
 
-    charts = {};
-    for (const valueKey of Object.keys(datasets)) {
-        const ctx = $(`canvas-chart-${valueKey}`).getContext("2d");
-        const valueDatasets = datasets[valueKey];
+    var layout = {
+        xaxis: {
+            type: 'date'
+        }
+    };
 
-        charts[valueKey] = new Chart(ctx, {
-            type: "scatter",
-            data: { datasets: valueDatasets },
-            options: {
-                responsive: true,
-                title: { display: true, text: 'Urban Sensing' }, // FIXME pass a list of titles
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        display: true,
-                        scaleLabel: { display: true, labelString: 'Date' },
-                        ticks: { major: { fontStyle: 'bold', fontColor: '#FF0000' } }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: { display: true, labelString: labels[valueKey] }
-                    }]
-                }
-            }
-        });
-    }
-    return charts;
+    Plotly.newPlot("div-tmp", datasets['tmp'], { title: "Temperature (°C)", ...layout });
+    Plotly.newPlot("div-hum", datasets['hum'], { title: "Humidity (%RH)", ...layout });
+    Plotly.newPlot("div-pm10", datasets['pm10'], { title: "Particle Matter 10", ...layout });
+    Plotly.newPlot("div-pm25", datasets['pm25'], { title: "Particle Matter 2.5", ...layout });
+    stopLoading(document.getElementById("loading"));
 }
 
 async function download() {
