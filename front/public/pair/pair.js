@@ -22,7 +22,7 @@
 
         let chart = timeseriesChart(scheme)
             .x(getTime).xLabel("Time of data collection")
-            .y(get_tmp).yLabel(Props[VALUE_KEY].name)
+            .y(getValue[VALUE_KEY]).yLabel(Props[VALUE_KEY].name)
             .brushmove(onBrush);
 
         // FIXME
@@ -43,8 +43,8 @@
         return d3.time.format.iso.parse(d.properties.time);
     }
 
-    function getFromValueKey(d, valueKey) {
-        return d.properties[valueKey];
+    const getValue = {
+        [VALUE_KEY]: (d) => d.properties[VALUE_KEY],
     }
 
     function onBrush(brush) {
@@ -64,24 +64,25 @@
             (currentZoom <= 17) ? 4 : 5);
     }
 
+    // obs.: use []'s for computed property names
     const circleStyle = {
-        VALUE_KEY: function tmpCircleStyle(circles) {
+        [VALUE_KEY]: function tmpCircleStyle(circles) {
             if (!extent || !scale) {
                 extent = d3.extent(circles.data(), (d) => d.properties[VALUE_KEY]);
                 scale = d3.scale.log().domain(reverse ? extent.reverse() : extent).range(d3.range(classes));
             }
 
             circles.attr('opacity', 0.4)
-                   .attr('stroke', scheme[classes - 1]).attr('stroke-width', 1)
-                   .attr('fill', (d) => scheme[(scale(d.properties[VALUE_KEY]) * 10).toFixed()]);
+                .attr('stroke', scheme[classes - 1]).attr('stroke-width', 1)
+                .attr('fill', (d) => scheme[(scale(d.properties[VALUE_KEY]) * 10).toFixed()]);
 
             circles.on('click', function(d, i) {
                 L.DomEvent.stopPropagation(d3.event);
 
                 let t = '<h3><%- board %></h3>' + '<ul>' +
-                        '<li>Temperature: <%- tmp %>°C</li>' +
-                        '<li>Time:        <%- datetime %></li>' +
-                        '<li>Coordinates: (<%- lat %>, <%- lon %>)</li>' + '</ul>';
+                    '<li>Temperature: <%- tmp %>°C</li>' +
+                    '<li>Time:        <%- datetime %></li>' +
+                    '<li>Coordinates: (<%- lat %>, <%- lon %>)</li>' + '</ul>';
 
                 let data = {
                     board: d.board_MAC_addr,
@@ -93,9 +94,9 @@
 
                 // NOTE: GeoJSON coordinates are [lon, lat]
                 L.popup()
-                 .setLatLng([d.geometry.coordinates[1], d.geometry.coordinates[0]])
-                 .setContent(_.template(t, data))
-                 .openOn(map);
+                    .setLatLng([d.geometry.coordinates[1], d.geometry.coordinates[0]])
+                    .setContent(_.template(t, data))
+                    .openOn(map);
             });
         }
     };
@@ -113,7 +114,8 @@
             y_label = "Y",
             brush = d3.svg.brush().x(x).on("brush", _brushmove);
 
-        let getX = () => {}, getY = () => {}; // no op
+        let getX = () => {},
+            getY = () => {}; // no op
 
         function timeseries(selection) {
             selection.each(function(d) {
