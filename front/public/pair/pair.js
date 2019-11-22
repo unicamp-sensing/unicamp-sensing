@@ -1,18 +1,19 @@
 // ref.: http://bl.ocks.org/tnightingale/4718717
 
 (function() {
-    let extent, scale,
+    let extent,
+        scale,
         classes = 9,
         scheme_id = "BuPu",
         reverse = false,
-        scheme = colorbrewer[scheme_id][classes],
-        container = L.DomUtil.get('map'),
-        map = L.map(container).setView(unicamp, 16);
+        scheme = colorbrewer[scheme_id][classes];
 
+    const container = L.DomUtil.get('map');
+    const map = L.map(container).setView(unicamp, 16);
     toggleMaps["Stamen Toner Lite"].addTo(map);
     L.control.layers(toggleMaps).addTo(map);
 
-    const VALUE_KEY = 'tmp'; // TODO iterate throught the valueKeys list
+    const VALUE_KEY = 'tmp'; // TODO iterate through the valueKeys list
 
     d3.json(container.dataset.source, function(collection) {
         L.pointsLayer(collection, {
@@ -25,17 +26,6 @@
             .y(getValue[VALUE_KEY]).yLabel(Props[VALUE_KEY].name)
             .brushmove(onBrush);
 
-        // FIXME
-        // console.log(new Set(collection.features.map(function(feature) {
-        //     return feature.properties.time.substring(0, 14)
-        // })));
-        // startTime = new Date(2019, 11 - 1, 12, 16); // FIXME we should use month - 1
-        // endTime = new Date(2019, 11 - 1, 14, 18); // FIXME we should use month - 1
-        // const shownFeatures = collection.features.filter(function(feature) {
-        //     datetime = new Date(feature.properties.time);
-        //     return startTime <= datetime && datetime <= endTime;
-        // });
-        // d3.select("body").datum(shownFeatures).call(chart);
         d3.select("body").datum(collection.features).call(chart);
     });
 
@@ -43,8 +33,50 @@
         return d3.time.format.iso.parse(d.properties.time);
     }
 
-    const getValue = {
-        [VALUE_KEY]: (d) => d.properties[VALUE_KEY],
+    const getValue = {};
+    for (valueKey of valueKeys) {
+        const valueKeyStr = valueKey.toString();
+        getValue[valueKeyStr] = (d) => d.properties[valueKeyStr];
+    }
+
+    const circleStyle = {};
+    for (valueKey of valueKeys) {
+        const valueKeyStr = valueKey.toString();
+        circleStyle[valueKeyStr] = function(circles) {
+            if (!extent || !scale) {
+                extent = d3.extent(circles.data(), (d) => d.properties[valueKeyStr]);
+                scale = d3.scale.log().domain(reverse ? extent.reverse() : extent).range(d3.range(classes));
+            }
+
+            circles.attr('opacity', 0.4)
+                .attr('stroke', scheme[classes - 1]).attr('stroke-width', 1)
+                .attr('fill', (d) => scheme[(scale(d.properties[valueKeyStr]) * 10).toFixed()]);
+
+            circles.on('click', function(d, i) {
+                L.DomEvent.stopPropagation(d3.event);
+
+                let t = '<h3><%- board %></h3>' + '<ul>' +
+                    '<li>' + Props[valueKeyStr].name + ': ' +
+                    '<%- ' + valueKeyStr + ' %>' + Props[valueKeyStr].unit + '</li>' +
+                    '<li>Time:        <%- datetime %></li>' +
+                    '<li>Coordinates: (<%- lat %>, <%- lon %>)</li>' + '</ul>';
+
+                // obs.: use []'s for computed property names
+                let data = {
+                    board: d.board_MAC_addr,
+                    [valueKeyStr]: d.properties[valueKeyStr],
+                    datetime: moment(new Date(d.properties.time)).format('MMMM Do YYYY, h:mm:ss a'),
+                    lat: d.properties.lat,
+                    lon: d.properties.lon
+                };
+
+                // NOTE: GeoJSON coordinates are [lon, lat]
+                L.popup()
+                    .setLatLng([d.geometry.coordinates[1], d.geometry.coordinates[0]])
+                    .setContent(_.template(t, data))
+                    .openOn(map);
+            });
+        };
     }
 
     function onBrush(brush) {
@@ -64,43 +96,6 @@
             (currentZoom <= 17) ? 4 : 5);
     }
 
-    // obs.: use []'s for computed property names
-    const circleStyle = {
-        [VALUE_KEY]: function tmpCircleStyle(circles) {
-            if (!extent || !scale) {
-                extent = d3.extent(circles.data(), (d) => d.properties[VALUE_KEY]);
-                scale = d3.scale.log().domain(reverse ? extent.reverse() : extent).range(d3.range(classes));
-            }
-
-            circles.attr('opacity', 0.4)
-                .attr('stroke', scheme[classes - 1]).attr('stroke-width', 1)
-                .attr('fill', (d) => scheme[(scale(d.properties[VALUE_KEY]) * 10).toFixed()]);
-
-            circles.on('click', function(d, i) {
-                L.DomEvent.stopPropagation(d3.event);
-
-                let t = '<h3><%- board %></h3>' + '<ul>' +
-                    '<li>Temperature: <%- tmp %>°C</li>' +
-                    '<li>Time:        <%- datetime %></li>' +
-                    '<li>Coordinates: (<%- lat %>, <%- lon %>)</li>' + '</ul>';
-
-                let data = {
-                    board: d.board_MAC_addr,
-                    VALUE_KEY: d.properties[VALUE_KEY],
-                    datetime: moment(new Date(d.properties.time)).format('MMMM Do YYYY, h:mm:ss a'),
-                    lat: d.properties.lat,
-                    lon: d.properties.lon
-                };
-
-                // NOTE: GeoJSON coordinates are [lon, lat]
-                L.popup()
-                    .setLatLng([d.geometry.coordinates[1], d.geometry.coordinates[0]])
-                    .setContent(_.template(t, data))
-                    .openOn(map);
-            });
-        }
-    };
-
     function timeseriesChart(color) {
         const mapRect = d3.select('#map').node().getBoundingClientRect();
 
@@ -112,7 +107,7 @@
             y = d3.scale.linear(),
             x_label = "X",
             y_label = "Y",
-            brush = d3.svg.brush().x(x).on("brush", _brushmove);
+            brush = d3.svg.brush().x(x).on("brush", () => brushmove.call(null, brush));
 
         let getX = () => {},
             getY = () => {}; // no op
@@ -231,10 +226,6 @@
             brushmove = cb;
             return timeseries;
         };
-
-        function _brushmove() {
-            brushmove.call(null, brush);
-        }
 
         return timeseries;
     }
