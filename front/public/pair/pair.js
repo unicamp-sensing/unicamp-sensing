@@ -13,8 +13,7 @@
     toggleMaps["Stamen Toner Lite"].addTo(map);
     L.control.layers(toggleMaps).addTo(map);
 
-    const VALUE_KEY = 'tmp'; // TODO iterate through the valueKeys list
-
+    VALUE_KEY = 'tmp';
     d3.json(container.dataset.source, function(collection) {
         L.pointsLayer(collection, {
             radius: getRadius,
@@ -28,6 +27,30 @@
 
         d3.select("body").datum(collection.features).call(chart);
     });
+
+    // // L.pointsLayer doesn't work correctly when added to a LayerGroup :(
+    // dataLayers = createDataLayers();
+    // for (valueKey of valueKeys) {
+    //     if (Props[valueKey].name in dataLayers) {
+    //         const valueKeyStr = valueKey.toString();
+    //         d3.json(container.dataset.source, function(collection) {
+    //             L.pointsLayer(collection, {
+    //                 radius: getRadius,
+    //                 applyStyle: circleStyle[valueKeyStr]
+    //             }).addTo(dataLayers[Props[valueKeyStr].name]);
+
+    //             let chart = timeseriesChart(scheme)
+    //                 .x(getTime).xLabel("Time of data collection")
+    //                 .y(getValue[valueKeyStr]).yLabel(Props[valueKeyStr].name)
+    //                 .brushmove(onBrush);
+
+    //             d3.select("body").datum(collection.features).call(chart);
+    //         });
+    //     } else {
+    //         console.log(`No layer for '${valueKey}' in dataLayers`);
+    //     }
+    // }
+    // L.control.layers(dataLayers, toggleMaps).addTo(map);
 
     function getTime(d) {
         return d3.time.format.iso.parse(d.properties.time);

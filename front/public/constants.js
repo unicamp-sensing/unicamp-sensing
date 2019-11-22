@@ -82,3 +82,13 @@ const toggleMaps = {
 };
 
 const unicamp = [-22.814, -47.069];
+
+function createDataLayers() {
+    // NOTE assumes keys match those of Props[].name
+    return {
+        "Temperature": new L.layerGroup(),
+        "Humidity":    new L.layerGroup(),
+        "PM10":        new L.layerGroup(),
+        "PM2.5":       new L.layerGroup()
+    };
+}

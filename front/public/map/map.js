@@ -18,15 +18,6 @@ function drawMap(defaultTiles) {
     defaultTiles.addTo(geoMap);
 }
 
-function createDataLayers() {
-    return {
-        "Temperature": new L.layerGroup(),
-        "Humidity":    new L.layerGroup(),
-        "PM10":        new L.layerGroup(),
-        "PM2.5":       new L.layerGroup()
-    };
-}
-
 const valueKeyToChromaScale = {
     tmp:  chroma.scale(['yellow', 'red']),
     hum:  chroma.scale(['AliceBlue', 'DarkBlue']),
