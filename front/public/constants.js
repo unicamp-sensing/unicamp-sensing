@@ -81,7 +81,7 @@ const toggleMaps = {
     "Stamen Toner Lite": tilesSTL
 };
 
-const unicamp = [-22.814, -47.069];
+const unicamp = [-22.817, -47.069];
 
 function createDataLayers() {
     // NOTE assumes keys match those of Props[].name

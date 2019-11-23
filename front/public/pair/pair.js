@@ -190,14 +190,12 @@
                 xExtent = d3.extent(d, getX);
                 yExtent = d3.extent(d, getY);
 
-                // console.log(`xExtent: ${xExtent}`);
-                // xExtent[0] = new Date(xExtent[0].setHours(xExtent[0].getHours() - 1));
-                // xExtent[1] = new Date(xExtent[1].setHours(xExtent[1].getHours() + 1));
-                // console.log(`xExtent': ${xExtent}`);
-                // console.log(`yExtent: ${yExtent}`);
-                // yExtent[0] -= 2;
-                // yExtent[1] += 2;
-                // console.log(`yExtent: ${yExtent}`);
+                // NOTE using constant values for prettier visualization on presentation
+                xExtent[0] = new Date(xExtent[0].setMinutes(xExtent[0].getMinutes() - 2));
+                xExtent[1] = new Date(xExtent[1].setMinutes(xExtent[1].getMinutes() + 2));
+                yExtent[0] -= 2;
+                yExtent[1] += 2;
+                console.log(`yExtent: ${yExtent}`);
 
                 x.domain(xExtent);
                 xAxis.call(d3.svg.axis().scale(x).orient("bottom"));
