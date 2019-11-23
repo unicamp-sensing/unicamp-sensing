@@ -1,7 +1,26 @@
-# UNICAMP Sensing
+# Unicamp Sensing
 
-UNICAMP Sensing is a project developed by computer engineering students at [UNICAMP](https://www.unicamp.br/unicamp/) 
-for walkability evaluation through analysis of path temperature, humidity and particulate matter.
+**Unicamp Sensing** is a project developed by Computer Engineering students at [UNICAMP](https://www.unicamp.br/unicamp/)'s [Institute of Computing](https://ic.unicamp.br/en)
+to evaluate the [walkability](https://en.wikipedia.org/wiki/Walkability) in the campus, through analysis of temperature, humidity and particulate matter levels.
+
+Visualizations of the collected data can be seen at [unicamp-sensing.herokuapp.com](http://unicamp-sensing.herokuapp.com/).
+
+## Background
+
+This work is largely inspired by two projects from the [MIT Senseable City Lab](http://senseable.mit.edu/): 
+- [City Scanner](http://senseable.mit.edu/cityscanner/)
+- [Urban Sensing](http://senseable.mit.edu/urban-sensing/)
+
+While the name comes directly from the latter, our project is more resemblant of the former: instead of using vehicles to capture the spatiotemporal variation in environmental indicators, which ends up collecting information on the roads, we "walk our sensors" to better understand the paths that are taken daily by students in the university.
+
+This way, we aim to learn **where** and **how** to improve campus walkability, by analysing where are the places with the worst indicators.
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Refer to [Docs](https://gitlab.ic.unicamp.br/ra187690/urban-sensing/tree/master/docs#docs).
+
+## Schematics
 
 Data is gathered with: 
 *  NodeMcu ESP8266 micro-controller;
@@ -9,31 +28,8 @@ Data is gathered with:
 *  NEO-6MV2 GPS module;
 *  DSM501A air particle sensor.
 
-Access through [[link]](http://unicamp-sensing.herokuapp.com/)
-
-## Schematics
 
 ![Schematics](https://gitlab.ic.unicamp.br/ra187690/urban-sensing/raw/master/docs/schematic_projetos.png)
-
-## Dependencies
-
-## Installation
-
-## Usage
-
-```sh
-$ cd /path/to/front
-
-$ npm install
-
-$ npm start
-```
-the app will be running at: `http://localhost:3000`
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 ## License
 [WTFPL](http://www.wtfpl.net/)
