@@ -25,6 +25,7 @@
         rel="stylesheet"
         type="text/css"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
     <script
         type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -38,22 +39,43 @@
     <script src="../utils.js"></script>
     <script src="../init_libs.js"></script>
 
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
+    <!-- Stylesheets -->
+	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="../css/slicknav.min.css"/>
 
-        #geoMap {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+	<!-- Main Stylesheets -->
+    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/my_style.css"/>
 </head>
 
 <body>
-    <h1>GPS Data</h1>
+    <!-- Header Section -->
+    <header class="header-section">
+        <a href="index.html" class="site-logo">
+            <!-- <img src="img/logo.png" alt=""> -->
+            <h2 id="my-title">Unicamp Sensing</h2>
+        </a>
+        <nav class="header-nav">
+            <ul class="main-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../timeplot/index.html">Timeplot</a></li>
+                <li><a href="#" class="active">Map</a></li>
+                <li><a href="../map/index.html">Map + Timeplot</a></li>
+                <li><a href="https://gitlab.ic.unicamp.br/ra187690/urban-sensing" target="_blank">Github</a></li>
+            </ul>
+            <div class="header-right">
+                <div class="user-panel">
+                    <button href="#" class="register" id="button-download">Download data as CSV</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Header Section end -->
+
+    <!-- <h1>GPS Data</h1> -->
     <div id="geoMap"></div>
+
     <script src="map.js"></script>
 </body>
 

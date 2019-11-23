@@ -5,4 +5,10 @@
 #button-download {
     background-color: #FFFFFF00;
     color: #FFFFFF;
+    font-size: 16px;
+}
+
+#geoMap {
+    width: 100%;
+    height: 100%;
 }

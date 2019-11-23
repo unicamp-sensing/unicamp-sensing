@@ -21,21 +21,54 @@
     <script src="../utils.js"></script>
     <script src="../init_libs.js"></script>
     <script src="../main.js"></script>
+
+    <!-- Stylesheets -->
+	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="../css/slicknav.min.css"/>
+
+	<!-- Main Stylesheets -->
+    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/my_style.css"/>
 </head>
 
 <body>
-    <div id="div-tmp"></div>
-    <div id="div-hum"></div>
-    <div id="div-pm10"></div>
-    <div id="div-pm25"></div>
+    <!-- Header Section -->
+    <header class="header-section">
+        <a href="index.html" class="site-logo">
+            <!-- <img src="img/logo.png" alt=""> -->
+            <h2 id="my-title">Unicamp Sensing</h2>
+        </a>
+        <nav class="header-nav">
+            <ul class="main-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="#" class="active">Timeplot</a></li>
+                <li><a href="../map/index.html">Map</a></li>
+                <li><a href="../map/index.html">Map + Timeplot</a></li>
+                <li><a href="https://gitlab.ic.unicamp.br/ra187690/urban-sensing" target="_blank">Github</a></li>
+            </ul>
+            <div class="header-right">
+                <div class="user-panel">
+                    <button href="#" class="register" id="button-download">Download data as CSV</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Header Section end -->
 
-    <div>
-        <h1 id="loading">Loading...</h1>
-    </div>
 
-    <div>
-        <button id="button-download">Download data</button>
-    </div>
+    <section id="timeplot-section">
+        <div id="timeplot-container">
+            <div id="div-tmp"></div>
+            <div id="div-hum"></div>
+            <div id="div-pm10"></div>
+            <div id="div-pm25"></div>
+            
+            <div>
+                <h1 id="loading">Loading...</h1>
+            </div>
+        </div>
+    </section>
 </body>
 
 </html>
