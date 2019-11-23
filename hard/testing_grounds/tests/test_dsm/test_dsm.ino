@@ -23,12 +23,12 @@ void loop()
     Serial.print("PM25: ");
     Serial.println(particle.getPM25(1));
     
-    if (p10 < 1 || p25 < 1) {
-      Serial.println("Fail");
-    }
+    // if (p10 < 1 || p25 < 1) {
+    //   Serial.println("Fail");
+    // }
     delay(1000);
   }
   
-  Serial.println("Pass");
-  delay(1000);
+  // Serial.println("Pass");
+  // delay(1000);
 }

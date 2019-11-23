@@ -5,7 +5,7 @@ const $ = id => document.getElementById(id);
 
 const all = list => list.every(x => !!x); // true iff all values are truthy
 const any = list => list.some(x => !!x);  // true iff at least one value is truthy
-// always falsy values are: false, 0, '', "", null, undefined, NaN
+// obs.: false, 0, '', "", null, undefined and NaN are always falsy values
 
 const randColor = () => Math.round(255 * Math.random());
 
