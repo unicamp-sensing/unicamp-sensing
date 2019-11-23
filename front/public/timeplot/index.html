@@ -1,63 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
-
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet-src.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/1.0.0-rc.3/lodash.underscore.min.js"></script>
-
-    <script src="colorbrewer.js"></script>
-    <script src="leaflet.points-layer.js"></script>
-
-    <script src="../constants.js"></script>
-    <script src="pair.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Urban Sensing - UNICAMP</title>
 
     <script src="../libs/firebase.js"></script>
+
     <script src="../libs/FileSaver.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src="../constants.js"></script>
+    <script src="../parse.js"></script>
+    <script src="../utils.js"></script>
     <script src="../init_libs.js"></script>
     <script src="../main.js"></script>
-
-    <style type="text/css">
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-
-        #map {
-            height: 68%;
-            width: 98%;
-            margin-bottom: 1em;
-        }
-
-        .leaflet-popup-content ul {
-            padding-left: 1.5em;
-        }
-
-        .circle {
-            visibility: hidden;
-        }
-
-        .circle.selected {
-            visibility: visible;
-        }
-
-        svg {
-            font: 10px sans-serif;
-        }
-
-        .axis path,
-        .axis line {
-            fill: none;
-            stroke: #000;
-            shape-rendering: crispEdges;
-        }
-    </style>
+    <script src="plot.js"></script>
 
     <!-- Stylesheets -->
 	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
@@ -79,9 +43,9 @@
         <nav class="header-nav">
             <ul class="main-menu">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="../timeplot/index.html">Timeplot</a></li>
+                <li><a href="#" class="active">Timeplot</a></li>
                 <li><a href="../map/index.html">Map</a></li>
-                <li><a href="#" class="active">Map + Timeplot</a></li>
+                <li><a href="../pair/index.html">Map + Timeplot</a></li>
                 <li><a href="https://gitlab.ic.unicamp.br/ra187690/urban-sensing" target="_blank">Github</a></li>
             </ul>
             <div class="header-right">
@@ -94,10 +58,18 @@
     <!-- Header Section end -->
 
 
-    <!-- NOTE using mocked data for presentation -->
-    <div id='map' data-source="teste-bb0d8-converted.json"></div>
-    <script src="pair.js"></script>
-
+    <section id="timeplot-section">
+        <div id="timeplot-container">
+            <div id="div-tmp"></div>
+            <div id="div-hum"></div>
+            <div id="div-pm10"></div>
+            <div id="div-pm25"></div>
+            
+            <div>
+                <h1 id="loading">Loading...</h1>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer Section -->
 	<footer class="footer-section">

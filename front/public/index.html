@@ -1,41 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Urban Sensing - UNICAMP</title>
+    <title>Unicamp Sensing</title>
+    
+    <!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/slicknav.min.css"/>
 
+	<!-- Main Stylesheets -->
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/my_style.css"/>
+
+
+    <!-- Scripts -->
     <script src="./libs/firebase.js"></script>
-
     <script src="./libs/FileSaver.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
+    
     <script src="./constants.js"></script>
     <script src="./parse.js"></script>
     <script src="./utils.js"></script>
     <script src="./init_libs.js"></script>
     <script src="./main.js"></script>
 </head>
-
 <body>
-    <div id="div-tmp"></div>
-    <div id="div-hum"></div>
-    <div id="div-pm10"></div>
-    <div id="div-pm25"></div>
+    <!-- Header Section -->
+    <header class="header-section">
+        <a href="index.html" class="site-logo">
+            <!-- <img src="img/logo.png" alt=""> -->
+            <h2 id="my-title">Unicamp Sensing</h2>
+        </a>
+        <nav class="header-nav">
+            <ul class="main-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="./timeplot/index.html">Timeplot</a></li>
+                <li><a href="./map/index.html">Map</a></li>
+                <li><a href="./pair/index.html">Map + Timeplot</a></li>
+                <li><a href="https://gitlab.ic.unicamp.br/ra187690/urban-sensing" target="_blank">Github</a></li>
+            </ul>
+            <div class="header-right">
+                <div class="user-panel">
+                    <button href="#" class="register" id="button-download">Download data as CSV</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Header Section end -->
+    
 
-    <div>
-        <h1 id="loading">Loading...</h1>
-    </div>
+    <!-- Intro Section end -->
+	<section class="intro-section spad">
+            <div class="container">
+                    
+                    <!-- <div class="section-title">
+                            <h2>UNICAMP Sensing</h2>
+                    </div> -->
+                    <div class="row intro-first">
+                        <div class="col-lg-6 order-lg-2" id="board-inside">
+                                <img src="img/board-inside.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 order-lg-1">
+                            <div class="about-text">
+                                <h3>The Project</h3>
+                                <p>
+                                    UNICAMP Sensing is a project developed by computer engineering students at UNICAMP
+                                    for walkability evaluation through analysis of path temperature, humidity and particulate matter.
+                                </p>
+                                <!-- <a href="#" class="readmore-btn">Find out more</a> -->
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="col-lg-6">
+                                <img src="img/schematics.png" alt="">
+                            </div>
+                            <div class="col-lg-6 ">
+                                <div class="about-text">
+                                    <h3>Data is gathered with:</h3>
+                                    <p>
+                                        <ul>
+                                            <li>NodeMcu ESP8266 micro-controller;</li>
+                                            <li>DHT11 temperatyure & humidity sensor;</li>
+                                            <li>NEO-6MV2 GPS module;</li>
+                                            <li>DSM501A air particle sensor.</li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                    
+            </div>
+    </section>
 
-    <div>
-        <button id="button-download">Download data</button>
-    </div>
+    <!-- Footer Section -->
+	<footer class="footer-section">
+        <div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+        </div>
+    </footer>
+    <!-- Footer Section end -->
 </body>
-
 </html>
