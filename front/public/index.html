@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Unicamp Sensing</title>
-    
-    <!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
 
-	<!-- Main Stylesheets -->
-    <link rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" href="css/my_style.css"/>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/slicknav.min.css" />
+
+    <!-- Main Stylesheets -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/my_style.css" />
 
 
     <!-- Scripts -->
     <script src="./libs/firebase.js"></script>
     <script src="./libs/FileSaver.js"></script>
-    
+
     <script src="./constants.js"></script>
     <script src="./parse.js"></script>
     <script src="./utils.js"></script>
     <script src="./init_libs.js"></script>
     <script src="./main.js"></script>
 </head>
+
 <body>
     <!-- Header Section -->
     <header class="header-section">
@@ -49,28 +51,33 @@
         </nav>
     </header>
     <!-- Header Section end -->
-    
+
 
     <!-- Intro Section end -->
-	<section class="intro-section spad">
+    <section class="intro-section spad">
         <div class="container">
             <!-- <div class="section-title">
                     <h2>UNICAMP Sensing</h2>
             </div> -->
             <div class="row intro-first">
                 <div class="col-lg-6 order-lg-2" id="board-inside">
-                        <img src="img/board-inside.jpg" alt="">
+                    <img src="img/board-inside.jpg" alt="">
                 </div>
                 <div class="col-lg-6 order-lg-1">
                     <div class="about-text">
                         <h3>The Project</h3>
                         <p>
-                            Unicamp Sensing is a project developed by Computer Engineering students at <a href="https://www.unicamp.br/unicamp/">UNICAMP</a>'s <a href="https://ic.unicamp.br/en">Institute of Computing</a>
-                            to evaluate the walkability in the campus, through analysis of temperature, humidity and particulate matter levels.
+                            <b>Unicamp Sensing</b> is a project developed by Computer Engineering students at <a href="https://www.unicamp.br/unicamp/">UNICAMP</a>'s <a href="https://ic.unicamp.br/en">Institute of Computing</a>
+                            to evaluate the walkability in the campus, through analysis of temperature, humidity and particulate matter levels.<br>
                         </p>
-                        <!-- <a href="#" class="readmore-btn">Find out more</a> -->
+                        <h3>Background</h3>
+                        <p>
+                            This work is largely inspired by two projects from the <a href="http://senseable.mit.edu/">MIT Senseable City Lab</a>:<br>
+                            <a href="http://senseable.mit.edu/cityscanner/">City Scanner</a> and <a href="http://senseable.mit.edu/urban-sensing/">Urban Sensing</a>.<br>
+
+                            While the name comes directly from the second, our project is more resemblant of the first: instead of using vehicles to capture the spatiotemporal variation in environmental indicators, we "walk our sensors" to better understand the paths that are taken daily by students in the university.<br>
+                        </p>
                     </div>
-                    
                 </div>
             </div>
             <div class="row">
@@ -79,14 +86,13 @@
                 </div>
                 <div class="col-lg-6 ">
                     <div class="about-text">
-                        <h3>Data is gathered with:</h3>
+                        <h3>Sensing Node</h3>
                         <p>
-                            <ul>
-                                <li>NodeMcu ESP8266 micro-controller;</li>
-                                <li>DHT11 temperatyure & humidity sensor;</li>
-                                <li>NEO-6MV2 GPS module;</li>
-                                <li>DSM501A air particle sensor.</li>
-                            </ul>
+                            Data is gathered with:<br>
+                            • NodeMcu ESP8266 micro-controller;<br>
+                            • DHT11 temperatyure & humidity sensor;<br>
+                            • NEO-6MV2 GPS module;<br>
+                            • DSM501A air particle sensor.
                         </p>
                     </div>
                 </div>
@@ -95,12 +101,17 @@
     </section>
 
     <!-- Footer Section -->
-	<footer class="footer-section">
-        <div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+    <footer class="footer-section">
+        <div class="copyright">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>
+                document.write(new Date().getFullYear());
+            </script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </div>
         </div>
     </footer>
     <!-- Footer Section end -->
 </body>
+
 </html>
