@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel='stylesheet' type='text/css' media='screen' href='./style.css'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -15,31 +14,41 @@
 	<!-- Main Stylesheets -->
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/my_style.css"/>
+
+
+    <!-- Scripts -->
+    <script src="./libs/firebase.js"></script>
+    <script src="./libs/FileSaver.js"></script>
+    
+    <script src="./constants.js"></script>
+    <script src="./parse.js"></script>
+    <script src="./utils.js"></script>
+    <script src="./init_libs.js"></script>
+    <script src="./main.js"></script>
 </head>
 <body>
     <!-- Header Section -->
-	<header class="header-section">
-            <a href="index.html" class="site-logo">
-                <!-- <img src="img/logo.png" alt=""> -->
-                <h2 id="my-title">Unicamp Sensing</h2>
-            </a>
-            <nav class="header-nav">
-                <ul class="main-menu">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="about-us.html">Timeplot</a></li>
-                    <li><a href="#">Map</a></li>
-                    <li><a href="#">Map + Timeplot</a></li>
-                    <li><a href="news.html">Github</a></li>
-                    <!-- <li><a href="contact.html">Contact</a></li> -->
-                </ul>
-                <div class="header-right">
-                    <div class="user-panel">
-                        <a href="#" class="register">Download data as CSV</a>
-                    </div>
+    <header class="header-section">
+        <a href="index.html" class="site-logo">
+            <!-- <img src="img/logo.png" alt=""> -->
+            <h2 id="my-title">Unicamp Sensing</h2>
+        </a>
+        <nav class="header-nav">
+            <ul class="main-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="./timeplot/index.html">Timeplot</a></li>
+                <li><a href="./map/index.html">Map</a></li>
+                <li><a href="./map/index.html">Map + Timeplot</a></li>
+                <li><a href="https://gitlab.ic.unicamp.br/ra187690/urban-sensing" target="_blank">Github</a></li>
+            </ul>
+            <div class="header-right">
+                <div class="user-panel">
+                    <button href="#" class="register" id="button-download">Download data as CSV</a>
                 </div>
-            </nav>
-        </header>
-        <!-- Header Section end -->
+            </div>
+        </nav>
+    </header>
+    <!-- Header Section end -->
     
 </body>
 </html>
