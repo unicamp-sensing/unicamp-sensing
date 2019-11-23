@@ -1,0 +1,34 @@
+Firebase structure:
+{
+  <year> : {
+    <month> : {
+      <day> : {
+        <hour> : {
+          <minute> : {
+            <second> : {
+              <board_MAC_addr> : {
+                "hum" : <humidity>, "tmp" : <temperature>,
+                "lat" : <latitude>, "lon" : <longitude>,
+                "pm10" : <PM10>,    "pm25" : <PM2.5>
+              }, ...
+          ⋮
+  }, ...
+}
+
+GeoJSON structure:
+{
+   "type": "FeatureCollection",
+   "features": [
+      {
+         "type": "Feature",
+         "geometry": { "type": "Point", "coordinates": [<lat>, <lon>] },
+         "properties": {
+            "time": "<year>-<month>-<day>T<hour>:<minute>:<second>Z",
+            "hum": <humidity>, "tmp": <temperature>,
+            "lat": <latitude>, "lon": <longitude>,
+            "pm10": <PM10>,    "pm25": <PM2.5>
+         }
+      }, ...
+   ]
+}
+obs.: time: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" (Z means "zero hour offset", i.e. UTC)
