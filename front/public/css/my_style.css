@@ -1,5 +1,7 @@
 #my-title {
     color: #FFFFFF;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
 }
 
 #button-download {
@@ -29,4 +31,8 @@
 #loading {
     width: 100%;
     margin-left: 40%;
+}
+
+#board-inside {
+    /* max-height: 200px; */
 }
