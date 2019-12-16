@@ -15,7 +15,7 @@
 |   |   |   |   |   |   |   +-- pm10: [PM10]
 |   |   |   |   |   |   |   +-- pm25: [PM2.5]
 ```
-A script that converts JSON files with this structure into the [GeoJSON format](https://geojson.org/) is located at [`back/firebase2geojson.py`](https://gitlab.ic.unicamp.br/ra187690/urban-sensing/blob/master/back/firebase2geojson.py).
+A script that converts JSON files with this structure into the [GeoJSON format](https://geojson.org/) is located at [`back/firebase2geojson.py`](https://github.com/unicamp-sensing/unicamp-sensing/blob/master/back/firebase2geojson.py).
 ## Running the website locally
 Once you have [Node.js](https://nodejs.org/en/) installed and the repository cloned:
 - `$ cd path/to/urban-sensing/front/`

@@ -3,7 +3,7 @@
 **Unicamp Sensing** is a project developed by Computer Engineering students at [UNICAMP](https://www.unicamp.br/unicamp/)'s [Institute of Computing](https://ic.unicamp.br/en)
 to evaluate the [walkability](https://en.wikipedia.org/wiki/Walkability) in the campus, through analysis of temperature, humidity and particulate matter levels.
 
-Visualizations of the collected data can be seen at [unicamp-sensing.herokuapp.com](http://unicamp-sensing.herokuapp.com/).
+Visualizations of the collected data can be seen at https://unicamp-sensing.herokuapp.com/.
 
 ## Background
 
