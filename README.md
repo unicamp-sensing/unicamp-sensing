@@ -18,7 +18,7 @@ This way, we aim to learn **where** and **how** to improve campus walkability, b
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Refer to [Docs](https://gitlab.ic.unicamp.br/ra187690/urban-sensing/tree/master/docs#docs).
+Refer to [Docs](https://github.com/unicamp-sensing/unicamp-sensing/tree/master/docs#docs).
 
 ## Schematics
 
@@ -29,7 +29,7 @@ Data is gathered with:
 *  DSM501A air particle sensor.
 
 
-![Schematics](https://gitlab.ic.unicamp.br/ra187690/urban-sensing/raw/master/docs/schematic_projetos.png)
+![Schematics](https://raw.githubusercontent.com/unicamp-sensing/unicamp-sensing/master/docs/schematic_projetos.png)
 
 ## License
 [WTFPL](http://www.wtfpl.net/)
